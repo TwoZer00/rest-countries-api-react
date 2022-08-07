@@ -55,7 +55,7 @@ export const Home = ({ data }) => {
 
   if (show) {
     return (
-      <>
+      <div className="flex flex-col justify-center max-w-[1440px] mx-auto">
         <div className="flex flex-col lg:flex-row lg:h-12 px-10 gap-7 my-8">
           <div className="w-full h-12">
             <Search
@@ -95,7 +95,7 @@ export const Home = ({ data }) => {
             </Link>
           ))}
         </div>
-      </>
+      </div>
     );
   }
 };

@@ -48,7 +48,7 @@ export const Detailed = ({ data }) => {
     console.info(Object.entries(country.name.nativeName)[0][1].common);
     return (
       <>
-        <div className="h-full flex flex-col px-5 lg:px-10 items-center justify-center dark:text-white mb-1">
+        <div className="h-full flex flex-col px-5 lg:px-10 items-center justify-center dark:text-white mb-1 max-w-[1440px] mx-auto">
           <div className="w-full py-10">
             <button
               onClick={handleBackButon}
@@ -103,7 +103,7 @@ export const Detailed = ({ data }) => {
                   <span className="font-semibold capitalize">Currencies:</span>
                   {elc}
                 </p>
-                <p className="grid grid-rows-2 grid-flow-col gap-2 font-light mb-8 lg:mb-0 max-h-[50px] overflow-auto">
+                <p className="grid grid-rows-2 grid-flow-col gap-2 font-light mb-8 lg:mb-0 overflow-auto">
                   <span className="font-semibold capitalize">Languages:</span>
                   {ell}
                 </p>
