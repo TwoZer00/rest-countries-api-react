@@ -1,6 +1,9 @@
 import React from "react";
-import { MoonIcon } from "@heroicons/react/outline";
-import { MoonIcon as MoonIconSolid } from "@heroicons/react/solid";
+import { MoonIcon, PuzzleIcon } from "@heroicons/react/outline";
+import {
+  MoonIcon as MoonIconSolid,
+  PuzzleIcon as PuzzleIconSolid,
+} from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 
 export const Header = ({ dark, setDark }) => {
@@ -14,11 +17,11 @@ export const Header = ({ dark, setDark }) => {
     }
   };
   return (
-    <header className="text-sm lg:text-base flex flex-row h-20 items-center bg-white dark:border-0 shadow-lg px-5 lg:px-10 dark:text-white dark:bg-dark-mode-ligth">
+    <header className="fixed w-full text-sm lg:text-base transition-colors flex flex-row h-20 items-center bg-white/10 backdrop-blur-sm dark:border-0 shadow-lg px-5 lg:px-10 dark:text-white dark:bg-dark-mode-ligth/20">
       <Link to={"/"} className="w-full font-bold">
         Where in the world?
       </Link>
-      <nav className="w-auto">
+      <nav className="w-auto flex flex-row gap-x-2">
         <button
           className="whitespace-nowrap font-semibold flex flex-row gap-x-2 items-center"
           onClick={handleDark}
@@ -30,6 +33,17 @@ export const Header = ({ dark, setDark }) => {
           )}
           Dark mode
         </button>
+        <Link
+          to={"/games"}
+          className="font-semibold flex flex-row gap-x-2 items-center"
+        >
+          {dark ? (
+            <PuzzleIconSolid className="w-5 h-5"></PuzzleIconSolid>
+          ) : (
+            <PuzzleIcon className="w-5 h-5"></PuzzleIcon>
+          )}
+          Play
+        </Link>
       </nav>
     </header>
   );

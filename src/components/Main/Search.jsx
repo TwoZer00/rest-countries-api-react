@@ -16,12 +16,10 @@ export const Search = ({ data, setData, setSearch }) => {
       const tempData = data.filter((data) => {
         return data.name.common.toLowerCase().includes(value);
       });
-      console.info("----", tempData);
       // tempData.length = 8;
       setData(tempData);
     } else {
       let temp = [...data];
-      console.info("----a", temp);
       // temp.length = 8;
       setData(temp);
     }

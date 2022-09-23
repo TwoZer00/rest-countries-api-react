@@ -6,6 +6,8 @@ module.exports = {
     colors: {
       "dark-mode-ligth": "#2b3945",
       "dark-fe": "hsl(207, 26%, 17%)",
+      valid: "#54dd91",
+      invalid: "#df4d4d",
       white: "#fff",
       black: "#000",
     },

@@ -5,3 +5,6 @@ export async function getAll() {
   //   console.table(data);
   return data;
 }
+export function randomCountryPosition(size) {
+  return Math.floor(Math.random() * size);
+}
