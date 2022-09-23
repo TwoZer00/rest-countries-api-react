@@ -30,7 +30,7 @@ function App() {
       getData();
     }
   }, []);
-
+  //
   if (data) {
     return (
       <div className={`${dark ? "dark" : ""}`}>
