@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 export default function Hint({ id, title, data, ts, cost }) {
-  console.log(data.includes("km"));
+  // console.log(data.includes("km"));
   let valK = data.includes("km");
   let nondata = [];
   nondata.length = data.length;
@@ -25,9 +25,9 @@ export default function Hint({ id, title, data, ts, cost }) {
       }`}
     >
       <p className="text-center font-semibold w-full">{title}</p>
-      <div className="flex flex-col justify-center h-full">
+      <div className="flex flex-col flex-wrap justify-center h-full w-full">
         <p
-          className={`select-none h-fit text-xl transition-colors text-center ${
+          className={`select-none h-fit text-lg transition-colors text-center break-words w-full ${
             visible
               ? "text-black dark:text-white"
               : "text-white dark:text-dark-mode-ligth"

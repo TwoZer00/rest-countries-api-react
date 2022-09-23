@@ -1,8 +1,10 @@
-import { TrendingUpIcon } from "@heroicons/react/outline";
+import {
+  ArrowUpIcon as TrendingUpIcon,
+  ArrowDownIcon as TrendingDownIcon,
+} from "@heroicons/react/24/outline";
 import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 import { DataContext } from "./App";
 import HLFlag from "./HLFlag";
 import Modal from "./Modal";
@@ -73,13 +75,16 @@ export default function GameHL() {
 
   const reset = () => {
     setCountry(countryC);
+    countries = data.filter((element) => {
+      return element.ccn3 !== countryC.ccn3;
+    });
     setCountryC(countries[randomCountryPosition(countries.length)]);
   };
   const resetGame = () => {
     setScore(0);
     country1 = data[randomCountryPosition(data.length)];
     country2 = data.filter((element) => {
-      return element.ccn3 !== country1.ccn3;
+      return element.ccn3 !== country1.ccn3 && element.ccn3 !== countryC.ccn3;
     })[
       randomCountryPosition(
         data.filter((element) => {
@@ -97,10 +102,15 @@ export default function GameHL() {
   return (
     <div className="h-full relative text-white">
       <div className="w-full mx-auto flex flex-col items-center justify-center h-full">
-        <h1 className="text-3xl font-bold tracking-wide absolute top-0 z-40 flex pt-4">
-          Higher or Lower
-          <TrendingUpIcon className="w-10 h-10" />
-        </h1>
+        <div className="text-3xl font-bold flex-col tracking-wide absolute top-0 z-40 flex pt-4 w-[180px]">
+          <p className="flex items-center">
+            Higer <TrendingUpIcon className="w-7 h-7" />
+          </p>
+          <p className="text-center text-sm">OR</p>
+          <p className="flex items-center self-end">
+            <TrendingDownIcon className="w-7 h-7" /> Lower
+          </p>
+        </div>
         <div className="flex flex-row items-center w-full text-center h-full relative">
           <HLFlag
             name={country.name.common}

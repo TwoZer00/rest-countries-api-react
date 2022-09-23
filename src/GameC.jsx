@@ -15,17 +15,6 @@ export default function GameC() {
       element.population &&
       element.capital
   );
-  // console.log(data);
-  // console.log(
-  //   data.filter(
-  //     (element) =>
-  //       element.languages &&
-  //       element.tld &&
-  //       element.region &&
-  //       element.population &&
-  //       element.capital
-  //   )
-  // );
   const [countries, setCountries] = useState(data);
   const [randomCountry, setRandomCountry] = useState(
     data[randomCountryPosition(data.length)]
@@ -38,7 +27,6 @@ export default function GameC() {
   const dropdownRef = useRef();
   const [valid, setValid] = useState();
   useOutsideAlerter(dropdownRef, setVisible);
-  // console.log(randomCountry.area);
   const handleSubmit = (e, a) => {
     setShowResult(true);
     let value;

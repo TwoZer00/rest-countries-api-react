@@ -34,7 +34,6 @@ export default function Game(props) {
     for (let index = 0; index < options.length; index++) {
       options[index].disabled = true;
     }
-    console.log(options);
     let target = event.target.innerHTML;
     if (target === randomFlag.name.common) {
       let scoreTemp = score;
@@ -72,8 +71,8 @@ export default function Game(props) {
   if (countries.length !== 0) {
     // if (false) {
     return (
-      <div className="dark:text-white flex flex-col h-full w-2/3 justify-center items-center mx-auto relative ">
-        <div className="flex flex-col bg-white/10 backdrop-blur-sm p-10 rounded gap-5">
+      <div className="dark:text-white flex flex-col h-full w-11/12 justify-center items-center mx-auto relative ">
+        <div className="flex flex-col bg-white/10 backdrop-blur-sm p-10 rounded gap-5 px-5 w-full sm:w-fit">
           <h1 className="font-semibold text-2xl">
             Choose the name of the country based on the flag
           </h1>

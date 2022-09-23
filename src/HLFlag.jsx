@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import { TrendingUpIcon, TrendingDownIcon } from "@heroicons/react/outline";
+import {
+  ArrowUpIcon as TrendingUpIcon,
+  ArrowDownIcon as TrendingDownIcon,
+} from "@heroicons/react/24/outline";
 import {
   useSpring,
   animated,

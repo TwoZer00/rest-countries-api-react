@@ -82,7 +82,7 @@ export const Home = ({ data }) => {
               <option value="6">All</option>
             </select>
           </div>
-          <div className=" grid grid-cols-1 lg:grid-cols-4 w-full justify-items-center gap-16 px-10 pb-10">
+          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full justify-items-center gap-16 px-10 pb-10">
             {show.map((element, index) => (
               <Link
                 key={index}

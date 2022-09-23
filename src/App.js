@@ -43,7 +43,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home data={data} />} />
                 <Route path="/country/:id" element={<Detailed data={data} />} />
-                <Route path="/games" element={<GameDashboard />} />
+                <Route path="/games" element={<GameDashboard dark={dark} />} />
                 <Route path="/guesstheflag" element={<Game data={data} />} />
                 <Route path="/guessthecountry" element={<GameC />} />
                 <Route path="/higherlower" element={<GameHL />} />

@@ -1,9 +1,12 @@
 import React from "react";
-import { MoonIcon, PuzzleIcon } from "@heroicons/react/outline";
+import {
+  MoonIcon,
+  PuzzlePieceIcon as PuzzleIcon,
+} from "@heroicons/react/24/outline";
 import {
   MoonIcon as MoonIconSolid,
-  PuzzleIcon as PuzzleIconSolid,
-} from "@heroicons/react/solid";
+  PuzzlePieceIcon as PuzzleIconSolid,
+} from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 
 export const Header = ({ dark, setDark }) => {
