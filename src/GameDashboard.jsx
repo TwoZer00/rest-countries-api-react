@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   FlagIcon,
   ListBulletIcon as ViewListIcon,
@@ -14,6 +14,9 @@ import {
 import { Link } from "react-router-dom";
 
 export default function GameDashboard({ dark }) {
+  useEffect(() => {
+    document.title = `Where in the world? - Games`;
+  }, []);
   return (
     <div className="flex flex-col dark:text-white items-center justify-center gap-2 pt-2 h-full">
       <div className="p-5 rounded bg-white/10 backdrop-blur border-dark-mode-ligth shadow-lg">
@@ -39,7 +42,9 @@ export default function GameDashboard({ dark }) {
               <FlagIcon className="w-5 h-5" />
             )}
           </Link>
-          <small>Based on the country flag choose the correct option</small>
+          <small className="text-center">
+            Based on the country flag choose the correct option
+          </small>
         </div>
         <div className="flex flex-col">
           <Link
@@ -53,7 +58,9 @@ export default function GameDashboard({ dark }) {
               <TrendingUpIcon className="w-5 h-5" />
             )}
           </Link>
-          <small>Based on the population choose the correct option</small>
+          <small className="text-center">
+            Based on the population choose the correct option
+          </small>
         </div>
         <div className="flex flex-col">
           <Link
@@ -67,7 +74,9 @@ export default function GameDashboard({ dark }) {
               <ViewListIcon className="w-5 h-5" />
             )}
           </Link>
-          <small>Based on the description name the correct country</small>
+          <small className="text-center">
+            Based on the description name the correct country
+          </small>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 
@@ -8,6 +8,16 @@ export const Detailed = ({ data }) => {
   const handleBackButon = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    if (id) {
+      document.title = `Where in the world? - ${
+        data.find((element) => element.ccn3 === id).name.common
+      } `;
+    } else {
+      document.title = `Where in the world? - not found`;
+    }
+  }, []);
   if (data) {
     const country = data.filter((country) => {
       return country.ccn3 === id;

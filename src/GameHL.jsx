@@ -2,7 +2,7 @@ import {
   ArrowUpIcon as TrendingUpIcon,
   ArrowDownIcon as TrendingDownIcon,
 } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { DataContext } from "./App";
@@ -104,7 +104,7 @@ export default function GameHL() {
       <div className="w-full mx-auto flex flex-col items-center justify-center h-full">
         <div className="text-3xl font-bold flex-col tracking-wide absolute top-0 z-40 flex pt-4 w-[180px]">
           <p className="flex items-center">
-            Higer <TrendingUpIcon className="w-7 h-7" />
+            Higher <TrendingUpIcon className="w-7 h-7" />
           </p>
           <p className="text-center text-sm">OR</p>
           <p className="flex items-center self-end">

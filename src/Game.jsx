@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -68,6 +68,9 @@ export default function Game(props) {
     ];
     setOptions(optionsTemp);
   };
+  useEffect(() => {
+    document.title = `Where in the world? - Guess the flag`;
+  });
   if (countries.length !== 0) {
     // if (false) {
     return (

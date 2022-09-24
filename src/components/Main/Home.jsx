@@ -47,6 +47,9 @@ export const Home = ({ data }) => {
     }
   };
   useEffect(() => {
+    document.title = "Where in the world?";
+  }, []);
+  useEffect(() => {
     if (data) {
       let temp = [...data];
       setShow(temp);

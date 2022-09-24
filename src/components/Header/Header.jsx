@@ -21,9 +21,11 @@ export const Header = ({ dark, setDark }) => {
   };
   return (
     <header className="fixed w-full text-sm lg:text-base transition-colors flex flex-row h-20 items-center bg-white/10 backdrop-blur-sm dark:border-0 shadow-lg px-5 lg:px-10 dark:text-white dark:bg-dark-mode-ligth/20">
-      <Link to={"/"} className="w-full font-bold">
-        Where in the world?
-      </Link>
+      <div className="w-full">
+        <Link to={"/"} className="font-bold">
+          Where in the world?
+        </Link>
+      </div>
       <nav className="w-auto flex flex-row gap-x-2">
         <button
           className="whitespace-nowrap font-semibold flex flex-row gap-x-2 items-center"
@@ -47,6 +49,14 @@ export const Header = ({ dark, setDark }) => {
           )}
           Play
         </Link>
+        <a
+          className="font-bold"
+          href="https://twozer00.dev"
+          target="_blank"
+          rel="noreferrer"
+        >
+          twozer00.dev
+        </a>
       </nav>
     </header>
   );

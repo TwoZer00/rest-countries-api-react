@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useRef } from "react";
 import { useContext } from "react";
 import { DataContext } from "./App";
@@ -91,6 +92,11 @@ export default function GameC() {
       setOptionsSearch(data);
     }
   };
+
+  useEffect(() => {
+    document.title = `Where in the world? - Guess the country`;
+  });
+
   return (
     <div className="dark:text-white h-full flex flex-col items-center justify-center">
       <div className="flex flex-col bg-white/10 backdrop-blur-sm max-w-[1440px] p-2">
