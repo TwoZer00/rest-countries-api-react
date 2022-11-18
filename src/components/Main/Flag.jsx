@@ -3,16 +3,16 @@ import React from "react";
 export const Flag = ({ data }) => {
   // console.log(data);
   return (
-    <div className="flex flex-col shadow-lg rounded overflow-hidden bg-white dark:bg-dark-mode-ligth dark:text-white">
-      <div className="min-h-[100px] h-[150px] max-h-[150px]">
+    <div className="flex flex-col shadow-lg rounded overflow-hidden bg-white dark:bg-dark-mode-ligth dark:text-white min-h-[350px]">
+      <div className="flex-none">
         <img
           src={`${data.flags.svg}`}
           alt={data.name.common}
-          className="w-full h-full object-cover"
+          className="w-full"
           loading="lazy"
         />
       </div>
-      <div className="flex flex-col p-5 w-full">
+      <div className="flex flex-col p-5 w-full h-full justify-center">
         <h1 className="font-bold mb-2">{data.name.common}</h1>
         <div className="text-sm">
           <p>

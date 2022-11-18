@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { to } from "react-spring";
+import { Timer } from "./components/Timer";
 import Modal from "./Modal";
 import RandomFlag from "./RandomFlag";
 
@@ -10,6 +12,9 @@ export default function Game(props) {
   const [randomFlag, setRandomFlag] = useState(
     props.data[Math.floor(Math.random() * 250)]
   );
+  // const time =  1000;
+  // const [timer,setTimer] = useState(10);
+  // let interval;
   const [countries, setCountries] = useState(props.data);
   const [options, setOptions] = useState([
     props.data[Math.floor(Math.random() * 250)],
@@ -67,18 +72,20 @@ export default function Game(props) {
       random,
     ];
     setOptions(optionsTemp);
+    // clearInterval(interval);
+    // setTimer(10);
   };
   useEffect(() => {
     document.title = `Where in the world? - Guess the flag`;
-  });
+  });  
   if (countries.length !== 0) {
     // if (false) {
     return (
       <div className="dark:text-white flex flex-col h-full w-11/12 justify-center items-center mx-auto relative ">
         <div className="flex flex-col bg-white/10 backdrop-blur-sm p-10 rounded gap-5 px-5 w-full sm:w-fit">
-          <h1 className="font-semibold text-2xl">
+          {countries.length>=250 && <h1 className="font-semibold text-2xl">
             Choose the name of the country based on the flag
-          </h1>
+          </h1>}
           <div className="w-full flex justify-center">
             <RandomFlag flag={randomFlag} />
           </div>
@@ -96,6 +103,7 @@ export default function Game(props) {
             })}
           </div>
           <div className="self-end font-bold">{countries.length}</div>
+          {/* <Timer max={time} reducer={1} timer={timer} func={reset} flag={randomFlag} /> */}
         </div>
       </div>
     );

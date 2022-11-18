@@ -111,7 +111,7 @@ export default function GameHL() {
             <TrendingDownIcon className="w-7 h-7" /> Lower
           </p>
         </div>
-        <div className="flex flex-row items-center w-full text-center h-full relative">
+        <div className="flex flex-col lg:flex-row items-center w-full text-center h-full relative">
           <HLFlag
             name={country.name.common}
             btn={false}

@@ -4,11 +4,12 @@ import { Header } from "./components/Header/Header";
 import { Home } from "./components/Main/Home";
 import { Detailed } from "./components/Main/Detailed";
 import { useState, useEffect, createContext } from "react";
-import { getAll } from "./utils.js";
+// import { getAll } from "./utils.js";
 import Game from "./Game";
 import GameDashboard from "./GameDashboard";
 import GameC from "./GameC";
 import GameHL from "./GameHL";
+import { getAll } from "./services/api";
 export const DataContext = createContext();
 function App() {
   const [data, setData] = useState(
@@ -30,7 +31,6 @@ function App() {
       getData();
     }
   }, []);
-  //
   if (data) {
     return (
       <div className={`${dark ? "dark" : ""}`}>

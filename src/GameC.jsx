@@ -99,15 +99,15 @@ export default function GameC() {
 
   return (
     <div className="dark:text-white h-full flex flex-col items-center justify-center">
-      <div className="flex flex-col bg-white/10 backdrop-blur-sm max-w-[1440px] p-2">
+      <div className="flex w-full flex-col bg-white/10 backdrop-blur-sm max-w-[1440px] p-2">
         <div className="text-center">
-          <h1 className="font-semibold text-4xl">What's the country?</h1>
+          <h1 className="font-bold text-4xl">What's the country?</h1>
           <small>
             Click boxes for more details, every box has cost, so if you guess
             correctly, your score will be reduced.
           </small>
         </div>
-        <div className="flex gap-x-8 items-center p-4">
+        <div className="flex flex-col lg:flex-row gap-x-8 items-center p-4">
           <div className="flex flex-col gap-4 items-center justify-center w-full">
             <div className="flex flex-row items-stretch w-full ">
               <form
@@ -223,7 +223,7 @@ export default function GameC() {
               />
             </div>
           </div>
-          <div className="flex flex-col justify-center items-center gap-2 select-none w-2/3 py-2">
+          <div className="flex flex-col justify-center items-center gap-2 select-none w-full lg:w-2/3 py-2">
             <div className="h-52 w-[350px] max-w-[350px] mx-auto bg-white/90 dark:bg-dark-mode-ligth/90 py-4 rounded shadow">
               {showResult && (
                 <img

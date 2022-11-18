@@ -49,7 +49,7 @@ export default function HLFlag({
   }, [svg]);
 
   return (
-    <section className="w-1/2 h-full">
+    <section className="w-full lg:w-1/2 h-full">
       <div className="relative h-full overflow-hidden">
         <animated.img
           src={svg}
