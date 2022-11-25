@@ -6,16 +6,22 @@ import { DataContext } from "./App";
 import Hint from "./Hint";
 import { useOutsideAlerter } from "./hooks/useOutsideAlerter";
 import { randomCountryPosition } from "./utils";
+import winSound from './resources/win_sound.wav';
+import lossSound from './resources/loss_sound.wav';
+import { Timer } from "./components/Timer";
 
 export default function GameC() {
-  const data = useContext(DataContext).filter(
+  const data = [...useContext(DataContext).filter(
     (element) =>
       element.languages &&
       element.tld &&
       element.region &&
       element.population &&
-      element.capital
-  );
+      element.capital &&
+      element.unMember
+  ),useContext(DataContext).find(element => { return element.ccn3 === "275" })
+  ];
+  // console.log(data);
   const [countries, setCountries] = useState(data);
   const [randomCountry, setRandomCountry] = useState(
     data[randomCountryPosition(data.length)]
@@ -27,13 +33,16 @@ export default function GameC() {
   const [showResult, setShowResult] = useState(false);
   const dropdownRef = useRef();
   const [valid, setValid] = useState();
+  const audioRef = useRef();
   useOutsideAlerter(dropdownRef, setVisible);
   const handleSubmit = (e, a) => {
+    setVisible(false);
     setShowResult(true);
     let value;
     if (e) {
       e.preventDefault();
       value = optionsSearch[0].name.common;
+      formRef.current.country.value = value;
     } else {
       value = a.country.value;
     }
@@ -43,11 +52,15 @@ export default function GameC() {
         return value + totalScore;
       });
       setValid(true);
+      audioRef.current.src = winSound;
+      audioRef.current.play()
     } else {
       // setScore((value) => {
       //   return value ;
       // });
+      audioRef.current.src = lossSound;
       setValid(false);
+      audioRef.current.play();
     }
     let countriesTemp = countries.filter(
       (element) => element.name.common !== randomCountry.name.common
@@ -99,7 +112,7 @@ export default function GameC() {
 
   return (
     <div className="dark:text-white h-full flex flex-col items-center justify-center">
-      <div className="flex w-full flex-col bg-white/10 backdrop-blur-sm max-w-[1440px] p-2">
+      <div className="flex w-full flex-col bg-white/10 backdrop-blur-sm lg:w-fit p-2">
         <div className="text-center">
           <h1 className="font-bold text-4xl">What's the country?</h1>
           <small>
@@ -178,7 +191,7 @@ export default function GameC() {
                 </div>
               </form>
             </div>
-            <div className="grid grid-cols-3 gap-4 w-full">
+            <div className="grid grid-cols-3 gap-4 w-full justify-items-center transition-none">
               <Hint
                 id={randomCountry.ccn3}
                 title="Region"
@@ -229,9 +242,9 @@ export default function GameC() {
                 <img
                   src={randomCountry.flags.svg}
                   alt="flag"
-                  className="w-full h-full object-contain"
+                  className={`w-full h-full transition-opacity object-contain ${showResult?'opacity-100':'opacity-0'}`}
                 />
-              )}
+                )}
             </div>
             <p className="text-xl max-w-full min-w-[200px] min-h-[32px] shadow bg-white dark:bg-dark-mode-ligth rounded text-center flex flex-col items-center justify-center">
               {showResult && randomCountry.name.common}
@@ -240,6 +253,7 @@ export default function GameC() {
         </div>
         <p className="self-end font-bold">{countries.length}</p>
       </div>
+      <audio src={winSound} controls={false} ref={audioRef}></audio>
     </div>
   );
 }

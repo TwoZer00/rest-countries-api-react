@@ -10,6 +10,7 @@ import GameDashboard from "./GameDashboard";
 import GameC from "./GameC";
 import GameHL from "./GameHL";
 import { getAll } from "./services/api";
+import Test from "./Test";
 export const DataContext = createContext();
 function App() {
   const [data, setData] = useState(
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/guesstheflag" element={<Game data={data} />} />
                 <Route path="/guessthecountry" element={<GameC />} />
                 <Route path="/higherlower" element={<GameHL />} />
+                <Route path="/test" element={<Test />} />
               </Routes>
             </DataContext.Provider>
           </div>

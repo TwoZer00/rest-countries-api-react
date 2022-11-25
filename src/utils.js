@@ -7,3 +7,17 @@ export async function getAll() {
 export function randomCountryPosition(size) {
   return Math.floor(Math.random() * size);
 }
+
+export function intervalFunc(setTime,skip) {
+  setTime(value => {
+    if (value <= 0) { 
+        clearInterval(this)
+      skip();
+      return 0;
+    }
+    else {
+        return value - 1;
+    }
+    
+});
+}

@@ -11,7 +11,7 @@ import Modal from "./Modal";
 import { randomCountryPosition } from "./utils";
 
 export default function GameHL() {
-  const data = useContext(DataContext);
+  const data = [...useContext(DataContext).filter(element => { return element.unMember }), useContext(DataContext).find(element => { return element.ccn3 ==='275'}), useContext(DataContext).find(element => { return element.ccn3 ==='336'})];
   let country1 = data[randomCountryPosition(data.length)];
   let country2 = data.filter((element) => {
     return element.ccn3 !== country1.ccn3;
@@ -35,7 +35,7 @@ export default function GameHL() {
   const results = (e) => {
     setShowResults(true);
     let target = e.target.childNodes[0].textContent.toLowerCase();
-    console.log(target);
+    // console.log(target);
     let result = "";
     if (country.population > countryC.population) {
       //   return console.log(true, country.population, countryC.population);
@@ -46,7 +46,7 @@ export default function GameHL() {
       //   return console.log(false, country.population, countryC.population);
       result = "higher";
     }
-    console.log(result === target, country.population, countryC.population);
+    // console.log(result === target, country.population, countryC.population);
     if (result === target || result === "draw") {
       setScore((value) => {
         return value + 1;
@@ -61,7 +61,7 @@ export default function GameHL() {
           ? localStorage.getItem("GameHL")
           : "0"
       );
-      console.log(localStorage.getItem("GameHL"));
+      // console.log(localStorage.getItem("GameHL"));
       localStorage.setItem(
         "GameHL",
         localStorage.getItem("GameHL") < score ? score : tempRecord
