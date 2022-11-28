@@ -5,30 +5,21 @@ import { useContext } from "react";
 import { DataContext } from "./App";
 import Hint from "./Hint";
 import { useOutsideAlerter } from "./hooks/useOutsideAlerter";
-import { randomCountryPosition } from "./utils";
+import { randomCountryPosition, unMemberFilter } from "./utils";
 import winSound from './resources/win_sound.wav';
 import lossSound from './resources/loss_sound.wav';
 import { Timer } from "./components/Timer";
 
-export default function GameC({dataset}) {
-  const data = [...dataset.filter(
-    (element) =>
-      element.languages &&
-      element.tld &&
-      element.region &&
-      element.population &&
-      element.capital &&
-      element.unMember
-  )
-  ];
-  console.log(dataset);
-  const [countries, setCountries] = useState(data);
+export default function GameC({ dataset, region }) {
+  const data = unMemberFilter(useContext(DataContext))
+
+  const [countries, setCountries] = useState(dataset);
   const [randomCountry, setRandomCountry] = useState(
-    data[randomCountryPosition(data.length)]
+    dataset[randomCountryPosition(dataset.length)]
   );
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState(10);
-  const [optionsSearch, setOptionsSearch] = useState(data);
+  const [optionsSearch, setOptionsSearch] = useState(unMemberFilter(useContext(DataContext)));
   const [visible, setVisible] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const dropdownRef = useRef();
@@ -85,7 +76,7 @@ export default function GameC({dataset}) {
     dropdownRef.current.scroll(0, 0);
     let value = e.target.value;
     if (value.length > 0) {
-      let temp = data.filter((element) =>
+      let temp = dataset.filter((element) =>
         element.name.common.toLowerCase().includes(value.toLowerCase())
       );
       setOptionsSearch(
@@ -102,7 +93,7 @@ export default function GameC({dataset}) {
         })
       );
     } else {
-      setOptionsSearch(data);
+      setOptionsSearch(dataset);
     }
   };
 
@@ -129,13 +120,12 @@ export default function GameC({dataset}) {
                 className="w-full"
               >
                 <div
-                  className={`relative group shadow ${
-                    valid === true
-                      ? "bg-valid"
-                      : valid === false
+                  className={`relative group shadow ${valid === true
+                    ? "bg-valid"
+                    : valid === false
                       ? "bg-invalid"
                       : "bg-white dark:bg-dark-mode-ligth"
-                  }   w-full rounded`}
+                    }   w-full rounded`}
                 >
                   {/* <span className="text-2xl bg-white">🏳️</span> */}
                   <div className="">
@@ -143,11 +133,9 @@ export default function GameC({dataset}) {
                       list="countries"
                       id="country"
                       name="country"
-                      className={`${
-                        valid !== undefined ? "text-white" : ""
-                      } text-xl py-2 bg-white/0 w-full${
-                        visible ? "rounded-b-none" : ""
-                      } border-none px-2 outline-none`}
+                      className={`${valid !== undefined ? "text-white" : ""
+                        } text-xl py-2 bg-white/0 w-full${visible ? "rounded-b-none" : ""
+                        } border-none px-2 outline-none`}
                       placeholder="Search country"
                       disabled={showResult}
                       autoComplete="false"
@@ -161,9 +149,8 @@ export default function GameC({dataset}) {
                   </div>
                   <div
                     ref={dropdownRef}
-                    className={`absolute z-10 top-full w-full max-h-[100px] bg-white text-black dark:text-white dark:bg-dark-mode-ligth shadow rounded-b-md overflow-auto px-2 flex-col divide-y divide-black/20 dark:divide-white/20  ${
-                      visible ? "flex" : "hidden"
-                    }`}
+                    className={`absolute z-10 top-full w-full max-h-[100px] bg-white text-black dark:text-white dark:bg-dark-mode-ligth shadow rounded-b-md overflow-auto px-2 flex-col divide-y divide-black/20 dark:divide-white/20  ${visible ? "flex" : "hidden"
+                      }`}
                   >
                     {optionsSearch.map((element, index) => (
                       <p
@@ -242,9 +229,9 @@ export default function GameC({dataset}) {
                 <img
                   src={randomCountry.flags.svg}
                   alt="flag"
-                  className={`w-full h-full transition-opacity object-contain ${showResult?'opacity-100':'opacity-0'}`}
+                  className={`w-full h-full transition-opacity object-contain ${showResult ? 'opacity-100' : 'opacity-0'}`}
                 />
-                )}
+              )}
             </div>
             <p className="text-xl max-w-full min-w-[200px] min-h-[32px] shadow bg-white dark:bg-dark-mode-ligth rounded text-center flex flex-col items-center justify-center">
               {showResult && randomCountry.name.common}

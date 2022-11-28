@@ -22,13 +22,13 @@ export default function RandomFlag({ flag }) {
       key={flag.ccn3}
       src={flag.flags.svg}
       alt={flag.name.common}
-      className={`w-full max-h-[300px] object-fill`}
+      className={`w-fit h-full object-contain`}
       style={styles}
     />
   );
   return (
     <div
-      className={`w-[500px] h-[300px] flex flex-col items-center justify-center overflow-hidden`}
+      className={`w-[500px] h-[250px] max-h-[250px] flex flex-col items-center justify-center overflow-hidden`}
     >
       {flagElement}
     </div>

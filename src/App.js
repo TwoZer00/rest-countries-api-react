@@ -20,7 +20,7 @@ function App() {
       ? JSON.parse(localStorage.getItem("data"))
       : undefined
   );
-
+  const [gamePreference,setGamePreference] = useState([{region:"world",duration:"complete"}])
   const [dataUse, setDataUse] = useState(unMemberFilter(data));
   const [dark, setDark] = useState(
     localStorage.getItem("dark") === "true" ? true : false
@@ -48,7 +48,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home data={data} />} />
                 <Route path="/country/:id" element={<Detailed data={data} />} />
-                <Route path="/games" element={<GameDashboard dark={dark} data={dataUse} setData={setDataUse}  />} />
+                <Route path="/games" element={<GameDashboard dark={dark} data={dataUse} setData={setDataUse} gamep={gamePreference} gamepf={setGamePreference} />} />
                 <Route path="/guesstheflag" element={<Game dataset={dataUse} />} />
                 <Route path="/guessthecountry" element={<GameC dataset={dataUse} />} />
                 <Route path="/higherlower" element={<GameHL />} />

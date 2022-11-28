@@ -6,43 +6,49 @@ import { DataContext } from "./App";
 import { Timer } from "./components/Timer";
 import Modal from "./Modal";
 import RandomFlag from "./RandomFlag";
-import { getRandomInt } from "./utils";
+import { getRandomInt, unMemberFilter } from "./utils";
 
 export default function Game({ dataset }) {
+  const data = unMemberFilter(useContext(DataContext))
   const [score, setScore] = useState([0, 0]);
+  const [results, setResults] = useState([])
   const [time, setTime] = useState(10);
   const [randomFlag, setRandomFlag] = useState(
     dataset[Math.floor(Math.random() * dataset?.length)]
   );
   const [countries, setCountries] = useState(dataset);
-  const [options, setOptions] = useState([
-    useContext(DataContext)[Math.floor(Math.random() * useContext(DataContext).length)],
-    useContext(DataContext)[Math.floor(Math.random() * useContext(DataContext).length)],
-    useContext(DataContext)[Math.floor(Math.random() * useContext(DataContext).length)],
-    useContext(DataContext)[Math.floor(Math.random() * useContext(DataContext).length)],
-    randomFlag,
-  ]);
-  options.sort((a, b) => {
-    let x = a.name.common.toLowerCase();
-    let y = b.name.common.toLowerCase();
-    if (x < y) {
-      return -1;
+  const getOptions = () => {
+    let tempOptions = [];
+    while (tempOptions.length < 4) {
+      let temp = data[getRandomInt(data.length)];
+      // console.log(temp)
+      if (tempOptions.indexOf(temp) === -1) {
+        tempOptions.push(temp);
+      }
     }
-    if (x > y) {
-      return 1;
-    }
-    return 0;
-  });
+    return tempOptions;
+  }
+  const [options, setOptions] = useState([]);
+
+
+
 
   const [rmClick, setRmClick] = useState(false);
   let max = 10;
   const handleClick = (event) => {
-    let options = event.target.parentElement.children;
     setRmClick(true)
-    // for (let index = 0; index < options.length; index++) {
-    //   options[index].disabled = true;
-    // }
+
+
     let target = event.target.innerHTML;
+
+    let selected = data.find(value => value.name.common === target);
+    let tempResult = { options, selected: selected, correct: randomFlag };
+    let temps = [...results, tempResult];
+
+    setResults(temps)
+
+
+
     if (target === randomFlag.name.common) {
       win(true);
     } else {
@@ -74,7 +80,7 @@ export default function Game({ dataset }) {
   }
 
 
-  const [skipFlag,setSkipFlag] = useState();
+  const [skipFlag, setSkipFlag] = useState();
 
   const reset = (win) => {
     // console.log(score);
@@ -84,23 +90,50 @@ export default function Game({ dataset }) {
     setCountries(countriesTemp);
     let random = countriesTemp[Math.floor(Math.random() * countriesTemp.length)];
     setRandomFlag(random);
-    let temOptions = dataset.filter((element) => {
+    let temOptions = data.filter((element) => {
       return element.ccn3 !== random.ccn3;
     });
-    let optionsTemp = [
-      temOptions[Math.floor(Math.random() * temOptions.length)],
-      temOptions[Math.floor(Math.random() * temOptions.length)],
-      temOptions[Math.floor(Math.random() * temOptions.length)],
-      temOptions[Math.floor(Math.random() * temOptions.length)],
-      random,
-    ];
+    let optionsTemp = [];
+
+    while (optionsTemp.length <= 3) {
+      let temp = temOptions[getRandomInt(temOptions.length)];
+      if (optionsTemp.indexOf(temp) === -1) {
+        optionsTemp.push(temp);
+      }
+    }
+    optionsTemp.push(random);
+
     setOptions(optionsTemp);
     setTime(10);
   };
+  const startAgain = () => {
+    // console.log(dataset)
+    setRandomFlag(dataset[getRandomInt(dataset.length)])
+    setCountries(dataset);
+    setTime(10);
+    setRmClick(false);
+    setScore([0, 0])
+    setResults([])
+    setSkipFlag(false)
+    // reset()
+  }
+
   useEffect(() => {
     document.title = `Where in the world? - Guess the flag`;
-  }, []);  
-  
+    setOptions([...getOptions(), randomFlag])
+    options.sort((a, b) => {
+      let x = a.name.common.toLowerCase();
+      let y = b.name.common.toLowerCase();
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    });
+  }, []);
+
   if (dataset.length <= 0) {
     return <Navigate replace to={'/games'} />
   }
@@ -110,14 +143,14 @@ export default function Game({ dataset }) {
     return (
       <div className="dark:text-white flex flex-col h-full w-11/12 justify-center items-center mx-auto relative ">
         <div className="flex flex-col bg-white/10 backdrop-blur-sm p-10 rounded gap-5 px-5 w-full sm:w-fit">
-          
+
           {countries.length >= dataset.length && <h1 className="font-semibold text-2xl">
             Choose the name of the country based on the flag
           </h1>}
           <div className="w-full flex justify-center">
             <RandomFlag flag={randomFlag} />
           </div>
-          <div className={`flex flex-col gap-x-2 justify-center flex-wrap w-full gap-2 ${rmClick?'pointer-events-none':''}`}>
+          <div className={`flex flex-col gap-x-2 justify-center flex-wrap w-full gap-2 ${rmClick ? 'pointer-events-none' : ''}`}>
             {options.map((element, index) => {
               return (
                 <button
@@ -132,7 +165,7 @@ export default function Game({ dataset }) {
           </div>
           <div className="flex flex-row justify-between items-center">
             <div className="font-bold">{countries.length}</div>
-            <Timer reducer={1} time={time} skip={skipFlag} skipf={setSkipFlag} loss={loss} setTime={setTime} className={"self-end"}/>
+            <Timer reducer={1} time={time} skip={skipFlag} skipf={setSkipFlag} loss={loss} setTime={setTime} className={"self-end"} />
           </div>
         </div>
       </div>
@@ -142,8 +175,9 @@ export default function Game({ dataset }) {
       <Modal
         title="You finished the game 😁👍🏻"
         desc="Congrats! see you score, also you can play again or go back to play more puzzles"
-        again={reset}
+        again={startAgain}
         score={score}
+        results={results}
       />
     );
   }
