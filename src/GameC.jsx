@@ -10,8 +10,8 @@ import winSound from './resources/win_sound.wav';
 import lossSound from './resources/loss_sound.wav';
 import { Timer } from "./components/Timer";
 
-export default function GameC() {
-  const data = [...useContext(DataContext).filter(
+export default function GameC({dataset}) {
+  const data = [...dataset.filter(
     (element) =>
       element.languages &&
       element.tld &&
@@ -19,9 +19,9 @@ export default function GameC() {
       element.population &&
       element.capital &&
       element.unMember
-  ),useContext(DataContext).find(element => { return element.ccn3 === "275" })
+  )
   ];
-  // console.log(data);
+  console.log(dataset);
   const [countries, setCountries] = useState(data);
   const [randomCountry, setRandomCountry] = useState(
     data[randomCountryPosition(data.length)]
@@ -191,7 +191,7 @@ export default function GameC() {
                 </div>
               </form>
             </div>
-            <div className="grid grid-cols-3 gap-4 w-full justify-items-center transition-none">
+            <div className="grid grid-cols-3 gap-4 w-full justify-items-center trasition">
               <Hint
                 id={randomCountry.ccn3}
                 title="Region"

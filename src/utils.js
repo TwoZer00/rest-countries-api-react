@@ -21,3 +21,15 @@ export function intervalFunc(setTime,skip) {
     
 });
 }
+
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+export function unMemberFilter(array) {
+  return array.filter(
+    value => {
+      return value.unMember || value.ccn3 === "275" || value.ccn3 === '336'
+    }
+  )
+}

@@ -11,6 +11,8 @@ import GameC from "./GameC";
 import GameHL from "./GameHL";
 import { getAll } from "./services/api";
 import Test from "./Test";
+import GameMenu from "./GameMenu";
+import { unMemberFilter } from "./utils";
 export const DataContext = createContext();
 function App() {
   const [data, setData] = useState(
@@ -18,6 +20,8 @@ function App() {
       ? JSON.parse(localStorage.getItem("data"))
       : undefined
   );
+
+  const [dataUse, setDataUse] = useState(unMemberFilter(data));
   const [dark, setDark] = useState(
     localStorage.getItem("dark") === "true" ? true : false
   );
@@ -44,11 +48,12 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home data={data} />} />
                 <Route path="/country/:id" element={<Detailed data={data} />} />
-                <Route path="/games" element={<GameDashboard dark={dark} />} />
-                <Route path="/guesstheflag" element={<Game data={data} />} />
-                <Route path="/guessthecountry" element={<GameC />} />
+                <Route path="/games" element={<GameDashboard dark={dark} data={dataUse} setData={setDataUse}  />} />
+                <Route path="/guesstheflag" element={<Game dataset={dataUse} />} />
+                <Route path="/guessthecountry" element={<GameC dataset={dataUse} />} />
                 <Route path="/higherlower" element={<GameHL />} />
                 <Route path="/test" element={<Test />} />
+                {/* <Route path="/game-flag/:region/:duration" element={<GameMenu />} /> */}
               </Routes>
             </DataContext.Provider>
           </div>

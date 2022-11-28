@@ -1,24 +1,25 @@
 import React, { useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { DataContext } from "./App";
 import { Timer } from "./components/Timer";
 import Modal from "./Modal";
 import RandomFlag from "./RandomFlag";
+import { getRandomInt } from "./utils";
 
-export default function Game(props) {
-  // console.log(props.data.find(element => { return element.ccn3 === "336" }))
-  // console.log(props.data.find(element => { return element.ccn3 === "275" }))
-  const realCountries = [...props.data.filter(element => { return element.unMember }),props.data.find(element => { return element.ccn3 === "336" }),props.data.find(element => { return element.ccn3 === "275" })];
+export default function Game({ dataset }) {
   const [score, setScore] = useState([0, 0]);
   const [time, setTime] = useState(10);
   const [randomFlag, setRandomFlag] = useState(
-    realCountries[Math.floor(Math.random() * 195)]
+    dataset[Math.floor(Math.random() * dataset?.length)]
   );
-  const [countries, setCountries] = useState(realCountries);
+  const [countries, setCountries] = useState(dataset);
   const [options, setOptions] = useState([
-    realCountries[Math.floor(Math.random() * 195)],
-    realCountries[Math.floor(Math.random() * 195)],
-    realCountries[Math.floor(Math.random() * 195)],
-    realCountries[Math.floor(Math.random() * 195)],
+    useContext(DataContext)[Math.floor(Math.random() * useContext(DataContext).length)],
+    useContext(DataContext)[Math.floor(Math.random() * useContext(DataContext).length)],
+    useContext(DataContext)[Math.floor(Math.random() * useContext(DataContext).length)],
+    useContext(DataContext)[Math.floor(Math.random() * useContext(DataContext).length)],
     randomFlag,
   ]);
   options.sort((a, b) => {
@@ -81,9 +82,9 @@ export default function Game(props) {
       return element.ccn3 !== randomFlag.ccn3;
     });
     setCountries(countriesTemp);
-    let random = countries[Math.floor(Math.random() * countries.length)];
+    let random = countriesTemp[Math.floor(Math.random() * countriesTemp.length)];
     setRandomFlag(random);
-    let temOptions = realCountries.filter((element) => {
+    let temOptions = dataset.filter((element) => {
       return element.ccn3 !== random.ccn3;
     });
     let optionsTemp = [
@@ -95,18 +96,22 @@ export default function Game(props) {
     ];
     setOptions(optionsTemp);
     setTime(10);
-    // setSkipFlag(false)
   };
   useEffect(() => {
     document.title = `Where in the world? - Guess the flag`;
-  });  
+  }, []);  
+  
+  if (dataset.length <= 0) {
+    return <Navigate replace to={'/games'} />
+  }
+
   if (countries.length !== 0) {
     // if (false) {
     return (
       <div className="dark:text-white flex flex-col h-full w-11/12 justify-center items-center mx-auto relative ">
         <div className="flex flex-col bg-white/10 backdrop-blur-sm p-10 rounded gap-5 px-5 w-full sm:w-fit">
           
-          {countries.length >= realCountries.length && <h1 className="font-semibold text-2xl">
+          {countries.length >= dataset.length && <h1 className="font-semibold text-2xl">
             Choose the name of the country based on the flag
           </h1>}
           <div className="w-full flex justify-center">
