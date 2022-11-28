@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { DataContext } from "./App";
-import { getRandomInt } from "./utils";
+import { getRandomInt, unMemberFilter } from "./utils";
 import { useRef } from "react";
 
 export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
@@ -28,6 +28,7 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
   const durationRef = useRef()
   useEffect(() => {
     document.title = `Where in the world? - Games`;
+    regionRef.current.value && setData(unMemberFilter(datause))
   }, []);
   const handleChange = (e) => {
     let value = e.target.value;
@@ -37,7 +38,6 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
       gamepf({ region: numberToRegion(regionRef.current.value), duration: numberToDuration(durationRef.current.value) })
     }
   }
-
   const regionFiltered = (region) => {
     // console.log(datause)
     let temp = datause.filter(value => { return value.unMember || value.ccn3 === "275" || value.ccn3 === '336' });
