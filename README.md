@@ -1,5 +1,5 @@
 # Frontend Mentor - REST Countries API with color theme switcher solution
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5d6c82b1-8e5e-411c-8be6-a1197f4c4400/deploy-status)](https://app.netlify.com/sites/unrivaled-chimera-982612/deploys) <br>
 This is a solution to the [REST Countries API with color theme switcher challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
