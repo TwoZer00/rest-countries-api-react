@@ -2,19 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Modal({ title, desc, back, again, score, record, results }) {
-  console.log(results)
   let data = []
   results.forEach((element, parentIndex) => {
-    let options = [parentIndex + 1]
+    let options = [<td className="border">{parentIndex + 1}</td>]
     element.options.forEach((option, index) => {
       if (option === element.selected && option === element.correct) {
-        options.push(<td key={`option${parentIndex}.${index}`} className={`text-bold border bg-valid/20 border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}*</td>);
+        options.push(<td key={`option${parentIndex}.${index}`} className={`text-bold border bg-valid/20 dark:border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}</td>);
       }
       else if (option === element.selected) {
-        options.push(<td key={`option${parentIndex}.${index}`} className={`border bg-invalid/20 border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}*</td>);
+        options.push(<td key={`option${parentIndex}.${index}`} className={`border bg-invalid/20 dark:border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}</td>);
       }
       else {
-        options.push(<td key={`option${parentIndex}.${index}`} className={`border border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}</td>);
+        options.push(<td key={`option${parentIndex}.${index}`} className={`border dark:border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}</td>);
       }
 
     });
@@ -24,7 +23,7 @@ export default function Modal({ title, desc, back, again, score, record, results
 
   return (
     <div className="absolute h-full w-screen flex flex-col items-center justify-center top-0 bg-dark-mode-ligth/60 z-50 dark:text-white">
-      <div className="bg-dark-fe/70 backdrop-blur w-fit max-w-96 rounded shadow-lg p-5 flex flex-col gap-3">
+      <div className="dark:bg-dark-fe/70 bg-white/40 backdrop-blur w-fit max-w-96 rounded shadow-lg p-5 flex flex-col gap-3">
         <h2 className="text-xl font-semibold text-center">{title}</h2>
         <p className="text-center">{desc}</p>
         {score[1] !== undefined ? (
@@ -42,15 +41,15 @@ export default function Modal({ title, desc, back, again, score, record, results
           </div>
         )}
         <div className="flex flex-col max-h-[200px] overflow-auto">
-          <table className="border border-collapse border-dark-mode-ligth">
+          <table className="border border-collapse dark:border-dark-mode-ligth">
             <thead>
               <tr>
                 <th className=""></th>
-                <th className="border border-dark-mode-ligth bg-white/10">Option 1</th>
-                <th className="border border-dark-mode-ligth bg-white/10">Option 2</th>
-                <th className="border border-dark-mode-ligth bg-white/10">Option 3</th>
-                <th className="border border-dark-mode-ligth bg-white/10">Option 4</th>
-                <th className="border border-dark-mode-ligth bg-white/10">Option 5</th>
+                <th className="border dark:border-dark-mode-ligth dark:bg-white/10">Option 1</th>
+                <th className="border dark:border-dark-mode-ligth dark:bg-white/10">Option 2</th>
+                <th className="border dark:border-dark-mode-ligth dark:bg-white/10">Option 3</th>
+                <th className="border dark:border-dark-mode-ligth dark:bg-white/10">Option 4</th>
+                <th className="border dark:border-dark-mode-ligth dark:bg-white/10">Option 5</th>
               </tr>
             </thead>
             <tbody>

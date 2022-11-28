@@ -103,6 +103,20 @@ export default function Game({ dataset }) {
     }
     optionsTemp.push(random);
 
+    optionsTemp.sort((a, b) => {
+      // console.log('a')
+      let x = a.name.common.toLowerCase();
+      let y = b.name.common.toLowerCase();
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    });
+
+
     setOptions(optionsTemp);
     setTime(10);
   };

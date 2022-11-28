@@ -76,7 +76,7 @@ export default function GameC({ dataset, region }) {
     dropdownRef.current.scroll(0, 0);
     let value = e.target.value;
     if (value.length > 0) {
-      let temp = dataset.filter((element) =>
+      let temp = data.filter((element) =>
         element.name.common.toLowerCase().includes(value.toLowerCase())
       );
       setOptionsSearch(
@@ -93,7 +93,7 @@ export default function GameC({ dataset, region }) {
         })
       );
     } else {
-      setOptionsSearch(dataset);
+      setOptionsSearch(data);
     }
   };
 

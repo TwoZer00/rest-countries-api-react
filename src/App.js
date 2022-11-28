@@ -21,7 +21,7 @@ function App() {
       : undefined
   );
   const [gamePreference,setGamePreference] = useState([{region:"world",duration:"complete"}])
-  const [dataUse, setDataUse] = useState(unMemberFilter(data));
+  const [dataUse, setDataUse] = useState([]);
   const [dark, setDark] = useState(
     localStorage.getItem("dark") === "true" ? true : false
   );
@@ -31,6 +31,7 @@ function App() {
       let dataB = await getAll();
       setData(dataB);
       localStorage.setItem("data", JSON.stringify(dataB));
+      setDataUse(unMemberFilter(dataB))
     };
     if (!data) {
       getData();
