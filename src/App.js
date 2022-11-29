@@ -4,7 +4,6 @@ import { Header } from "./components/Header/Header";
 import { Home } from "./components/Main/Home";
 import { Detailed } from "./components/Main/Detailed";
 import { useState, useEffect, createContext } from "react";
-// import { getAll } from "./utils.js";
 import Game from "./Game";
 import GameDashboard from "./GameDashboard";
 import GameC from "./GameC";

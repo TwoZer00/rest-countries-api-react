@@ -6,8 +6,8 @@ export default function Modal({ title, desc, back, again, score, record, results
   results.forEach((element, parentIndex) => {
     let options = [<td className="border">{parentIndex + 1}</td>]
     element.options.forEach((option, index) => {
-      if (option === element.selected && option === element.correct) {
-        options.push(<td key={`option${parentIndex}.${index}`} className={`text-bold border bg-valid/20 dark:border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}</td>);
+      if (option === element.correct) {
+        options.push(<td key={`option${parentIndex}.${index}`} className={`${option === element.selected ? "font-bold" : ""} text-bold border bg-valid/20 dark:border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}</td>);
       }
       else if (option === element.selected) {
         options.push(<td key={`option${parentIndex}.${index}`} className={`border bg-invalid/20 dark:border-dark-mode-ligth/50`}>{option.name.common + " " + option.flag}</td>);
