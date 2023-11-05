@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
-import { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataContext } from "./App";
 import Hint from "./Hint";
 import { useOutsideAlerter } from "./hooks/useOutsideAlerter";
-import { randomCountryPosition, unMemberFilter } from "./utils";
-import winSound from './resources/win_sound.wav';
 import lossSound from './resources/loss_sound.wav';
-import { Timer } from "./components/Timer";
+import winSound from './resources/win_sound.wav';
+import { randomCountryPosition, unMemberFilter } from "./utils";
 
 export default function GameC({ dataset, region }) {
   const data = unMemberFilter(useContext(DataContext))
@@ -138,7 +134,7 @@ export default function GameC({ dataset, region }) {
                         } border-none px-2 outline-none`}
                       placeholder="Search country"
                       disabled={showResult}
-                      autoComplete="false"
+                      autoComplete="off"
                       onInputCapture={handleSearch}
                       onFocusCapture={() => {
                         setVisible((value) => {

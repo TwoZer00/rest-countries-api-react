@@ -1,17 +1,15 @@
 import {
-  ArrowUpIcon as TrendingUpIcon,
   ArrowDownIcon as TrendingDownIcon,
+  ArrowUpIcon as TrendingUpIcon,
 } from "@heroicons/react/24/outline";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { DataContext } from "./App";
 import HLFlag from "./HLFlag";
-import Modal from "./Modal";
+import ModalResult from "./ModalResult";
 import { randomCountryPosition } from "./utils";
 
 export default function GameHL() {
-  const data = [...useContext(DataContext).filter(element => { return element.unMember }), useContext(DataContext).find(element => { return element.ccn3 ==='275'}), useContext(DataContext).find(element => { return element.ccn3 ==='336'})];
+  const data = [...useContext(DataContext).filter(element => { return element.unMember }), useContext(DataContext).find(element => { return element.ccn3 === '275' }), useContext(DataContext).find(element => { return element.ccn3 === '336' })];
   let country1 = data[randomCountryPosition(data.length)];
   let country2 = data.filter((element) => {
     return element.ccn3 !== country1.ccn3;
@@ -26,7 +24,6 @@ export default function GameHL() {
   let countries = data.filter((element) => {
     return element.ccn3 !== country1.ccn3 && element.ccn3 !== country2.ccn3;
   });
-  //   console.log(country1, country2, countries);
   const [country, setCountry] = useState(country1);
   const [countryC, setCountryC] = useState(country2);
   const [showResults, setShowResults] = useState(false);
@@ -136,39 +133,18 @@ export default function GameHL() {
         </div>
       </div>
       {modalLose && (
-        <Modal
-          title="Game over 🥲"
-          desc="Thanks for play our game, check you score, play again to break it or go back and play more of our games."
-          again={resetGame}
-          score={score}
-          record={parseInt(
-            localStorage.getItem("GameHL")
-              ? localStorage.getItem("GameHL")
-              : "0"
-          )}
-        />
-        // <div className="absolute top-0 w-screen h-full z-50 flex flex-col items-center justify-center">
-        //   <div className="bg-dark-fe/70 backdrop-blur-xl rounded w-80 h-80 flex p-2 flex-col justify-center shadow-lg items-center gap-2">
-        //     <h3 className="text-xl font-semibold">Better luck next time 😬</h3>
-        //     <p className="w-3/4 text-center">
-        //       You loose, try again or check other puzzles 😎
-        //     </p>
-        //     <div className="flex flex-row gap-x-4 h-12 items-stretch">
-        //       <Link
-        //         to={"/games"}
-        //         className="border px-4 rounded hover:bg-white/20 flex flex-col items-center justify-center transition-all"
-        //       >
-        //         Menu
-        //       </Link>
-        //       <button
-        //         onClick={resetGame}
-        //         className="border px-4 rounded hover:bg-white/20 transition-all"
-        //       >
-        //         Play again
-        //       </button>
-        //     </div>
-        //   </div>
-        // </div>
+        // <Modal
+        //   title="Game over 🥲"
+        //   desc="Thanks for play our game, check you score, play again to break it or go back and play more of our games."
+        //   again={resetGame}
+        //   score={score}
+        //   record={parseInt(
+        //     localStorage.getItem("GameHL")
+        //       ? localStorage.getItem("GameHL")
+        //       : "0"
+        //   )}
+        // />
+        <ModalResult result={modalLose} points={score} reset={resetGame} />
       )}
     </div>
   );
