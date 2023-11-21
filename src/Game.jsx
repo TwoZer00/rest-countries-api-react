@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
-import { useContext } from "react";
-import { useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { DataContext } from "./App";
-import { Timer } from "./components/Timer";
 import FlagTransition from "./FlagTransition";
 import Modal from "./Modal";
-import RandomFlag from "./RandomFlag";
+import { Timer } from "./components/Timer";
 import { getRandomInt, unMemberFilter } from "./utils";
 
 export default function Game({ dataset }) {
@@ -157,12 +154,11 @@ export default function Game({ dataset }) {
     // if (false) {
     return (
       <div className="dark:text-white flex flex-col h-full w-11/12 justify-center items-center mx-auto relative ">
-        <div className="flex flex-col bg-white/10 backdrop-blur-sm p-10 rounded gap-5 px-5 w-full sm:w-fit">
+        <div className="flex flex-col bg-white/10 backdrop-blur-sm p-10 rounded gap-5 px-5 w-full sm:w-[500px]">
           {countries.length >= dataset.length && <h1 className="font-semibold text-2xl">
             Choose the name of the country based on the flag
           </h1>}
-          <div className="w-[500px] h-[250px] flex-auto">
-            {/* <RandomFlag flag={randomFlag} /> */}
+          <div className="w-full h-[250px] flex-auto">
             <FlagTransition flag={randomFlag} />
           </div>
           <div className={`flex flex-col gap-x-2 justify-center flex-wrap w-full gap-2 ${rmClick ? 'pointer-events-none' : ''}`}>

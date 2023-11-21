@@ -20,18 +20,16 @@ export default function Hint({ id, title, data, ts, cost }) {
   return (
     <div
       onClick={!visible ? handleVisible : undefined}
-      className={`flex flex-col items-center gap-x-2 h-36 w-32 shadow bg-white dark:bg-dark-mode-ligth rounded px-4 py-2 backdrop-blur ${
-        !visible && "hover:cursor-pointer"
-      }`}
+      className={`flex flex-col items-center gap-x-2 h-28 w-32 shadow bg-white dark:bg-dark-mode-ligth rounded px-4 py-2 backdrop-blur ${!visible && "hover:cursor-pointer"
+        }`}
     >
       <p className="text-center font-semibold w-full">{title}</p>
       <div className="flex flex-col flex-wrap justify-center h-full w-full">
         <p
-          className={`select-none h-fit text-lg transition-colors text-center break-words w-full ${
-            visible
-              ? "text-black dark:text-white"
-              : "text-white dark:text-dark-mode-ligth"
-          }`}
+          className={`select-none h-fit text-lg transition-colors text-center break-words w-full ${visible
+            ? "text-black dark:text-white"
+            : "text-white dark:text-dark-mode-ligth"
+            }`}
         >
           {visible ? data : nondata.join("")}
           {valK && <sup>2</sup>}
