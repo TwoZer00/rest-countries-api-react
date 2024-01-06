@@ -1,4 +1,3 @@
-import React from "react";
 import {
   MoonIcon,
   PuzzlePieceIcon as PuzzleIcon,
@@ -7,6 +6,7 @@ import {
   MoonIcon as MoonIconSolid,
   PuzzlePieceIcon as PuzzleIconSolid,
 } from "@heroicons/react/24/solid";
+import React from "react";
 import { Link } from "react-router-dom";
 
 export const Header = ({ dark, setDark }) => {
@@ -22,7 +22,12 @@ export const Header = ({ dark, setDark }) => {
   return (
     <header className="fixed w-full text-sm lg:text-base transition-colors flex flex-row h-20 items-center bg-white/10 backdrop-blur-sm dark:border-0 shadow-lg px-5 lg:px-10 dark:text-white dark:bg-dark-mode-ligth/20">
       <div className="w-full">
-        <Link to={"/"} className="font-bold">
+        <Link to={"/"} className="font-bold flex flex-row items-center gap-2">
+          <img
+            src={dark ? "/wiw1.svg" : "wiw.svg"}
+            alt="Where in the world logo"
+            className={`w-auto h-8 lg:h-10 ${dark ? "bg-white" : "bg-black"} rounded-full p-1 background`}
+          />
           Where in the world?
         </Link>
       </div>
