@@ -14,7 +14,22 @@ module.exports = {
     fontFamily: {
       sans: ["Nunito Sans", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      keyframes: {
+        "toggledown": {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(120%)' }
+        },
+        "toggleup": {
+          '0%': { transform: 'translateY(120%)' },
+          '100%': { transform: 'translateY(-100%)' }
+        }
+      },
+      animation: {
+        toggleup: 'toggleup 1s ease-in-out infinite',
+        toggledown: 'toggledown 1s ease-in-out infinite',
+      }
+    },
   },
   plugins: [],
 };
