@@ -1,23 +1,21 @@
-import React, { useContext, useEffect } from "react";
 import {
   FlagIcon,
-  ListBulletIcon as ViewListIcon,
-  ArrowTrendingUpIcon as TrendingUpIcon,
   GlobeAmericasIcon as GlobeIcon,
+  ArrowTrendingUpIcon as TrendingUpIcon,
+  ListBulletIcon as ViewListIcon,
 } from "@heroicons/react/24/outline";
 import {
+  ClockIcon as ClockIconSolid,
   FlagIcon as FlagIconSolid,
-  ListBulletIcon as ViewListIconSolid,
-  ArrowTrendingUpIcon as TrendingUpIconSolid,
   GlobeAmericasIcon as GlobeIconSolid,
   MapPinIcon as MapPinIconSolid,
-  ClockIcon as ClockIconSolid
+  ArrowTrendingUpIcon as TrendingUpIconSolid,
+  ListBulletIcon as ViewListIconSolid
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { DataContext } from "./App";
 import { getRandomInt, unMemberFilter } from "./utils";
-import { useRef } from "react";
 
 export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
   let datause = useContext(DataContext);
@@ -26,6 +24,7 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
   const [duration, setDuration] = useState("complete");
   const regionRef = useRef()
   const durationRef = useRef()
+  let [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     document.title = `Where in the world? - Games`;
     regionRef.current.value && setData(unMemberFilter(datause))
@@ -33,11 +32,20 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
   const handleChange = (e) => {
     let value = e.target.value;
     if (value) {
+      if (value != "0") durationRef.current.value = "4";
       setRegion(numberToRegion(value));
       setData(regionFiltered(numberToRegion(value)));
       gamepf({ region: numberToRegion(regionRef.current.value), duration: numberToDuration(durationRef.current.value) })
     }
   }
+  useEffect(() => {
+    if (searchParams.get("region")) {
+      regionRef.current.value = regionToNumber(searchParams.get("region"))
+      setData(regionFiltered(searchParams.get("region")))
+    }
+  }, [searchParams.get("region")])
+
+
   const regionFiltered = (region) => {
     // console.log(datause)
     let temp = datause.filter(value => { return value.unMember || value.ccn3 === "275" || value.ccn3 === '336' });
@@ -93,7 +101,12 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
   }
   const handleChangeDuration = (e) => {
     let value = e.target.value;
-    gamepf({ region: numberToRegion(regionRef.current.value), duration: numberToDuration(durationRef.current.value) })
+    if (value) {
+      gamepf({ region: numberToRegion(regionRef.current.value), duration: numberToDuration(durationRef.current.value) })
+    }
+    handleDuration(value);
+  }
+  const handleDuration = (value) => {
     let divider = 0;
     switch (numberToDuration(value)) {
       case 'small':
@@ -117,6 +130,14 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
     }
     setData(temp);
   }
+
+  useEffect(() => {
+    if (searchParams.get("duration")) {
+      durationRef.current.value = searchParams.get("duration")
+      handleDuration(searchParams.get("duration"))
+    }
+  }, [searchParams.get("duration")])
+
   return (
     <div className="flex flex-col dark:text-white items-center justify-center gap-2 pt-2 h-full">
       <div className="p-5 rounded bg-white/10 backdrop-blur border-dark-mode-ligth shadow-lg flex flex-col gap-5">
@@ -144,7 +165,7 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
 
             <div className="flex items-center gap-2">
               <ClockIconSolid className={`h-5 w-5 ${!enableD ? "opacity-20" : ""}`} />
-              <select name="duration" onChange={handleChangeDuration} ref={durationRef} disabled={gamep.region != "world"} defaultValue={gamep.region != "world" ? "4" : "0"} className="rounded px-2 py-1 capitalize dark:bg-dark-mode-ligth disabled:opacity-20 dark:border">
+              <select name="duration" onChange={handleChangeDuration} ref={durationRef} disabled={gamep.region != "world"} defaultValue={gamep.region != "world" ? 4 : gamep.duration} className="rounded px-2 py-1 capitalize dark:bg-dark-mode-ligth disabled:opacity-20 dark:border">
                 <option disabled value="4">Duration</option>
                 <option value="1">Small</option>
                 <option value="2">Medium</option>
@@ -154,7 +175,7 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
           </div>
           <div className="flex flex-col">
             <Link
-              to={`/guesstheflag`}
+              to={`/guesstheflag?region=${region}${region === "world" ? "&duration=" + duration : ""}`}
               className="border p-2 rounded shadow hover:bg-black/20 transition-all flex flex-row items-center justify-center gap-x-2"
             >
               Guess the Flag
@@ -170,7 +191,7 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
           </div>
           <div className="flex flex-col">
             <Link
-              to={"/guessthecountry"}
+              to={`/guessthecountry?region=${region}${region === "world" ? "&duration=" + duration : ""}`}
               className="border p-2 rounded shadow hover:bg-black/20 transition-all flex flex-row items-center justify-center gap-x-2"
             >
               Guess the country
