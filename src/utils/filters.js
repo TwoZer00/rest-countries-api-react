@@ -3,7 +3,12 @@ export function getRealCountries(data) {
 }
 
 export function getByRegion(data, region) {
-    return data.filter(country => (country.region).toLowerCase() === region)
+    if (region && region != "world") {
+        return data.filter(country => (country.region).toLowerCase() === region)
+    }
+    else {
+        return data
+    }
 }
 
 export function getCountryByName(data, name) {
@@ -12,4 +17,32 @@ export function getCountryByName(data, name) {
 
 export function getByCcn3(data, code) {
     return data.find(country => country.ccn3 === code)
+}
+
+export function rumble(data) {
+    return data.sort(() => Math.random() - 0.5)
+}
+
+export function getDuration(duration) {
+    switch (duration) {
+        case "small":
+            return 3
+        case "medium":
+            return 2
+        default:
+            return 1
+    }
+}
+
+export function getRandomOptions(data, coption) {
+    let options = []
+    options.push(coption)
+    let randomCountries = rumble(data)
+    while (options.length < 3) {
+        let random = randomCountries[Math.floor(Math.random() * randomCountries.length)]
+        if (!options.includes(random)) {
+            options.push(random)
+        }
+    }
+    return options
 }
