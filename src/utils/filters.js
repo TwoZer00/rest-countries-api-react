@@ -38,11 +38,11 @@ export function getRandomOptions(data, coption) {
     let options = []
     options.push(coption)
     let randomCountries = rumble(data)
-    while (options.length < 3) {
+    while (options.length < 4) {
         let random = randomCountries[Math.floor(Math.random() * randomCountries.length)]
         if (!options.includes(random)) {
             options.push(random)
         }
     }
-    return options
+    return options.sort(() => Math.random() - 0.5);
 }
