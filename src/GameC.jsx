@@ -1,19 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { DataContext } from "./App";
 import Hint from "./Hint";
 import { useOutsideAlerter } from "./hooks/useOutsideAlerter";
 import lossSound from './resources/loss_sound.wav';
 import winSound from './resources/win_sound.wav';
 import { randomCountryPosition, unMemberFilter } from "./utils";
+import { getCountryDetails } from "./services/api";
 
 export default function GameC({ dataset, region }) {
   const data = unMemberFilter(useContext(DataContext))
-
   const [countries, setCountries] = useState(dataset);
-  const [randomCountry, setRandomCountry] = useState(
-    dataset[randomCountryPosition(dataset.length)]
-  );
+  const [randomCountry, setRandomCountry] = useState();
+
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState(10);
   const [optionsSearch, setOptionsSearch] = useState(unMemberFilter(useContext(DataContext)));
@@ -62,8 +61,14 @@ export default function GameC({ dataset, region }) {
     }, 2000);
   };
   const formRef = useRef();
-  const reset = () => {
-    setRandomCountry(countries[randomCountryPosition(countries.length)]);
+  const reset = async () => {
+    console.log('Resetting game...');
+    const tempData = await getCountryDetails(countries[randomCountryPosition(countries.length)].ccn3);
+    setRandomCountry(()=>{
+      return tempData
+    }
+    );
+    // console.log('Reset random country:', {...countries[randomCountryPosition(countries.length)], ...tempData});
     setOptionsSearch(data);
     setTotalScore(10);
     setValid();
@@ -97,7 +102,18 @@ export default function GameC({ dataset, region }) {
   useEffect(() => {
     document.title = `Where in the world? - Guess the country`;
   });
-
+  useEffect(() => {
+    const fetchData = async () => {
+      const temp = dataset[randomCountryPosition(countries.length)];
+      let data = await getCountryDetails(temp.ccn3);
+      // console.log('Fetched country details:', data.name.common);
+      
+      setRandomCountry(data);
+    }
+    if(!randomCountry){
+      fetchData();
+    }
+  },[randomCountry]);
   if (countries.length > 0) {
     return (
       <div className="dark:text-white h-full flex flex-col items-center justify-center overflow-x-hidden overflow-y-auto">
@@ -178,44 +194,44 @@ export default function GameC({ dataset, region }) {
               </div>
               <div className="grid grid-cols-3 gap-4 w-full justify-items-center trasition">
                 <Hint
-                  id={randomCountry.ccn3}
+                  id={randomCountry?.ccn3}
                   title="Region"
-                  data={randomCountry.region}
+                  data={randomCountry?.region}
                   ts={setTotalScore}
                   cost={1}
                 />
                 <Hint
-                  id={randomCountry.ccn3}
+                  id={randomCountry?.ccn3}
                   title="Population"
-                  data={randomCountry.population.toLocaleString()}
+                  data={randomCountry?.population?.toLocaleString()}
                   ts={setTotalScore}
                   cost={0.5}
                 />
                 <Hint
-                  id={randomCountry.ccn3}
+                  id={randomCountry?.ccn3}
                   title="Domain"
-                  data={randomCountry.tld[0]}
+                  data={randomCountry?.tld[0]}
                   ts={setTotalScore}
                   cost={3}
                 />
                 <Hint
-                  id={randomCountry.ccn3}
+                  id={randomCountry?.ccn3}
                   title="Language"
-                  data={Object.values(randomCountry.languages)[0]}
+                  data={Object.values(randomCountry?.languages||{})[0]}
                   ts={setTotalScore}
                   cost={1}
                 />
                 <Hint
-                  id={randomCountry.ccn3}
+                  id={randomCountry?.ccn3}
                   title="Capital"
-                  data={randomCountry.capital[0]}
+                  data={randomCountry?.capital[0]}
                   ts={setTotalScore}
                   cost={3}
                 />
                 <Hint
-                  id={randomCountry.ccn3}
+                  id={randomCountry?.ccn3}
                   title="Area"
-                  data={randomCountry.area + " km"}
+                  data={randomCountry?.area + " km"}
                   ts={setTotalScore}
                   cost={0.5}
                 />
@@ -225,14 +241,14 @@ export default function GameC({ dataset, region }) {
               <div className="h-52 w-[350px] max-w-[350px] mx-auto bg-white/90 dark:bg-dark-mode-ligth/90 py-4 rounded shadow">
                 {showResult && (
                   <img
-                    src={randomCountry.flags.svg}
+                    src={randomCountry?.flags.svg}
                     alt="flag"
                     className={`w-full h-full transition-opacity object-contain ${showResult ? 'opacity-100' : 'opacity-0'}`}
                   />
                 )}
               </div>
               <p className="text-xl max-w-full min-w-[200px] min-h-[32px] shadow bg-white dark:bg-dark-mode-ligth rounded text-center flex flex-col items-center justify-center">
-                {showResult && randomCountry.name.common}
+                {showResult && randomCountry?.name.common}
               </p>
             </div>
           </div>
@@ -241,6 +257,7 @@ export default function GameC({ dataset, region }) {
         <audio src={winSound} controls={false} ref={audioRef}></audio>
       </div>
     );
+  
   }
   else {
     return (

@@ -8,7 +8,7 @@ import Game from "./Game";
 import GameDashboard from "./GameDashboard";
 import GameC from "./GameC";
 import GameHL from "./GameHL";
-import { getAll } from "./services/api";
+import { getAll, getCountryDetails, getOverview } from "./services/api";
 import Test from "./Test";
 import GameMenu from "./GameMenu";
 import { unMemberFilter } from "./utils";
@@ -27,10 +27,9 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      let dataB = await getAll();
+      let dataB = await getOverview();
       setData(dataB);
-      localStorage.setItem("data", JSON.stringify(dataB));
-      setDataUse(unMemberFilter(dataB))
+      setDataUse(dataB)
     };
     if (!data) {
       getData();
