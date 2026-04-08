@@ -2,11 +2,13 @@ import {
   FlagIcon,
   ArrowTrendingUpIcon as TrendingUpIcon,
   ListBulletIcon as ViewListIcon,
+  LanguageIcon,
 } from "@heroicons/react/24/outline";
 import {
   FlagIcon as FlagIconSolid,
   ArrowTrendingUpIcon as TrendingUpIconSolid,
   ListBulletIcon as ViewListIconSolid,
+  LanguageIcon as LanguageIconSolid,
 } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -28,26 +30,29 @@ const DURATIONS = {
 };
 
 export default function GameDashboard({ dark }) {
-  const allData = unMemberFilter(useContext(DataContext));
+  const allContext = useContext(DataContext);
   const [region, setRegion] = useState("world");
   const [duration, setDuration] = useState("complete");
+  const [territories, setTerritories] = useState(false);
+
 
   useEffect(() => {
     document.title = "Where in the world? - Games";
   }, []);
 
   const filteredData = useMemo(() => {
-    const byRegion = allData.filter(REGIONS[region].filter);
+    const base = territories ? allContext : unMemberFilter(allContext);
+    const byRegion = base.filter(REGIONS[region].filter);
     const count = Math.round(byRegion.length / DURATIONS[duration].divider);
     if (duration === "complete") return byRegion;
     const shuffled = [...byRegion].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, count);
-  }, [allData, region, duration]);
+  }, [allContext, region, duration, territories]);
 
   const countryCount = filteredData.length;
 
   const gameLink = (path) =>
-    `${path}?region=${region}&duration=${duration}`;
+    `${path}?region=${region}&duration=${duration}${territories ? "&territories=true" : ""}`;
 
   const GameCard = ({ to, icon: Icon, iconSolid: IconSolid, title, description }) => (
     <Link
@@ -99,6 +104,15 @@ export default function GameDashboard({ dark }) {
           <p className="text-sm text-center opacity-60">
             {countryCount} countries selected
           </p>
+          <label className="flex items-center gap-2 justify-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={territories}
+              onChange={(e) => setTerritories(e.target.checked)}
+              className="w-4 h-4 rounded"
+            />
+            <span className="text-sm">Include territories</span>
+          </label>
         </div>
 
         <div className="flex flex-col gap-3">
@@ -115,6 +129,13 @@ export default function GameDashboard({ dark }) {
             iconSolid={ViewListIconSolid}
             title="Guess the Country"
             description="Read the clues, name the correct country"
+          />
+          <GameCard
+            to={gameLink("/worldle")}
+            icon={LanguageIcon}
+            iconSolid={LanguageIconSolid}
+            title="Worldle"
+            description="Guess the country name letter by letter"
           />
         </div>
 

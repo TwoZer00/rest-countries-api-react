@@ -10,11 +10,13 @@
   --color-dark-fe: hsl(207, 26%, 17%);
   --color-valid: #54dd91;
   --color-invalid: #df4d4d;
+  --color-yellow-500: #eab308;
   --color-white: #fff;
   --color-black: #000;
   --font-sans: "Nunito Sans", sans-serif;
   --animate-toggleup: toggleup 1s ease-in-out infinite;
   --animate-toggledown: toggledown 1s ease-in-out infinite;
+  --animate-flip: flip 0.4s ease-in-out both;
 }
 
 @keyframes toggledown {
@@ -25,6 +27,12 @@
 @keyframes toggleup {
   0% { transform: translateY(120%); }
   100% { transform: translateY(-100%); }
+}
+
+@keyframes flip {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
 }
 
 .background {

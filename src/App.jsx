@@ -7,6 +7,7 @@ import Game from "./games/Game";
 import GameDashboard from "./games/GameDashboard";
 import GameC from "./games/GameC";
 import GameHL from "./games/GameHL";
+import Worldle from "./games/Worldle";
 import { getOverview } from "./services/api";
 export const DataContext = createContext();
 function App() {
@@ -53,6 +54,7 @@ function App() {
                 <Route path="/guesstheflag" element={<Game />} />
                 <Route path="/guessthecountry" element={<GameC />} />
                 <Route path="/higherlower" element={<GameHL />} />
+                <Route path="/worldle" element={<Worldle />} />
                 <Route path="*" element={
                   <div className="flex flex-col items-center justify-center h-full dark:text-white">
                     <p className="text-4xl font-bold">404</p>
