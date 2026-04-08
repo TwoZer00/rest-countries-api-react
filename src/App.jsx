@@ -1,4 +1,3 @@
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header/Header";
 import { Home } from "./components/Main/Home";
@@ -8,9 +7,7 @@ import Game from "./Game";
 import GameDashboard from "./GameDashboard";
 import GameC from "./GameC";
 import GameHL from "./GameHL";
-import { getAll, getCountryDetails, getOverview } from "./services/api";
-import Test from "./Test";
-import GameMenu from "./GameMenu";
+import { getOverview } from "./services/api";
 import { unMemberFilter } from "./utils";
 export const DataContext = createContext();
 function App() {
@@ -51,8 +48,6 @@ function App() {
                 <Route path="/guesstheflag" element={<Game dataset={dataUse} />} />
                 <Route path="/guessthecountry" element={<GameC dataset={dataUse} />} />
                 <Route path="/higherlower" element={<GameHL />} />
-                <Route path="/test" element={<Test />} />
-                {/* <Route path="/game-flag/:region/:duration" element={<GameMenu />} /> */}
               </Routes>
             </DataContext.Provider>
           </div>
