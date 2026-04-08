@@ -7,8 +7,10 @@ import lossSound from '../resources/loss_sound.wav';
 import winSound from '../resources/win_sound.wav';
 import { randomCountryPosition, unMemberFilter } from "../utils";
 import { getCountryDetails } from "../services/api";
+import { useGameDataset } from "../hooks/useGameDataset";
 
-export default function GameC({ dataset }) {
+export default function GameC() {
+  const dataset = useGameDataset();
   const data = unMemberFilter(useContext(DataContext))
   const [countries, setCountries] = useState(dataset);
   const [randomCountry, setRandomCountry] = useState();

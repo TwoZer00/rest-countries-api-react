@@ -8,7 +8,6 @@ import GameDashboard from "./games/GameDashboard";
 import GameC from "./games/GameC";
 import GameHL from "./games/GameHL";
 import { getOverview } from "./services/api";
-import { unMemberFilter } from "./utils";
 export const DataContext = createContext();
 function App() {
   const [data, setData] = useState(
@@ -16,8 +15,6 @@ function App() {
       ? JSON.parse(localStorage.getItem("data"))
       : undefined
   );
-  const [gamePreference,setGamePreference] = useState([{region:"world",duration:"complete"}])
-  const [dataUse, setDataUse] = useState([]);
   const [dark, setDark] = useState(
     localStorage.getItem("dark") === "true" ? true : false
   );
@@ -26,7 +23,6 @@ function App() {
     const getData = async () => {
       let dataB = await getOverview();
       setData(dataB);
-      setDataUse(dataB)
     };
     if (!data) {
       getData();
@@ -53,9 +49,9 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home data={data} />} />
                 <Route path="/country/:id" element={<Detailed data={data} />} />
-                <Route path="/games" element={<GameDashboard dark={dark} data={dataUse} setData={setDataUse} gamep={gamePreference} gamepf={setGamePreference} />} />
-                <Route path="/guesstheflag" element={<Game dataset={dataUse} />} />
-                <Route path="/guessthecountry" element={<GameC dataset={dataUse} />} />
+                <Route path="/games" element={<GameDashboard dark={dark} />} />
+                <Route path="/guesstheflag" element={<Game />} />
+                <Route path="/guessthecountry" element={<GameC />} />
                 <Route path="/higherlower" element={<GameHL />} />
                 <Route path="*" element={
                   <div className="flex flex-col items-center justify-center h-full dark:text-white">

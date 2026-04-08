@@ -5,8 +5,10 @@ import FlagTransition from "./FlagTransition";
 import Modal from "./Modal";
 import { Timer } from "../components/Timer";
 import { getRandomInt, unMemberFilter } from "../utils";
+import { useGameDataset } from "../hooks/useGameDataset";
 
-export default function Game({ dataset }) {
+export default function Game() {
+  const dataset = useGameDataset();
   const data = unMemberFilter(useContext(DataContext))
   const [score, setScore] = useState([0, 0]);
   const [results, setResults] = useState([])
