@@ -1,35 +1,31 @@
-
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const Timer = ({ time, setTime, reducer, className, skip, skipf, loss }) => {
-    let timeout;
-    useEffect(() => {
-        if (!timeout) {
-            if (!skip) {
-                timeout = setTimeout(() => {
-                    if (time > 0) {
-                        setTime(value => {
-                            return value - 1;
-                        })
-                    }
-                    else if (time === 0) {
-                        loss();
-                    }
-                }, reducer * 1000);
-            }
-        }
-    }, [time]);
+  const timeoutRef = useRef(null);
 
+  useEffect(() => {
+    if (skip) return;
+    timeoutRef.current = setTimeout(() => {
+      if (time > 0) {
+        setTime((v) => v - 1);
+      } else {
+        loss();
+      }
+    }, reducer * 1000);
 
-    useEffect(() => {
-        if (skip) {
-            clearTimeout(timeout);
-            skipf(false);
-        }
-    }, [skip])
-    return (
-        <div className={`${className} font-bold h-8 w-8 text-xl dark:bg-white bg-black text-white dark:text-black flex flex-col justify-center items-center rounded-full`}>
-            {time}
-        </div>
-    );
-}
+    return () => clearTimeout(timeoutRef.current);
+  }, [time, skip]);
+
+  useEffect(() => {
+    if (skip) {
+      clearTimeout(timeoutRef.current);
+      skipf(false);
+    }
+  }, [skip]);
+
+  return (
+    <div className={`${className} font-bold h-8 w-8 text-xl dark:bg-white bg-black text-white dark:text-black flex flex-col justify-center items-center rounded-full`}>
+      {time}
+    </div>
+  );
+};
