@@ -62,7 +62,6 @@ export default function GameC({ dataset, region }) {
   };
   const formRef = useRef();
   const reset = async () => {
-    console.log('Resetting game...');
     const tempData = await getCountryDetails(countries[randomCountryPosition(countries.length)].ccn3);
     setRandomCountry(()=>{
       return tempData
@@ -174,7 +173,6 @@ export default function GameC({ dataset, region }) {
                           onClick={(e) => {
                             let value = e.target.children[1].innerHTML;
                             formRef.current.country.value = value;
-                            console.log(e.target.children[1].innerHTML);
                             setVisible(false);
                             // formRef.current.submit();
                             handleSubmit(undefined, formRef.current);
