@@ -32,8 +32,17 @@ function App() {
       getData();
     }
   }, []);
-  if (data) {
+  if (!data) {
     return (
+      <div className={`${dark ? "dark" : ""}`}>
+        <div className="flex flex-col min-h-screen h-screen dark:bg-dark-fe background transition-colors items-center justify-center">
+          <p className="text-xl font-semibold dark:text-white animate-pulse">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
       <div className={`${dark ? "dark" : ""}`}>
         <div
           className={`flex flex-col min-h-screen h-screen dark:bg-dark-fe background transition-colors`}
@@ -54,7 +63,6 @@ function App() {
         </div>
       </div>
     );
-  }
 }
 
 export default App;
