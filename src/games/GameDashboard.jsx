@@ -12,19 +12,18 @@ import {
   ArrowTrendingUpIcon as TrendingUpIconSolid,
   ListBulletIcon as ViewListIconSolid
 } from "@heroicons/react/24/solid";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { DataContext } from "../App";
 import { getRandomInt, unMemberFilter } from "../utils";
 
 export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
   let datause = useContext(DataContext);
-  const [enableD, setEnableD] = useState(true);
   const [region, setRegion] = useState("world");
   const [duration, setDuration] = useState("complete");
   const regionRef = useRef()
   const durationRef = useRef()
-  let [searchParams, setSearchParams] = useSearchParams();
+  let [searchParams] = useSearchParams();
   useEffect(() => {
     document.title = `Where in the world? - Games`;
     regionRef.current.value && setData(unMemberFilter(datause))
@@ -47,7 +46,6 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
 
 
   const regionFiltered = (region) => {
-    // console.log(datause)
     let temp = datause.filter(value => { return value.unMember || value.ccn3 === "275" || value.ccn3 === '336' });
     if (region === 'asiania') {
       return temp.filter(value => { return (value.region).toLowerCase() === 'asia' || (value.region).toLowerCase() === 'oceania' });
@@ -164,7 +162,7 @@ export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
             </div>
 
             <div className="flex items-center gap-2">
-              <ClockIconSolid className={`h-5 w-5 ${!enableD ? "opacity-20" : ""}`} />
+              <ClockIconSolid className="h-5 w-5" />
               <select name="duration" onChange={handleChangeDuration} ref={durationRef} disabled={gamep.region != "world"} defaultValue={gamep.region != "world" ? 4 : gamep.duration} className="rounded px-2 py-1 capitalize dark:bg-dark-mode-ligth disabled:opacity-20 dark:border">
                 <option disabled value="4">Duration</option>
                 <option value="1">Small</option>

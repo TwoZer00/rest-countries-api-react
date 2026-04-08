@@ -2,7 +2,7 @@ import {
   ArrowDownIcon as TrendingDownIcon,
   ArrowUpIcon as TrendingUpIcon,
 } from "@heroicons/react/24/outline";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../App";
 import HLFlag from "./HLFlag";
 import ModalResult from "./ModalResult";
@@ -32,18 +32,14 @@ export default function GameHL() {
   const results = (e) => {
     setShowResults(true);
     let target = e.target.childNodes[0].textContent.toLowerCase();
-    // console.log(target);
     let result = "";
     if (country.population > countryC.population) {
-      //   return console.log(true, country.population, countryC.population);
       result = "lower";
     } else if (country.population === countryC.population) {
       result = "draw";
     } else {
-      //   return console.log(false, country.population, countryC.population);
       result = "higher";
     }
-    // console.log(result === target, country.population, countryC.population);
     if (result === target || result === "draw") {
       setScore((value) => {
         return value + 1;
@@ -54,11 +50,8 @@ export default function GameHL() {
       }, 1500);
     } else {
       let tempRecord = parseInt(
-        localStorage.getItem("GameHL") !== null
-          ? localStorage.getItem("GameHL")
-          : "0"
+        localStorage.getItem("GameHL") ?? "0"
       );
-      // console.log(localStorage.getItem("GameHL"));
       localStorage.setItem(
         "GameHL",
         localStorage.getItem("GameHL") < score ? score : tempRecord
@@ -116,7 +109,6 @@ export default function GameHL() {
             svg={country.flags.svg}
             val={results}
             showPopulation={showResults}
-            animate={true}
           />
           <p className="font-bold text-2xl  absolute flex flex-col top-0 items-center justify-center w-full h-full z-40 pointer-events-none">
             V.S
@@ -128,22 +120,10 @@ export default function GameHL() {
             svg={countryC.flags.svg}
             val={results}
             showPopulation={showResults}
-            animate={false}
           />
         </div>
       </div>
       {modalLose && (
-        // <Modal
-        //   title="Game over 🥲"
-        //   desc="Thanks for play our game, check you score, play again to break it or go back and play more of our games."
-        //   again={resetGame}
-        //   score={score}
-        //   record={parseInt(
-        //     localStorage.getItem("GameHL")
-        //       ? localStorage.getItem("GameHL")
-        //       : "0"
-        //   )}
-        // />
         <ModalResult result={modalLose} points={score} reset={resetGame} />
       )}
     </div>

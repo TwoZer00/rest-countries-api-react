@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { DataContext } from "../App";
 import FlagTransition from "./FlagTransition";
@@ -19,7 +19,6 @@ export default function Game({ dataset }) {
     let tempOptions = [];
     while (tempOptions.length < 4) {
       let temp = data[getRandomInt(data.length)];
-      // console.log(temp)
       if (tempOptions.indexOf(temp) === -1) {
         tempOptions.push(temp);
       }
@@ -32,7 +31,6 @@ export default function Game({ dataset }) {
 
 
   const [rmClick, setRmClick] = useState(false);
-  let max = 10;
   const handleClick = (event) => {
     setRmClick(true)
 
@@ -59,7 +57,6 @@ export default function Game({ dataset }) {
   };
 
   const win = (flag) => {
-    // console.log('win')
     let scoreTemp = score;
     scoreTemp[0] = score[0] + 1;
     setScore(scoreTemp);
@@ -69,7 +66,6 @@ export default function Game({ dataset }) {
   }
 
   const loss = (flag) => {
-    // console.log('loss')
     let scoreTemp = score;
     scoreTemp[1] = score[1] + 1;
     setScore(scoreTemp);
@@ -80,8 +76,7 @@ export default function Game({ dataset }) {
 
   const [skipFlag, setSkipFlag] = useState();
 
-  const reset = (win) => {
-    // console.log(score);
+  const reset = () => {
     let countriesTemp = countries.filter((element) => {
       return element.ccn3 !== randomFlag.ccn3;
     });
@@ -102,7 +97,6 @@ export default function Game({ dataset }) {
     optionsTemp.push(random);
 
     optionsTemp.sort((a, b) => {
-      // console.log('a')
       let x = a.name.common.toLowerCase();
       let y = b.name.common.toLowerCase();
       if (x < y) {
@@ -119,7 +113,6 @@ export default function Game({ dataset }) {
     setTime(10);
   };
   const startAgain = () => {
-    // console.log(dataset)
     setRandomFlag(dataset[getRandomInt(dataset.length)])
     setCountries(dataset);
     setTime(10);
@@ -127,7 +120,6 @@ export default function Game({ dataset }) {
     setScore([0, 0])
     setResults([])
     setSkipFlag(false)
-    // reset()
   }
 
   useEffect(() => {

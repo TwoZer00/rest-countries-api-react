@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const Timer = ({ time, setTime, reducer, className, skip, skipf, loss }) => {
     let timeout;
@@ -23,7 +23,6 @@ export const Timer = ({ time, setTime, reducer, className, skip, skipf, loss }) 
 
     useEffect(() => {
         if (skip) {
-            // console.log('a')
             clearTimeout(timeout);
             skipf(false);
         }

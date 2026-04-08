@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Hint({ id, title, data, ts, cost }) {
-  // console.log(data.includes("km"));
   let valK = data?.includes("km");
   let nondata = [];
   nondata.length = data?.length|| 0;

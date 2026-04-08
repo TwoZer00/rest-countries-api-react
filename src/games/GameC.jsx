@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { DataContext } from "../App";
 import Hint from "./Hint";
 import { useOutsideAlerter } from "../hooks/useOutsideAlerter";
@@ -8,7 +8,7 @@ import winSound from '../resources/win_sound.wav';
 import { randomCountryPosition, unMemberFilter } from "../utils";
 import { getCountryDetails } from "../services/api";
 
-export default function GameC({ dataset, region }) {
+export default function GameC({ dataset }) {
   const data = unMemberFilter(useContext(DataContext))
   const [countries, setCountries] = useState(dataset);
   const [randomCountry, setRandomCountry] = useState();
@@ -33,7 +33,6 @@ export default function GameC({ dataset, region }) {
     } else {
       value = a.country.value;
     }
-    // console.log(value, randomCountry.name.common);
     if (value.toLowerCase() === randomCountry.name.common.toLowerCase()) {
       setScore((value) => {
         return value + totalScore;
@@ -42,9 +41,6 @@ export default function GameC({ dataset, region }) {
       audioRef.current.src = winSound;
       audioRef.current.play()
     } else {
-      // setScore((value) => {
-      //   return value ;
-      // });
       audioRef.current.src = lossSound;
       setValid(false);
       audioRef.current.play();
@@ -63,11 +59,7 @@ export default function GameC({ dataset, region }) {
   const formRef = useRef();
   const reset = async () => {
     const tempData = await getCountryDetails(countries[randomCountryPosition(countries.length)].ccn3);
-    setRandomCountry(()=>{
-      return tempData
-    }
-    );
-    // console.log('Reset random country:', {...countries[randomCountryPosition(countries.length)], ...tempData});
+    setRandomCountry(tempData);
     setOptionsSearch(data);
     setTotalScore(10);
     setValid();
@@ -105,8 +97,6 @@ export default function GameC({ dataset, region }) {
     const fetchData = async () => {
       const temp = dataset[randomCountryPosition(countries.length)];
       let data = await getCountryDetails(temp.ccn3);
-      // console.log('Fetched country details:', data.name.common);
-      
       setRandomCountry(data);
     }
     if(!randomCountry){
@@ -140,8 +130,7 @@ export default function GameC({ dataset, region }) {
                         : "bg-white dark:bg-dark-mode-ligth"
                       }   w-full rounded`}
                   >
-                    {/* <span className="text-2xl bg-white">🏳️</span> */}
-                    <div className="">
+                    <div>
                       <input
                         list="countries"
                         id="country"
@@ -174,7 +163,6 @@ export default function GameC({ dataset, region }) {
                             let value = e.target.children[1].innerHTML;
                             formRef.current.country.value = value;
                             setVisible(false);
-                            // formRef.current.submit();
                             handleSubmit(undefined, formRef.current);
                           }}
                         >

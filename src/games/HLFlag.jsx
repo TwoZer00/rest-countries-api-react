@@ -2,11 +2,9 @@ import {
   ArrowDownIcon as TrendingDownIcon,
   ArrowUpIcon as TrendingUpIcon,
 } from "@heroicons/react/24/outline";
-import React from "react";
 import {
   animated,
   config,
-  easings,
   useSpring,
   useTransition,
 } from "@react-spring/web";
@@ -17,10 +15,7 @@ export default function HLFlag({
   svg,
   val,
   showPopulation,
-  animate,
 }) {
-  let x = easings.easeInOutQuart;
-  //   if (animate) x = easings.easeOutQuart;
   const [styles, api] = useSpring(() => ({
     to: { opacity: 1 },
     from: { opacity: 0 },
@@ -32,13 +27,6 @@ export default function HLFlag({
     number: population,
     config: { duration: 800 },
   });
-  // useEffect(() => {
-  //   api.start({
-  //     to: { x: 0 },
-  //     from: { x: 300 },
-  //     delay: 0,
-  //   });
-  // }, [svg]);
 
   const transitions = useTransition(svg, {
     from: { x: "100%" },

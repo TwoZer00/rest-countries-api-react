@@ -1,7 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Modal({ title, desc, back, again, score, record, results }) {
+export default function Modal({ title, desc, again, score, record, results }) {
   let data = []
   results.forEach((element, parentIndex) => {
     let options = [<td className="border">{parentIndex + 1}</td>]
