@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRef } from "react";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated } from "@react-spring/web";
 import FlagTransition from "./FlagTransition";
 
 export default function RandomFlag({ flag }) {

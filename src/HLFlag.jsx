@@ -9,7 +9,7 @@ import {
   easings,
   useSpring,
   useTransition,
-} from "react-spring";
+} from "@react-spring/web";
 export default function HLFlag({
   name,
   population,

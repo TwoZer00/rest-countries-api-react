@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useTransition,animated,config } from 'react-spring';
+import { useTransition, animated, config } from '@react-spring/web';
 import { DataContext } from './App';
 import { Timer } from './components/Timer';
 import FlagTransition from './FlagTransition';

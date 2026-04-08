@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { config, useTransition,animated } from 'react-spring';
+import { config, useTransition, animated } from '@react-spring/web';
 import { DataContext } from './App';
 import { getRandomInt, unMemberFilter } from './utils';
 
