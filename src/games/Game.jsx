@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useCallback, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { DataContext } from "../App";
 import FlagTransition from "./FlagTransition";
@@ -33,40 +33,55 @@ export default function Game() {
   const [score, setScore] = useState([0, 0]);
   const [results, setResults] = useState([]);
   const [time, setTime] = useState(10);
-  const [rmClick, setRmClick] = useState(false);
   const [skipFlag, setSkipFlag] = useState(false);
+
+  const total = dataset.length;
+  const answered = total - countries.length;
+  const progress = total > 0 ? (answered / total) * 100 : 0;
 
   useEffect(() => {
     document.title = "Where in the world? - Guess the flag";
   }, []);
 
-  const handleClick = (event) => {
-    setRmClick(true);
-    const target = event.target.innerHTML;
-    const selected = data.find((v) => v.name.common === target);
+  const pick = useCallback((choice) => {
+    setResults((prev) => [...prev, { options, selected: choice, correct: randomFlag }]);
 
-    setResults((prev) => [...prev, { options, selected, correct: randomFlag }]);
-
-    if (target === randomFlag.name.common) {
-      win();
+    if (choice && choice.ccn3 === randomFlag.ccn3) {
+      setScore((prev) => [prev[0] + 1, prev[1]]);
     } else {
-      loss();
+      setScore((prev) => [prev[0], prev[1] + 1]);
     }
 
-    setTimeout(() => setRmClick(false), 120);
-  };
-
-  const win = () => {
-    setScore((prev) => [prev[0] + 1, prev[1]]);
     setSkipFlag(true);
     advance();
+  }, [options, randomFlag, countries]);
+
+  const handleClick = (event) => {
+    const target = event.target.innerHTML;
+    const choice = data.find((v) => v.name.common === target);
+    pick(choice);
   };
+
+  const skip = useCallback(() => {
+    pick(null);
+  }, [pick]);
 
   const loss = () => {
-    setScore((prev) => [prev[0], prev[1] + 1]);
-    setSkipFlag(true);
-    advance();
+    pick(null);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const num = parseInt(e.key);
+      if (num >= 1 && num <= options.length) {
+        pick(options[num - 1]);
+      } else if (e.key.toLowerCase() === "s") {
+        skip();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [options, pick, skip]);
 
   const advance = () => {
     const remaining = countries.filter((c) => c.ccn3 !== randomFlag.ccn3);
@@ -84,7 +99,6 @@ export default function Game() {
     setRandomFlag(first);
     setOptions(generateOptions(first, data));
     setTime(10);
-    setRmClick(false);
     setScore([0, 0]);
     setResults([]);
     setSkipFlag(false);
@@ -98,7 +112,7 @@ export default function Game() {
     return (
       <Modal
         title="You finished the game 😁👍🏻"
-        desc="Congrats! See your score, play again or go back to play more puzzles"
+        desc="See your score, play again or go back to play more puzzles"
         again={startAgain}
         score={score}
         results={results}
@@ -108,28 +122,47 @@ export default function Game() {
 
   return (
     <div className="dark:text-white flex flex-col h-full w-11/12 justify-center items-center mx-auto relative">
-      <div className="flex flex-col bg-white/10 backdrop-blur-sm p-10 rounded gap-5 px-5 w-full sm:w-[500px]">
-        {countries.length >= dataset.length && (
-          <h1 className="font-semibold text-2xl">
+      <div className="flex flex-col bg-white/10 backdrop-blur-sm p-6 sm:p-10 rounded-lg gap-5 w-full sm:w-[500px]">
+        {answered === 0 && (
+          <h1 className="font-semibold text-2xl text-center">
             Choose the name of the country based on the flag
           </h1>
         )}
-        <div className="w-full h-[250px] flex-auto">
+
+        <div className="flex items-center justify-between text-sm">
+          <span className="font-semibold">{answered} / {total}</span>
+        </div>
+        <div className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-valid rounded-full transition-all duration-500"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        <div className="w-full h-[250px]">
           <FlagTransition flag={randomFlag} />
         </div>
-        <div className={`flex flex-col justify-center w-full gap-2 ${rmClick ? "pointer-events-none" : ""}`}>
+
+        <div className="flex flex-col w-full gap-2">
           {options.map((element, index) => (
             <button
               key={index}
               onClick={handleClick}
-              className="shadow rounded p-2 bg-white dark:bg-dark-fe border hover:bg-dark-mode-ligth/10 transition-colors dark:hover:bg-dark-mode-ligth/10 hover:cursor-pointer select-none"
+              className="shadow rounded p-2 bg-white dark:bg-dark-fe border hover:bg-dark-mode-ligth/10 transition-colors dark:hover:bg-dark-mode-ligth/10 hover:cursor-pointer select-none text-left"
             >
+              <span className="opacity-40 text-xs mr-2">{index + 1}</span>
               {element.name.common}
             </button>
           ))}
         </div>
-        <div className="flex flex-row justify-between items-center">
-          <div className="font-bold">{countries.length}</div>
+
+        <div className="flex justify-between items-center">
+          <button
+            onClick={skip}
+            className="text-sm opacity-60 hover:opacity-100 transition-opacity select-none"
+          >
+            Skip <span className="text-xs opacity-50">(S)</span>
+          </button>
           <Timer
             reducer={1}
             time={time}
