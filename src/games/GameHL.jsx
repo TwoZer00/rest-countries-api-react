@@ -3,10 +3,10 @@ import {
   ArrowUpIcon as TrendingUpIcon,
 } from "@heroicons/react/24/outline";
 import React, { useContext, useState } from "react";
-import { DataContext } from "./App";
+import { DataContext } from "../App";
 import HLFlag from "./HLFlag";
 import ModalResult from "./ModalResult";
-import { randomCountryPosition } from "./utils";
+import { randomCountryPosition } from "../utils";
 
 export default function GameHL() {
   const data = [...useContext(DataContext).filter(element => { return element.unMember }), useContext(DataContext).find(element => { return element.ccn3 === '275' }), useContext(DataContext).find(element => { return element.ccn3 === '336' })];

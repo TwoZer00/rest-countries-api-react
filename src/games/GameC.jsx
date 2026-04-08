@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import { DataContext } from "./App";
+import { DataContext } from "../App";
 import Hint from "./Hint";
-import { useOutsideAlerter } from "./hooks/useOutsideAlerter";
-import lossSound from './resources/loss_sound.wav';
-import winSound from './resources/win_sound.wav';
-import { randomCountryPosition, unMemberFilter } from "./utils";
-import { getCountryDetails } from "./services/api";
+import { useOutsideAlerter } from "../hooks/useOutsideAlerter";
+import lossSound from '../resources/loss_sound.wav';
+import winSound from '../resources/win_sound.wav';
+import { randomCountryPosition, unMemberFilter } from "../utils";
+import { getCountryDetails } from "../services/api";
 
 export default function GameC({ dataset, region }) {
   const data = unMemberFilter(useContext(DataContext))

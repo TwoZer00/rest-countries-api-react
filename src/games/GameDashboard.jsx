@@ -14,8 +14,8 @@ import {
 } from "@heroicons/react/24/solid";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { DataContext } from "./App";
-import { getRandomInt, unMemberFilter } from "./utils";
+import { DataContext } from "../App";
+import { getRandomInt, unMemberFilter } from "../utils";
 
 export default function GameDashboard({ dark, data, setData, gamep, gamepf }) {
   let datause = useContext(DataContext);

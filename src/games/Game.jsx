@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { DataContext } from "./App";
+import { DataContext } from "../App";
 import FlagTransition from "./FlagTransition";
 import Modal from "./Modal";
-import { Timer } from "./components/Timer";
-import { getRandomInt, unMemberFilter } from "./utils";
+import { Timer } from "../components/Timer";
+import { getRandomInt, unMemberFilter } from "../utils";
 
 export default function Game({ dataset }) {
   const data = unMemberFilter(useContext(DataContext))
