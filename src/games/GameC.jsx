@@ -258,24 +258,24 @@ export default function GameC() {
     <div className="dark:text-white h-full flex flex-col items-center justify-center overflow-x-hidden overflow-y-auto">
       <div className="flex w-full flex-col bg-white/10 backdrop-blur-sm lg:w-fit p-4 rounded-lg gap-4">
         <div className="text-center">
-          <h1 className="font-bold text-4xl">What's the country?</h1>
-          <small>
+          <h1 className="font-bold text-2xl sm:text-4xl">What's the country?</h1>
+          <small className="hidden sm:block">
             Click boxes for more details, every box has a cost that reduces your score.
           </small>
         </div>
 
-        <div className="flex items-center justify-between text-sm px-4">
+        <div className="flex items-center justify-between text-sm px-1 sm:px-4">
           <span className="font-semibold">{answered} / {total}</span>
-          <span className="font-semibold">Score: {score} <span className="text-xs opacity-50">({totalScore} pts possible)</span></span>
+          <span className="font-semibold text-xs sm:text-sm">Score: {score} <span className="text-xs opacity-50">({totalScore} pts)</span></span>
         </div>
-        <div className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden mx-auto px-4">
+        <div className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
           <div
             className="h-full bg-valid rounded-full transition-all duration-500"
             style={{ width: `${progress}%` }}
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-x-8 items-center p-4">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-x-8 items-center p-2 sm:p-4">
           <div className="flex flex-col gap-4 items-center justify-center w-full">
             <div className="flex flex-row items-stretch w-full">
               <form onSubmit={handleSubmit} ref={formRef} className="w-full">
@@ -318,7 +318,7 @@ export default function GameC() {
                 </div>
               </form>
             </div>
-            <div className="grid grid-cols-3 gap-4 w-full justify-items-center">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 w-full justify-items-center">
               {HINTS.map((hint) => (
                 <Hint
                   key={hint.key}
@@ -334,7 +334,7 @@ export default function GameC() {
             </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-2 select-none w-full lg:w-2/3 py-2">
-            <div className="h-52 w-[350px] max-w-[350px] mx-auto bg-white/90 dark:bg-dark-mode-ligth/90 py-4 rounded shadow">
+            <div className="h-44 sm:h-52 w-full max-w-[350px] mx-auto bg-white/90 dark:bg-dark-mode-ligth/90 py-4 rounded shadow">
               {showResult && randomCountry && (
                 <img src={randomCountry.flags.svg} alt={randomCountry.name.common} className="w-full h-full object-contain" />
               )}
@@ -345,7 +345,7 @@ export default function GameC() {
           </div>
         </div>
 
-        <div className="flex justify-between items-center px-4">
+        <div className="flex justify-between items-center px-1 sm:px-4">
           <button
             onClick={skip}
             disabled={showResult || loading}
@@ -353,7 +353,7 @@ export default function GameC() {
           >
             Skip <span className="text-xs opacity-50">(S)</span>
           </button>
-          <p className="text-xs opacity-40">↑↓ navigate · Enter submit · Esc close</p>
+          <p className="text-xs opacity-40 hidden sm:block">↑↓ navigate · Enter submit · Esc close</p>
         </div>
       </div>
       <audio ref={winAudioRef} src={winSound} preload="auto" />

@@ -44,7 +44,7 @@ export default function Hint({ id, title, data, ts, cost, suggested, onReveal })
       tabIndex={visible ? -1 : 0}
       role="button"
       aria-label={`${title} hint, costs ${cost} points`}
-      className={`relative flex flex-col items-center h-28 w-32 shadow bg-white dark:bg-dark-mode-ligth rounded px-4 py-2 backdrop-blur outline-none focus:ring-2 focus:ring-valid/50 transition-all duration-300 ${
+      className={`relative flex flex-col items-center h-24 sm:h-28 w-full shadow bg-white dark:bg-dark-mode-ligth rounded px-3 sm:px-4 py-2 backdrop-blur outline-none focus:ring-2 focus:ring-valid/50 transition-all duration-300 ${
         closing ? "scale-95 opacity-50" : ""
       } ${!visible && !closing ? "hover:cursor-pointer hover:scale-105" : ""} ${
         suggested && !visible && !closing ? "ring-2 ring-valid/40" : ""

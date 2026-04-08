@@ -44,7 +44,7 @@ function App() {
           className={`flex flex-col min-h-screen h-screen dark:bg-dark-fe background transition-colors`}
         >
           <Header dark={dark} setDark={setDark} />
-          <div className="h-full overflow-auto pt-20">
+          <div className="h-full overflow-auto pt-16 sm:pt-20">
             <DataContext.Provider value={data}>
               <Routes>
                 <Route path="/" element={<Home data={data} />} />

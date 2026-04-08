@@ -93,9 +93,9 @@ export default function GameHL() {
   return (
     <div className="h-full relative text-white">
       <div className="w-full mx-auto flex flex-col items-center justify-center h-full">
-        <div className="absolute top-4 z-40 flex flex-col items-center">
-          <p className="text-2xl font-bold">Higher or Lower</p>
-          <p className="text-sm opacity-60">Streak: {score}</p>
+        <div className="absolute top-2 sm:top-4 z-40 flex flex-col items-center">
+          <p className="text-xl sm:text-2xl font-bold">Higher or Lower</p>
+          <p className="text-xs sm:text-sm opacity-60">Streak: {score}</p>
         </div>
         <div className="flex flex-col lg:flex-row items-center w-full text-center h-full relative">
           <HLFlag
@@ -106,9 +106,9 @@ export default function GameHL() {
             onGuess={guess}
             showPopulation={showResults}
           />
-          <p className="font-bold text-2xl absolute flex flex-col top-0 items-center justify-center w-full h-full z-40 pointer-events-none">
-            V.S
-          </p>
+          <div className="font-bold text-xl sm:text-2xl absolute flex items-center justify-center w-full h-full z-30 pointer-events-none">
+            <span className="bg-dark-mode-ligth/70 backdrop-blur-sm px-3 py-1 rounded-full">V.S</span>
+          </div>
           <HLFlag
             name={countryC.name.common}
             btn={true}

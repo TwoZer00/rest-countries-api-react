@@ -49,9 +49,9 @@ export const Detailed = ({ data }) => {
   }
 
   return (
-    <div className="flex flex-col w-11/12 mx-auto dark:text-white transition-colors items-center justify-center h-full max-h-full">
-      <div className="dark:bg-white/10 backdrop-blur-sm p-5 rounded">
-        <div className="py-5">
+    <div className="flex flex-col w-11/12 mx-auto dark:text-white transition-colors items-center justify-center h-full max-h-full overflow-auto py-4">
+      <div className="dark:bg-white/10 backdrop-blur-sm p-4 sm:p-5 rounded">
+        <div className="py-3 sm:py-5">
           <button
             onClick={() => navigate(-1)}
             className="border rounded px-4 flex flex-row-reverse items-center hover:bg-dark-mode-ligth/10 transition-colors"
@@ -60,7 +60,7 @@ export const Detailed = ({ data }) => {
             <ArrowLeftIcon className="w-4 h-4 stroke-2" />
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-center gap-x-4">
+        <div className="flex flex-col md:flex-row items-center gap-4">
           <div className="md:w-1/2">
             <img src={countryDetails.flags.svg} alt={countryDetails.name.common} />
           </div>

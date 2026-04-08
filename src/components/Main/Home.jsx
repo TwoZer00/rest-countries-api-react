@@ -36,12 +36,12 @@ export const Home = ({ data }) => {
   return (
     <div className="h-full overflow-auto">
       <div className="max-w-[1440px] mx-auto">
-        <div className="flex flex-col lg:flex-row lg:h-12 px-10 gap-7 my-8">
+        <div className="flex flex-col lg:flex-row lg:h-12 px-4 sm:px-10 gap-4 sm:gap-7 my-6 sm:my-8">
           <div className="w-full h-12">
             <Search onSearch={(value) => { setSearch(value); setVisible(PAGE_SIZE); }} />
           </div>
           <select
-            className="h-12 w-1/2 lg:h-full bg-white dark:bg-dark-mode-ligth dark:text-white rounded shadow px-3"
+            className="h-12 w-full sm:w-1/2 lg:h-full bg-white dark:bg-dark-mode-ligth dark:text-white rounded shadow px-3"
             defaultValue="0"
             onChange={handleRegionChange}
           >
@@ -54,7 +54,7 @@ export const Home = ({ data }) => {
             <option value="6">All</option>
           </select>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full justify-items-center gap-16 px-10 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full justify-items-center gap-8 sm:gap-16 px-4 sm:px-10 pb-10">
           {filtered.slice(0, visible).map((element) => (
             <Link
               key={element.ccn3}
