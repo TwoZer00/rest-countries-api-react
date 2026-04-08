@@ -2,9 +2,9 @@ import {
   ArrowDownIcon as TrendingDownIcon,
   ArrowUpIcon as TrendingUpIcon,
 } from "@heroicons/react/24/outline";
+import { useRef } from "react";
 import {
   animated,
-  config,
   useSpring,
   useTransition,
 } from "@react-spring/web";
@@ -18,6 +18,8 @@ export default function HLFlag({
   showPopulation,
   locked,
 }) {
+  const isFirstRender = useRef(true);
+
   const { number } = useSpring({
     reset: true,
     from: { number: 0 },
@@ -25,24 +27,27 @@ export default function HLFlag({
     config: { duration: 800 },
   });
 
-  const transitions = useTransition(svg, {
-    from: { x: "100%" },
-    enter: { x: "0" },
-    leave: { x: "-100%" },
-    config: config.slow,
+  const immediate = isFirstRender.current;
+
+  const flagTransition = useTransition(svg, {
+    from: immediate ? { opacity: 1, x: "0%" } : { opacity: 0, x: "60%" },
+    enter: { opacity: 1, x: "0%" },
+    leave: { opacity: 0, x: "-60%" },
+    config: { tension: 200, friction: 26 },
+    onRest: () => { isFirstRender.current = false; },
   });
 
-  const transitionp = useTransition(name, {
-    from: { x: "200%" },
-    enter: { x: "0" },
-    leave: { x: "-200%" },
-    config: config.slow,
+  const nameTransition = useTransition(name, {
+    from: immediate ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 },
+    enter: { opacity: 1, y: 0 },
+    leave: { opacity: 0, y: -30 },
+    config: { tension: 220, friction: 24 },
   });
 
   return (
     <section className="w-full lg:w-1/2 h-full">
       <div className="relative h-full overflow-hidden">
-        {transitions((style, item) => (
+        {flagTransition((style, item) => (
           <animated.img
             src={item}
             alt={name}
@@ -51,18 +56,16 @@ export default function HLFlag({
           />
         ))}
         <div className="absolute top-0 bg-dark-mode-ligth/50 backdrop-blur-sm p-4 h-full z-20 w-full flex flex-col gap-2 items-center justify-center">
-          {transitionp((style, item) => (
-            <animated.div style={{ ...style, position: "absolute" }}>
-              <div className="inline-block">
-                <p className="text-6xl font-bold">{item}</p>
-              </div>
+          {nameTransition((style, item) => (
+            <animated.div style={{ ...style, position: "absolute" }} className="flex flex-col items-center">
+              <p className="text-4xl sm:text-6xl font-bold text-center">{item}</p>
               {showPopulation && (
-                <animated.p className="font-bold text-4xl">
+                <animated.p className="font-bold text-3xl sm:text-4xl mt-2">
                   {number.to((n) => Math.round(n).toLocaleString())}
                 </animated.p>
               )}
               {btn && !showPopulation && (
-                <div className="flex flex-row gap-2 items-center justify-center my-2">
+                <div className="flex flex-row gap-2 items-center justify-center my-3">
                   <button
                     onClick={() => onGuess("higher")}
                     disabled={locked}
