@@ -1,7 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;800&display=swap");
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@source "../index.html";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-dark-mode-ligth: #2b3945;
+  --color-dark-fe: hsl(207, 26%, 17%);
+  --color-valid: #54dd91;
+  --color-invalid: #df4d4d;
+  --color-white: #fff;
+  --color-black: #000;
+  --font-sans: "Nunito Sans", sans-serif;
+  --animate-toggleup: toggleup 1s ease-in-out infinite;
+  --animate-toggledown: toggledown 1s ease-in-out infinite;
+}
+
+@keyframes toggledown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(120%); }
+}
+
+@keyframes toggleup {
+  0% { transform: translateY(120%); }
+  100% { transform: translateY(-100%); }
+}
 
 .background {
   /* background-color: #ffffff; */
