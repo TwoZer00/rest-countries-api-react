@@ -58,6 +58,79 @@ const RevealCell = ({ ch, state, delay, size }) => {
   );
 };
 
+const KEYBOARD_ROWS = [
+  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+  ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+  ["enter", "z", "x", "c", "v", "b", "n", "m", "back"],
+];
+
+const KEY_BG = {
+  correct: "bg-valid text-white",
+  present: "bg-yellow-500 text-white",
+  absent: "bg-black/20 dark:bg-white/10 opacity-40",
+  unused: "bg-black/5 dark:bg-white/5",
+};
+
+const LetterTracker = ({ guesses, answerName, onKey }) => {
+  const letterMap = useMemo(() => {
+    const map = {};
+    guesses.forEach((guess) => {
+      const states = getLetterStates(guess, answerName);
+      [...normalize(guess)].forEach((ch, i) => {
+        if (!ch || ch === " ") return;
+        const state = states[i];
+        const priority = { correct: 3, present: 2, absent: 1 };
+        if (!map[ch] || priority[state] > priority[map[ch]]) {
+          map[ch] = state;
+        }
+      });
+    });
+    return map;
+  }, [guesses, answerName]);
+
+  return (
+    <div className="flex flex-col gap-1 items-center select-none">
+      {KEYBOARD_ROWS.map((row, ri) => (
+        <div key={ri} className="flex gap-0.5 sm:gap-1">
+          {row.map((key) => {
+            if (key === "enter") {
+              return (
+                <button
+                  key={key}
+                  onClick={() => onKey("Enter")}
+                  className="h-10 sm:h-11 px-2 sm:px-3 flex items-center justify-center rounded text-xs font-bold bg-valid/80 text-white active:scale-95 transition-transform"
+                >
+                  ↵
+                </button>
+              );
+            }
+            if (key === "back") {
+              return (
+                <button
+                  key={key}
+                  onClick={() => onKey("Backspace")}
+                  className="h-10 sm:h-11 px-2 sm:px-3 flex items-center justify-center rounded text-xs font-bold bg-invalid/80 text-white active:scale-95 transition-transform"
+                >
+                  ⌫
+                </button>
+              );
+            }
+            return (
+              <button
+                key={key}
+                onClick={() => onKey(key)}
+                className={`w-7 h-10 sm:w-9 sm:h-11 flex items-center justify-center rounded text-xs sm:text-sm font-bold uppercase active:scale-95 transition-all ${KEY_BG[letterMap[key] || "unused"]}`}
+              >
+                {key}
+              </button>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const buildTemplate = (name) =>
   [...name].map((ch) => (/[a-zA-Z\u00C0-\u024F]/.test(ch) ? null : ch));
 
@@ -275,21 +348,26 @@ export default function Worldle() {
     }
   };
 
-  const handleKeyDown = (e) => {
+  const processKey = useCallback((key) => {
     if (gameState !== "playing") return;
-    if (e.key === "Enter") {
-      e.preventDefault();
+    if (key === "Enter") {
       submitGuess();
-    } else if (e.key === "Backspace") {
+    } else if (key === "Backspace") {
       setLetterInput((prev) => prev.slice(0, -1));
       setJustTyped(-1);
-    } else if (e.key.length === 1 && /[a-zA-Z]/.test(e.key) && letterInput.length < letterSlots) {
+    } else if (key.length === 1 && /[a-zA-Z]/.test(key) && letterInput.length < letterSlots) {
       setLetterInput((prev) => {
         setJustTyped(prev.length);
-        return [...prev, e.key];
+        return [...prev, key];
       });
       setTimeout(() => setJustTyped(-1), 150);
     }
+  }, [letterInput, letterSlots, gameState, submitGuess]);
+
+  const handleKeyDown = (e) => {
+    if (gameState !== "playing") return;
+    if (e.key === "Enter") e.preventDefault();
+    processKey(e.key);
   };
 
   const nextRound = () => {
@@ -427,9 +505,7 @@ export default function Worldle() {
         </div>
 
         {gameState === "playing" && (
-          <div className="text-center">
-            <p className="text-xs opacity-40">Type letters · Enter to submit · Backspace to delete</p>
-          </div>
+          <LetterTracker guesses={guesses} answerName={answerName} onKey={processKey} />
         )}
 
         {gameState !== "playing" && (
