@@ -1,22 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Flag } from "./Flag";
 import { Search } from "./Search";
 
 const PAGE_SIZE = 20;
+const REGIONS = { "1": "Africa", "2": "Americas", "3": "Asia", "4": "Europe", "5": "Oceania" };
 
 export const Home = ({ data }) => {
-  const [filtered, setFiltered] = useState(data);
+  const [region, setRegion] = useState(null);
+  const [search, setSearch] = useState("");
   const [visible, setVisible] = useState(PAGE_SIZE);
 
-  const handleChange = (event) => {
-    const regions = { "1": "Africa", "2": "Americas", "3": "Asia", "4": "Europe", "5": "Oceania" };
-    const region = regions[event.target.value];
+  const filtered = useMemo(() => {
+    let result = data;
     if (region) {
-      setFiltered(data.filter((d) => d.region === region));
-    } else {
-      setFiltered([...data]);
+      result = result.filter((d) => d.region === region);
     }
+    if (search) {
+      result = result.filter((d) => d.name.common.toLowerCase().includes(search));
+    }
+    return result;
+  }, [data, region, search]);
+
+  const handleRegionChange = (event) => {
+    setRegion(REGIONS[event.target.value] || null);
     setVisible(PAGE_SIZE);
   };
 
@@ -24,23 +31,19 @@ export const Home = ({ data }) => {
     document.title = "Where in the world?";
   }, []);
 
-  useEffect(() => {
-    if (data) setFiltered([...data]);
-  }, [data]);
-
-  if (!filtered) return null;
+  if (!data) return null;
 
   return (
     <div className="h-full overflow-auto">
       <div className="max-w-[1440px] mx-auto">
         <div className="flex flex-col lg:flex-row lg:h-12 px-10 gap-7 my-8">
           <div className="w-full h-12">
-            <Search data={filtered} setData={setFiltered} />
+            <Search onSearch={(value) => { setSearch(value); setVisible(PAGE_SIZE); }} />
           </div>
           <select
             className="h-12 w-1/2 lg:h-full bg-white dark:bg-dark-mode-ligth dark:text-white rounded shadow px-3"
             defaultValue="0"
-            onChange={handleChange}
+            onChange={handleRegionChange}
           >
             <option value="0" disabled>Filter by region</option>
             <option value="1">Africa</option>

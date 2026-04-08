@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { Header } from "./components/Header/Header";
 import { Home } from "./components/Main/Home";
 import { Detailed } from "./components/Main/Detailed";
@@ -57,6 +57,13 @@ function App() {
                 <Route path="/guesstheflag" element={<Game dataset={dataUse} />} />
                 <Route path="/guessthecountry" element={<GameC dataset={dataUse} />} />
                 <Route path="/higherlower" element={<GameHL />} />
+                <Route path="*" element={
+                  <div className="flex flex-col items-center justify-center h-full dark:text-white">
+                    <p className="text-4xl font-bold">404</p>
+                    <p className="text-lg">Page not found</p>
+                    <Link to="/" className="mt-4 border rounded px-4 py-1 hover:bg-dark-mode-ligth/10 transition-colors">Go home</Link>
+                  </div>
+                } />
               </Routes>
             </DataContext.Provider>
           </div>
