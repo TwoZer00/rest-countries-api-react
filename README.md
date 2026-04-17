@@ -24,6 +24,7 @@ Users should be able to:
 - Click on a country to see more detailed information on a separate page
 - Click through to the border countries on the detail page
 - Toggle the color scheme between light and dark mode _(optional)_
+- Play geography-themed mini games (flag guessing, higher/lower, Worldle)
 
 ### Screenshot
 
@@ -43,8 +44,12 @@ Users should be able to:
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Tailwind css](https://tailwindcss.com/) - For styles
+- [React 19](https://react.dev/) - JS library
+- [React Router](https://reactrouter.com/) - Routing
+- [Tailwind CSS v4](https://tailwindcss.com/) - For styles
+- [Vite](https://vite.dev/) - Build tool
+- [React Spring](https://www.react-spring.dev/) - Animations
+- [Heroicons](https://heroicons.com/) - Icons
 
 ## Author
 
