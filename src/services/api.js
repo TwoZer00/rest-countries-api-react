@@ -7,7 +7,7 @@ export async function getOverview() {
 }
 
 export async function getCountryDetails(id) {
-  const res = await fetch(`${apiURL}/alpha/${id}`);
+  const res = await fetch(`${apiURL}/alpha/${encodeURIComponent(id)}`);
   if (!res.ok) throw new Error(`Failed to fetch country ${id}: ${res.status}`);
   const data = await res.json();
   return data[0];
