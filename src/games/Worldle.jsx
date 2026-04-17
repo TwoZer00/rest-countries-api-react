@@ -285,6 +285,52 @@ export default function Worldle() {
     setStarted(true);
   };
 
+  const answerName = answer?.name?.common || "";
+  const template = useMemo(() => buildTemplate(answerName), [answerName]);
+  const letterSlots = useMemo(() => template.reduce((count, ch) => count + (ch === null ? 1 : 0), 0), [template]);
+
+  const submitGuess = useCallback(() => {
+    if (gameState !== "playing" || !answer) return;
+    if (letterInput.length !== letterSlots) {
+      setShake(true);
+      setMessage(`Fill all ${letterSlots} letters`);
+      setTimeout(() => setMessage(""), 1500);
+      setTimeout(() => setShake(false), 500);
+      return;
+    }
+
+    let li = 0;
+    const full = template.map((ch) => (ch !== null ? ch : letterInput[li++] || "")).join("");
+    const newGuesses = [...guesses, full];
+    setGuesses(newGuesses);
+    setLetterInput([]);
+    setJustTyped(-1);
+
+    if (normalize(full) === normalize(answerName)) {
+      setGameState("won");
+      setStats((prev) => ({ correct: prev.correct + 1, wrong: prev.wrong }));
+    } else if (newGuesses.length >= MAX_ATTEMPTS) {
+      setGameState("lost");
+      setStats((prev) => ({ correct: prev.correct, wrong: prev.wrong + 1 }));
+    }
+  }, [gameState, answer, letterInput, letterSlots, template, guesses, answerName]);
+
+  const processKey = useCallback((key) => {
+    if (gameState !== "playing") return;
+    if (key === "Enter") {
+      submitGuess();
+    } else if (key === "Backspace") {
+      setLetterInput((prev) => prev.slice(0, -1));
+      setJustTyped(-1);
+    } else if (key.length === 1 && /[a-zA-Z]/.test(key) && letterInput.length < letterSlots) {
+      setLetterInput((prev) => {
+        setJustTyped(prev.length);
+        return [...prev, key];
+      });
+      setTimeout(() => setJustTyped(-1), 150);
+    }
+  }, [letterInput, letterSlots, gameState, submitGuess]);
+
   useEffect(() => {
     if (started) containerRef.current?.focus();
   }, [started, guesses, gameState]);
@@ -302,11 +348,6 @@ export default function Worldle() {
     );
   }
 
-  const answerName = answer.name.common;
-  const template = buildTemplate(answerName);
-  const letterSlots = template.reduce((count, ch) => count + (ch === null ? 1 : 0), 0);
-
-  // Dynamic cell size: fit within container, min 28px, max 48px
   const totalChars = answerName.length;
   const cellSize = Math.max(28, Math.min(48, Math.floor(320 / totalChars)));
   const spaceSize = Math.max(8, cellSize * 0.35);
@@ -318,51 +359,6 @@ export default function Worldle() {
   };
 
   const isFilled = letterInput.length === letterSlots;
-
-  const showMessage = (msg) => {
-    setMessage(msg);
-    setTimeout(() => setMessage(""), 1500);
-  };
-
-  const submitGuess = () => {
-    if (gameState !== "playing") return;
-    if (!isFilled) {
-      setShake(true);
-      showMessage(`Fill all ${letterSlots} letters`);
-      setTimeout(() => setShake(false), 500);
-      return;
-    }
-
-    const full = buildGuess(letterInput);
-    const newGuesses = [...guesses, full];
-    setGuesses(newGuesses);
-    setLetterInput([]);
-    setJustTyped(-1);
-
-    if (normalize(full) === normalize(answerName)) {
-      setGameState("won");
-      setStats((prev) => ({ correct: prev.correct + 1, wrong: prev.wrong }));
-    } else if (newGuesses.length >= MAX_ATTEMPTS) {
-      setGameState("lost");
-      setStats((prev) => ({ correct: prev.correct, wrong: prev.wrong + 1 }));
-    }
-  };
-
-  const processKey = useCallback((key) => {
-    if (gameState !== "playing") return;
-    if (key === "Enter") {
-      submitGuess();
-    } else if (key === "Backspace") {
-      setLetterInput((prev) => prev.slice(0, -1));
-      setJustTyped(-1);
-    } else if (key.length === 1 && /[a-zA-Z]/.test(key) && letterInput.length < letterSlots) {
-      setLetterInput((prev) => {
-        setJustTyped(prev.length);
-        return [...prev, key];
-      });
-      setTimeout(() => setJustTyped(-1), 150);
-    }
-  }, [letterInput, letterSlots, gameState, submitGuess]);
 
   const handleKeyDown = (e) => {
     if (gameState !== "playing") return;
