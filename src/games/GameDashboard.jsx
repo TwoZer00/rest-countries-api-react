@@ -12,8 +12,9 @@ import {
 } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { DataContext } from "../App";
+import { DataContext, DarkContext } from "../App";
 import { unMemberFilter } from "../utils";
+import usePageMeta from "../hooks/usePageMeta";
 
 const REGIONS = {
   world: { label: "World", filter: () => true },
@@ -29,16 +30,18 @@ const DURATIONS = {
   small: { label: "Third", divider: 3 },
 };
 
-export default function GameDashboard({ dark }) {
+export default function GameDashboard() {
   const allContext = useContext(DataContext);
+  const { dark } = useContext(DarkContext);
   const [region, setRegion] = useState("world");
   const [duration, setDuration] = useState("complete");
   const [territories, setTerritories] = useState(false);
 
 
-  useEffect(() => {
-    document.title = "Where in the world? - Games";
-  }, []);
+  usePageMeta(
+    "Where in the world? - Games",
+    "Play geography mini games: guess flags, countries, populations, and more. Test your world knowledge!"
+  );
 
   const filteredData = useMemo(() => {
     const base = territories ? allContext : unMemberFilter(allContext);
@@ -80,7 +83,7 @@ export default function GameDashboard({ dark }) {
                 id="region"
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
-                className="px-2 py-2 rounded dark:bg-dark-mode-ligth dark:border w-full"
+                className="px-2 py-2 rounded dark:bg-dark-mode-light dark:border w-full"
               >
                 {Object.entries(REGIONS).map(([key, { label }]) => (
                   <option key={key} value={key}>{label}</option>
@@ -93,7 +96,7 @@ export default function GameDashboard({ dark }) {
                 id="duration"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
-                className="px-2 py-2 rounded dark:bg-dark-mode-ligth dark:border w-full"
+                className="px-2 py-2 rounded dark:bg-dark-mode-light dark:border w-full"
               >
                 {Object.entries(DURATIONS).map(([key, { label }]) => (
                   <option key={key} value={key}>{label}</option>

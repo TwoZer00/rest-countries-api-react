@@ -1,7 +1,7 @@
 import { Routes, Route, Link } from "react-router-dom";
-import { Header } from "./components/Header/Header";
-import { Home } from "./components/Main/Home";
-import { Detailed } from "./components/Main/Detailed";
+import Header from "./components/Header/Header";
+import Home from "./components/Main/Home";
+import Detailed from "./components/Main/Detailed";
 import { useState, useEffect, createContext } from "react";
 import Game from "./games/Game";
 import GameDashboard from "./games/GameDashboard";
@@ -10,6 +10,7 @@ import GameHL from "./games/GameHL";
 import Worldle from "./games/Worldle";
 import { getOverview } from "./services/api";
 export const DataContext = createContext();
+export const DarkContext = createContext();
 function App() {
   const [data, setData] = useState(
     localStorage.getItem("data")
@@ -40,17 +41,18 @@ function App() {
   }
 
   return (
+    <DarkContext.Provider value={{ dark, setDark }}>
       <div className={`${dark ? "dark" : ""}`}>
         <div
           className={`flex flex-col min-h-screen h-screen dark:bg-dark-fe background transition-colors`}
         >
-          <Header dark={dark} setDark={setDark} />
+          <Header />
           <div className="h-full overflow-auto pt-16 sm:pt-20">
             <DataContext.Provider value={data}>
               <Routes>
                 <Route path="/" element={<Home data={data} />} />
                 <Route path="/country/:id" element={<Detailed data={data} />} />
-                <Route path="/games" element={<GameDashboard dark={dark} />} />
+                <Route path="/games" element={<GameDashboard />} />
                 <Route path="/guesstheflag" element={<Game />} />
                 <Route path="/guessthecountry" element={<GameC />} />
                 <Route path="/higherlower" element={<GameHL />} />
@@ -59,7 +61,7 @@ function App() {
                   <div className="flex flex-col items-center justify-center h-full dark:text-white">
                     <p className="text-4xl font-bold">404</p>
                     <p className="text-lg">Page not found</p>
-                    <Link to="/" className="mt-4 border rounded px-4 py-1 hover:bg-dark-mode-ligth/10 transition-colors">Go home</Link>
+                    <Link to="/" className="mt-4 border rounded py-2 px-4 hover:bg-black/10 dark:hover:bg-white/10 transition-colors">Go home</Link>
                   </div>
                 } />
               </Routes>
@@ -67,6 +69,7 @@ function App() {
           </div>
         </div>
       </div>
+    </DarkContext.Provider>
     );
 }
 

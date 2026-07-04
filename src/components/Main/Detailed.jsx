@@ -1,17 +1,21 @@
 import { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import usePageMeta from "../../hooks/usePageMeta";
 
-export const Detailed = ({ data }) => {
+export default function Detailed({ data }) {
   const navigate = useNavigate();
   const { id } = useParams();
   const countryDetails = data.find((element) => element.ccn3 === id);
 
-  useEffect(() => {
-    document.title = countryDetails
+  usePageMeta(
+    countryDetails
       ? `Where in the world? - ${countryDetails.name.common}`
-      : "Where in the world? - Not found";
-  }, [id]);
+      : "Where in the world? - Not found",
+    countryDetails
+      ? `Learn about ${countryDetails.name.common}: population, region, capital, languages, and bordering countries.`
+      : "Country not found."
+  );
 
   if (!countryDetails) {
     return (
@@ -19,7 +23,7 @@ export const Detailed = ({ data }) => {
         <p className="text-2xl font-bold">Country not found</p>
         <button
           onClick={() => navigate("/")}
-          className="mt-4 border rounded px-4 py-1 hover:bg-dark-mode-ligth/10 transition-colors"
+          className="mt-4 border rounded py-2 px-4 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
         >
           Go home
         </button>
@@ -33,7 +37,7 @@ export const Detailed = ({ data }) => {
         <div className="py-3 sm:py-5">
           <button
             onClick={() => navigate(-1)}
-            className="border rounded px-4 flex flex-row-reverse items-center hover:bg-dark-mode-ligth/10 transition-colors"
+            className="border rounded py-2 px-4 flex flex-row-reverse items-center hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
           >
             Back
             <ArrowLeftIcon className="w-4 h-4 stroke-2" />
@@ -97,7 +101,7 @@ export const Detailed = ({ data }) => {
                       <Link
                         key={index}
                         to={`/country/${borderCountry.ccn3}`}
-                        className="py-1 px-2 rounded text-sm text-center dark:bg-dark-mode-ligth shadow hover:bg-dark-mode-ligth/10 transition-colors"
+                        className="py-1 px-2 rounded text-sm text-center dark:bg-dark-mode-light shadow hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
                       >
                         {borderCountry.name.common}
                       </Link>

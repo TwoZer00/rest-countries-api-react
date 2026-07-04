@@ -1,0 +1,28 @@
+# Cache hashed assets forever (Vite adds content hashes to filenames)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache audio files
+/assets/*.wav
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache images/icons
+/*.svg
+  Cache-Control: public, max-age=86400
+
+/favicon.ico
+  Cache-Control: public, max-age=86400
+
+# HTML pages should revalidate
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/games/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Security headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

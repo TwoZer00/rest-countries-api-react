@@ -3,9 +3,10 @@ import { Navigate } from "react-router-dom";
 import { DataContext } from "../App";
 import FlagTransition from "./FlagTransition";
 import Modal from "./Modal";
-import { Timer } from "../components/Timer";
+import Timer from "../components/Timer";
 import { getRandomInt, unMemberFilter } from "../utils";
 import { useGameDataset } from "../hooks/useGameDataset";
+import usePageMeta from "../hooks/usePageMeta";
 
 const sortByName = (a, b) => a.name.common.localeCompare(b.name.common);
 
@@ -15,8 +16,9 @@ export default function Game() {
 
   const generateOptions = (correct, pool) => {
     const others = pool.filter((c) => c.ccn3 !== correct.ccn3);
+    const needed = Math.min(4, others.length);
     const picked = [];
-    while (picked.length < 4) {
+    while (picked.length < needed) {
       const rand = others[getRandomInt(others.length)];
       if (!picked.includes(rand)) picked.push(rand);
     }
@@ -39,9 +41,10 @@ export default function Game() {
   const answered = total - countries.length;
   const progress = total > 0 ? (answered / total) * 100 : 0;
 
-  useEffect(() => {
-    document.title = "Where in the world? - Guess the flag";
-  }, []);
+  usePageMeta(
+    "Where in the world? - Guess the Flag",
+    "See a country flag and pick the correct name. Test your flag knowledge with this geography quiz!"
+  );
 
   const pick = useCallback((choice) => {
     setResults((prev) => [...prev, { options, selected: choice, correct: randomFlag }]);
@@ -53,13 +56,19 @@ export default function Game() {
     }
 
     setSkipFlag(true);
-    advance();
-  }, [options, randomFlag, countries]);
 
-  const handleClick = (event) => {
-    const target = event.target.innerHTML;
-    const choice = data.find((v) => v.name.common === target);
-    pick(choice);
+    // Inline advance to avoid stale closure
+    const remaining = countries.filter((c) => c.ccn3 !== randomFlag.ccn3);
+    setCountries(remaining);
+    if (remaining.length === 0) return;
+    const next = remaining[getRandomInt(remaining.length)];
+    setRandomFlag(next);
+    setOptions(generateOptions(next, data));
+    setTime(10);
+  }, [options, randomFlag, countries, data]);
+
+  const handleClick = (country) => {
+    pick(country);
   };
 
   const skip = useCallback(() => {
@@ -82,16 +91,6 @@ export default function Game() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [options, pick, skip]);
-
-  const advance = () => {
-    const remaining = countries.filter((c) => c.ccn3 !== randomFlag.ccn3);
-    setCountries(remaining);
-    if (remaining.length === 0) return;
-    const next = remaining[getRandomInt(remaining.length)];
-    setRandomFlag(next);
-    setOptions(generateOptions(next, data));
-    setTime(10);
-  };
 
   const startAgain = () => {
     const first = dataset[getRandomInt(dataset.length)];
@@ -147,8 +146,8 @@ export default function Game() {
           {options.map((element, index) => (
             <button
               key={index}
-              onClick={handleClick}
-              className="shadow rounded p-2 bg-white dark:bg-dark-fe border hover:bg-dark-mode-ligth/10 transition-colors dark:hover:bg-dark-mode-ligth/10 hover:cursor-pointer select-none text-left"
+              onClick={() => handleClick(element)}
+              className="shadow rounded p-2 bg-white dark:bg-dark-mode-light border hover:bg-black/10 dark:hover:bg-white/10 transition-colors hover:cursor-pointer select-none text-left"
             >
               <span className="opacity-40 text-xs mr-2">{index + 1}</span>
               {element.name.common}

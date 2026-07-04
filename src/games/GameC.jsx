@@ -5,8 +5,9 @@ import Modal from "./Modal";
 import { useOutsideAlerter } from "../hooks/useOutsideAlerter";
 import lossSound from "../resources/loss_sound.wav";
 import winSound from "../resources/win_sound.wav";
-import { randomCountryPosition, unMemberFilter } from "../utils";
+import { getRandomInt, unMemberFilter } from "../utils";
 import { useGameDataset } from "../hooks/useGameDataset";
+import usePageMeta from "../hooks/usePageMeta";
 
 const HINTS = [
   { key: "region", title: "Region", cost: 1, getData: (c) => c?.region },
@@ -51,9 +52,10 @@ export default function GameC() {
     return unrevealed.reduce((min, h) => h.cost < min.cost ? h : min).key;
   }, [revealedHints]);
 
-  useEffect(() => {
-    document.title = "Where in the world? - Guess the country";
-  }, []);
+  usePageMeta(
+    "Where in the world? - Guess the Country",
+    "Read clues about a mystery country and guess its name. A geography trivia game with hints!"
+  );
 
   useEffect(() => {
     if (!randomCountry) fetchNextCountry(dataset);
@@ -61,7 +63,7 @@ export default function GameC() {
 
   const fetchNextCountry = (pool) => {
     if (pool.length === 0) return;
-    const temp = pool[randomCountryPosition(pool.length)];
+    const temp = pool[getRandomInt(pool.length)];
     setRandomCountry(temp);
   };
 
@@ -277,7 +279,7 @@ export default function GameC() {
               <form onSubmit={handleSubmit} ref={formRef} className="w-full">
                 <div
                   className={`relative group shadow ${
-                    valid === true ? "bg-valid" : valid === false ? "bg-invalid" : "bg-white dark:bg-dark-mode-ligth"
+                    valid === true ? "bg-valid" : valid === false ? "bg-invalid" : "bg-white dark:bg-dark-mode-light"
                   } w-full rounded`}
                 >
                   <input
@@ -293,7 +295,7 @@ export default function GameC() {
                   />
                   <div
                     ref={dropdownRef}
-                    className={`absolute z-10 top-full w-full max-h-[150px] bg-white text-black dark:text-white dark:bg-dark-mode-ligth shadow rounded-b-md overflow-auto flex-col ${visible ? "flex" : "hidden"}`}
+                    className={`absolute z-10 top-full w-full max-h-[150px] bg-white text-black dark:text-white dark:bg-dark-mode-light shadow rounded-b-md overflow-auto flex-col ${visible ? "flex" : "hidden"}`}
                   >
                     {optionsSearch.map((element, index) => (
                       <button
@@ -330,12 +332,12 @@ export default function GameC() {
             </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-2 select-none w-full lg:w-2/3 py-2">
-            <div className="h-44 sm:h-52 w-full max-w-[350px] mx-auto bg-white/90 dark:bg-dark-mode-ligth/90 py-4 rounded shadow">
+            <div className="h-44 sm:h-52 w-full max-w-[350px] mx-auto bg-white/90 dark:bg-dark-mode-light/90 py-4 rounded shadow">
               {showResult && randomCountry && (
                 <img src={randomCountry.flags.svg} alt={randomCountry.name.common} className="w-full h-full object-contain" />
               )}
             </div>
-            <p className="text-xl max-w-full min-w-[200px] min-h-[32px] shadow bg-white dark:bg-dark-mode-ligth rounded text-center flex flex-col items-center justify-center">
+            <p className="text-xl max-w-full min-w-[200px] min-h-[32px] shadow bg-white dark:bg-dark-mode-light rounded text-center flex flex-col items-center justify-center">
               {showResult && randomCountry?.name.common}
             </p>
           </div>

@@ -13,11 +13,12 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.js",
     "preview": "vite preview"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "puppeteer": "^25.3.0",
     "tailwindcss": "^4.2.2",
     "vite": "^6.3.5"
   }

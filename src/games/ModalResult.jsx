@@ -5,7 +5,7 @@ export default function ModalResult({ points, reset }) {
   const isNewRecord = points > record;
 
   return (
-    <div className="w-full h-full bg-dark-mode-ligth/60 backdrop-blur absolute top-0 left-0 z-50 flex flex-col justify-center items-center">
+    <div className="w-full h-full bg-dark-mode-light/60 backdrop-blur absolute top-0 left-0 z-50 flex flex-col justify-center items-center">
       <div className="dark:bg-dark-fe/70 bg-white/40 backdrop-blur w-full max-w-sm rounded-lg shadow-lg p-6 flex flex-col gap-4 mx-4 dark:text-white">
         <h1 className="text-3xl font-bold text-center">Game over!</h1>
         <div className="flex flex-col items-center gap-2">
@@ -24,13 +24,13 @@ export default function ModalResult({ points, reset }) {
         <div className="flex justify-center gap-4 text-sm pt-2">
           <Link
             to="/games"
-            className="border py-2 px-4 rounded hover:bg-white/20 transition-all"
+            className="border py-2 px-4 rounded hover:bg-white/20 transition-colors"
           >
             Menu
           </Link>
           <button
             onClick={reset}
-            className="border py-2 px-4 rounded hover:bg-white/20 transition-all"
+            className="border py-2 px-4 rounded hover:bg-white/20 transition-colors"
           >
             Play again
           </button>

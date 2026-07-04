@@ -5,7 +5,7 @@ export default function Modal({ title, desc, again, score, record, results }) {
   const accuracy = total > 0 ? Math.round((score[0] / total) * 100) : 0;
 
   return (
-    <div className="absolute h-full w-screen flex flex-col items-center justify-center top-0 bg-dark-mode-ligth/60 z-50 dark:text-white">
+    <div className="absolute h-full w-full flex flex-col items-center justify-center top-0 bg-dark-mode-light/60 z-50 dark:text-white">
       <div className="dark:bg-dark-fe/70 bg-white/40 backdrop-blur w-full max-w-md rounded-lg shadow-lg p-5 flex flex-col gap-4 mx-4">
         <h2 className="text-xl font-semibold text-center">{title}</h2>
         <p className="text-center text-sm opacity-80">{desc}</p>
@@ -26,14 +26,14 @@ export default function Modal({ title, desc, again, score, record, results }) {
         )}
 
         {results && results.length > 0 && (
-          <div className="flex flex-col max-h-[250px] overflow-auto rounded border dark:border-dark-mode-ligth">
+          <div className="flex flex-col max-h-[250px] overflow-auto rounded border dark:border-dark-mode-light">
             {results.map((round, ri) => {
               const wasCorrect = round.selected?.ccn3 === round.correct.ccn3;
               const wasSkipped = !round.selected;
               return (
                 <div
                   key={ri}
-                  className={`flex items-center gap-3 px-3 py-2 border-b dark:border-dark-mode-ligth/50 last:border-b-0 ${
+                  className={`flex items-center gap-3 px-3 py-2 border-b dark:border-dark-mode-light/50 last:border-b-0 ${
                     wasCorrect ? "bg-valid/10" : wasSkipped ? "bg-white/5" : "bg-invalid/10"
                   }`}
                 >
@@ -63,13 +63,13 @@ export default function Modal({ title, desc, again, score, record, results }) {
         <div className="flex justify-center gap-4 text-sm">
           <Link
             to="/games"
-            className="border py-2 px-4 rounded hover:bg-white/20 transition-all"
+            className="border py-2 px-4 rounded hover:bg-white/20 transition-colors"
           >
             Menu
           </Link>
           <button
             onClick={again}
-            className="border py-2 px-4 rounded hover:bg-white/20 transition-all"
+            className="border py-2 px-4 rounded hover:bg-white/20 transition-colors"
           >
             Play again
           </button>

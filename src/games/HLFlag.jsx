@@ -55,7 +55,7 @@ export default function HLFlag({
             className="h-full object-cover w-full object-center"
           />
         ))}
-        <div className="absolute top-0 bg-dark-mode-ligth/50 backdrop-blur-sm p-4 h-full z-20 w-full flex flex-col gap-2 items-center justify-center">
+        <div className="absolute top-0 bg-dark-mode-light/50 backdrop-blur-sm p-4 h-full z-20 w-full flex flex-col gap-2 items-center justify-center">
           {nameTransition((style, item) => (
             <animated.div style={{ ...style, position: "absolute" }} className="flex flex-col items-center">
               <p className="text-4xl sm:text-6xl font-bold text-center">{item}</p>
@@ -69,7 +69,7 @@ export default function HLFlag({
                   <button
                     onClick={() => onGuess("higher")}
                     disabled={locked}
-                    className="border rounded overflow-hidden px-3 py-1 text-xl hover:bg-white/20 transition-all flex flex-row items-center gap-1 group disabled:opacity-50"
+                    className="border rounded overflow-hidden px-3 py-1 text-xl hover:bg-white/20 transition-colors flex flex-row items-center gap-1 group disabled:opacity-50"
                   >
                     Higher
                     <TrendingUpIcon className="w-5 h-5 pointer-events-none group-hover:animate-toggleup transition" />
@@ -79,7 +79,7 @@ export default function HLFlag({
                   <button
                     onClick={() => onGuess("lower")}
                     disabled={locked}
-                    className="border overflow-hidden rounded px-3 py-1 text-xl group hover:bg-white/20 transition-all flex flex-row items-center gap-1 disabled:opacity-50"
+                    className="border overflow-hidden rounded px-3 py-1 text-xl group hover:bg-white/20 transition-colors flex flex-row items-center gap-1 disabled:opacity-50"
                   >
                     Lower
                     <TrendingDownIcon className="w-5 h-5 pointer-events-none group-hover:animate-toggledown transition" />

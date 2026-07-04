@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { Navigate, Link, useSearchParams } from "react-router-dom";
 import { getRandomInt } from "../utils";
 import { useGameDataset } from "../hooks/useGameDataset";
+import usePageMeta from "../hooks/usePageMeta";
 
 const MAX_ATTEMPTS = 6;
 
@@ -192,7 +193,7 @@ function OptionsScreen({ dataset, onStart }) {
             <select
               value={maxLength}
               onChange={(e) => setMaxLength(parseInt(e.target.value))}
-              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-ligth dark:border text-sm"
+              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-light dark:border text-sm"
             >
               <option value={0}>No limit</option>
               <option value={6}>6 letters (easy)</option>
@@ -210,7 +211,7 @@ function OptionsScreen({ dataset, onStart }) {
             <select
               value={rounds}
               onChange={(e) => setRounds(parseInt(e.target.value))}
-              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-ligth dark:border text-sm"
+              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-light dark:border text-sm"
             >
               <option value={0}>All ({filtered.length})</option>
               <option value={5}>5 rounds</option>
@@ -227,7 +228,7 @@ function OptionsScreen({ dataset, onStart }) {
             <select
               value={hintAfter}
               onChange={(e) => setHintAfter(parseInt(e.target.value))}
-              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-ligth dark:border text-sm"
+              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-light dark:border text-sm"
             >
               <option value={0}>No hints</option>
               <option value={2}>After 2 wrong guesses</option>
@@ -272,9 +273,10 @@ export default function Worldle() {
   const [justTyped, setJustTyped] = useState(-1);
   const containerRef = useRef();
 
-  useEffect(() => {
-    document.title = "Where in the world? - Worldle";
-  }, []);
+  usePageMeta(
+    "Where in the world? - Worldle",
+    "Guess the country name letter by letter in this Wordle-inspired geography game. 6 attempts to get it right!"
+  );
 
   const handleStart = (filtered, hintConfig) => {
     setDataset(filtered);

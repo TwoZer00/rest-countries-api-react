@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://unrivaled-chimera-982612.netlify.app/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://unrivaled-chimera-982612.netlify.app/games</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://unrivaled-chimera-982612.netlify.app/guesstheflag</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://unrivaled-chimera-982612.netlify.app/guessthecountry</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://unrivaled-chimera-982612.netlify.app/higherlower</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://unrivaled-chimera-982612.netlify.app/worldle</loc>
+    <priority>0.8</priority>
+  </url>
+</urlset>

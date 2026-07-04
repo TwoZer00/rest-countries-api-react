@@ -1,7 +1,3 @@
-export function randomCountryPosition(size) {
-  return Math.floor(Math.random() * size);
-}
-
 export function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }

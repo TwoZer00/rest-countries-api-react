@@ -2,15 +2,16 @@ import { useContext, useEffect, useState, useCallback } from "react";
 import { DataContext } from "../App";
 import HLFlag from "./HLFlag";
 import ModalResult from "./ModalResult";
-import { randomCountryPosition, unMemberFilter } from "../utils";
+import { getRandomInt, unMemberFilter } from "../utils";
+import usePageMeta from "../hooks/usePageMeta";
 
 export default function GameHL() {
   const data = unMemberFilter(useContext(DataContext));
 
-  const pickRandom = (pool) => pool[randomCountryPosition(pool.length)];
+  const pickRandom = (pool) => pool[getRandomInt(pool.length)];
   const pickDifferent = (pool, exclude) => {
     const filtered = pool.filter((c) => c.ccn3 !== exclude.ccn3);
-    return filtered[randomCountryPosition(filtered.length)];
+    return filtered[getRandomInt(filtered.length)];
   };
 
   const [initial] = useState(() => {
@@ -25,9 +26,10 @@ export default function GameHL() {
   const [gameOver, setGameOver] = useState(false);
   const [locked, setLocked] = useState(false);
 
-  useEffect(() => {
-    document.title = "Where in the world? - Higher or Lower";
-  }, []);
+  usePageMeta(
+    "Where in the world? - Higher or Lower",
+    "Compare country populations and guess which is higher or lower. How long can you keep your streak?"
+  );
 
   const guess = useCallback((choice) => {
     if (locked || gameOver) return;
@@ -107,7 +109,7 @@ export default function GameHL() {
             showPopulation={showResults}
           />
           <div className="font-bold text-xl sm:text-2xl absolute flex items-center justify-center w-full h-full z-30 pointer-events-none">
-            <span className="bg-dark-mode-ligth/70 backdrop-blur-sm px-3 py-1 rounded-full">V.S</span>
+            <span className="bg-dark-mode-light/70 backdrop-blur-sm px-3 py-1 rounded-full">V.S</span>
           </div>
           <HLFlag
             name={countryC.name.common}

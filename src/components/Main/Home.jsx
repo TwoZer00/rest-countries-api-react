@@ -1,12 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Flag } from "./Flag";
-import { Search } from "./Search";
+import Flag from "./Flag";
+import Search from "./Search";
+import usePageMeta from "../../hooks/usePageMeta";
 
 const PAGE_SIZE = 20;
 const REGIONS = { "1": "Africa", "2": "Americas", "3": "Asia", "4": "Europe", "5": "Oceania" };
 
-export const Home = ({ data }) => {
+export default function Home({ data }) {
   const [region, setRegion] = useState(null);
   const [search, setSearch] = useState("");
   const [visible, setVisible] = useState(PAGE_SIZE);
@@ -27,9 +28,10 @@ export const Home = ({ data }) => {
     setVisible(PAGE_SIZE);
   };
 
-  useEffect(() => {
-    document.title = "Where in the world?";
-  }, []);
+  usePageMeta(
+    "Where in the world?",
+    "Explore all countries of the world. Search, filter by region, and discover detailed information about every nation."
+  );
 
   if (!data) return null;
 
@@ -41,7 +43,7 @@ export const Home = ({ data }) => {
             <Search onSearch={(value) => { setSearch(value); setVisible(PAGE_SIZE); }} />
           </div>
           <select
-            className="h-12 w-full sm:w-1/2 lg:h-full bg-white dark:bg-dark-mode-ligth dark:text-white rounded shadow px-3"
+            className="h-12 w-full sm:w-1/2 lg:h-full bg-white dark:bg-dark-mode-light dark:text-white rounded shadow px-3"
             defaultValue="0"
             onChange={handleRegionChange}
           >
@@ -69,7 +71,7 @@ export const Home = ({ data }) => {
           <div className="flex justify-center pb-10">
             <button
               onClick={() => setVisible((v) => v + PAGE_SIZE)}
-              className="px-6 py-2 rounded shadow bg-white dark:bg-dark-mode-ligth dark:text-white font-semibold hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+              className="px-6 py-2 rounded shadow bg-white dark:bg-dark-mode-light dark:text-white font-semibold hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
             >
               Load more
             </button>

@@ -1,6 +1,6 @@
-export const Flag = ({ data }) => {
+export default function Flag({ data }) {
   return (
-    <div className="flex flex-col shadow-lg rounded overflow-hidden bg-white dark:bg-dark-mode-ligth dark:text-white min-h-[300px] sm:min-h-[350px]">
+    <div className="flex flex-col shadow-lg rounded overflow-hidden bg-white dark:bg-dark-mode-light dark:text-white min-h-[300px] sm:min-h-[350px]">
       <div className="flex-none">
         <img
           src={data.flags.svg}

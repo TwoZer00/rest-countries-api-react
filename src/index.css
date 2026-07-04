@@ -6,7 +6,7 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-dark-mode-ligth: #2b3945;
+  --color-dark-mode-light: #2b3945;
   --color-dark-fe: hsl(207, 26%, 17%);
   --color-valid: #54dd91;
   --color-invalid: #df4d4d;

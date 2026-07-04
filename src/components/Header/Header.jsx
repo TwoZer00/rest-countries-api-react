@@ -7,15 +7,18 @@ import {
   PuzzlePieceIcon as PuzzleIconSolid,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { DarkContext } from "../../App";
 
-export const Header = ({ dark, setDark }) => {
+export default function Header() {
+  const { dark, setDark } = useContext(DarkContext);
   const handleDark = () => {
     setDark(!dark);
     localStorage.setItem("dark", !dark);
   };
 
   return (
-    <header className="fixed w-full z-50 text-sm lg:text-base transition-colors flex flex-row h-16 sm:h-20 items-center bg-white/10 backdrop-blur-sm dark:border-0 shadow-lg px-4 sm:px-5 lg:px-10 dark:text-white dark:bg-dark-mode-ligth/20">
+    <header className="fixed w-full z-50 text-sm lg:text-base transition-colors flex flex-row h-16 sm:h-20 items-center bg-white/10 backdrop-blur-sm dark:border-0 shadow-lg px-4 sm:px-5 lg:px-10 dark:text-white dark:bg-dark-mode-light/20">
       <div className="flex-1 min-w-0">
         <Link to="/" className="font-bold flex flex-row items-center gap-2">
           <img

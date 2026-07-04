@@ -1,21 +1,13 @@
 import { useEffect } from "react";
 
-export function useOutsideAlerter(ref, visible) {
+export function useOutsideAlerter(ref, setVisible) {
   useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        visible(false);
-        // alert("You clicked outside of me!");
+        setVisible(false);
       }
     }
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [ref, setVisible]);
 }
