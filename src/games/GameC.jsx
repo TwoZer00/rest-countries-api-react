@@ -6,7 +6,6 @@ import { useOutsideAlerter } from "../hooks/useOutsideAlerter";
 import lossSound from "../resources/loss_sound.wav";
 import winSound from "../resources/win_sound.wav";
 import { randomCountryPosition, unMemberFilter } from "../utils";
-import { getCountryDetails } from "../services/api";
 import { useGameDataset } from "../hooks/useGameDataset";
 
 const HINTS = [
@@ -23,7 +22,7 @@ export default function GameC() {
   const data = unMemberFilter(useContext(DataContext));
   const [countries, setCountries] = useState(dataset);
   const [randomCountry, setRandomCountry] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState(10);
@@ -60,13 +59,10 @@ export default function GameC() {
     if (!randomCountry) fetchNextCountry(dataset);
   }, []);
 
-  const fetchNextCountry = async (pool) => {
+  const fetchNextCountry = (pool) => {
     if (pool.length === 0) return;
-    setLoading(true);
     const temp = pool[randomCountryPosition(pool.length)];
-    const details = await getCountryDetails(temp.ccn3);
-    setRandomCountry(details);
-    setLoading(false);
+    setRandomCountry(temp);
   };
 
   const handleHintReveal = (hintKey) => {

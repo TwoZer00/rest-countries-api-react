@@ -1,32 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
-import { getCountryDetails } from "../../services/api";
 
 export const Detailed = ({ data }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const overview = data.find((element) => element.ccn3 === id);
-  const [countryDetails, setCountryDetails] = useState(overview);
-  const [loading, setLoading] = useState(true);
+  const countryDetails = data.find((element) => element.ccn3 === id);
 
   useEffect(() => {
-    document.title = overview
-      ? `Where in the world? - ${overview.name.common}`
+    document.title = countryDetails
+      ? `Where in the world? - ${countryDetails.name.common}`
       : "Where in the world? - Not found";
   }, [id]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const details = await getCountryDetails(id);
-      setCountryDetails({ ...details, ...data.find((el) => el.ccn3 === id) });
-      setLoading(false);
-    };
-    fetchData();
-  }, [id]);
-
-  if (!overview) {
+  if (!countryDetails) {
     return (
       <div className="flex flex-col items-center justify-center h-full dark:text-white">
         <p className="text-2xl font-bold">Country not found</p>
@@ -36,14 +23,6 @@ export const Detailed = ({ data }) => {
         >
           Go home
         </button>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-xl font-semibold dark:text-white animate-pulse">Loading...</p>
       </div>
     );
   }
