@@ -1,20 +1,20 @@
-import { useContext, useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { DataContext } from "../App";
 import FlagTransition from "./FlagTransition";
 import Modal from "./Modal";
 import Timer from "../components/Timer";
 import ProgressBar from "./ProgressBar";
 import GameLayout from "./GameLayout";
-import { getRandomInt, unMemberFilter } from "../utils";
+import { getRandomInt } from "../utils";
 import { useGameDataset } from "../hooks/useGameDataset";
+import { useCountryData } from "../hooks/useCountryData";
 import usePageMeta from "../hooks/usePageMeta";
 
 const sortByName = (a, b) => a.name.common.localeCompare(b.name.common);
 
 export default function Game() {
   const dataset = useGameDataset();
-  const data = unMemberFilter(useContext(DataContext));
+  const data = useCountryData();
 
   const generateOptions = (correct, pool) => {
     const others = pool.filter((c) => c.ccn3 !== correct.ccn3);

@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback, useRef, useMemo } from "react";
-import { Navigate, Link, useSearchParams } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { getRandomInt } from "../utils";
 import { useGameDataset } from "../hooks/useGameDataset";
 import usePageMeta from "../hooks/usePageMeta";
+import Button from "../components/Button";
 
 const MAX_ATTEMPTS = 6;
 
@@ -514,17 +515,15 @@ export default function Worldle() {
             {gameState === "lost" && <p className="text-lg font-semibold">{answerName}</p>}
             <div className="flex gap-3">
               {!isFinished ? (
-                <button onClick={nextRound} className="border py-2 px-4 rounded font-semibold hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                <Button onClick={nextRound} className="font-semibold">
                   Next country
-                </button>
+                </Button>
               ) : (
-                <button onClick={backToOptions} className="border py-2 px-4 rounded font-semibold hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                <Button onClick={backToOptions} className="font-semibold">
                   Play again
-                </button>
+                </Button>
               )}
-              <Link to="/games" className="border py-2 px-4 rounded font-semibold hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
-                Menu
-              </Link>
+              <Button to="/games" className="font-semibold">Menu</Button>
             </div>
             <div className="text-sm opacity-60">
               <span className="text-valid">✓ {stats.correct}</span>

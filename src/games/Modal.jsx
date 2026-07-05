@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
 export default function Modal({ title, desc, again, score, results }) {
   const isStreak = typeof score === "number";
@@ -74,18 +74,8 @@ export default function Modal({ title, desc, again, score, results }) {
         )}
 
         <div className="flex justify-center gap-4 text-sm">
-          <Link
-            to="/games"
-            className="border py-2 px-4 rounded hover:bg-white/20 transition-colors"
-          >
-            Menu
-          </Link>
-          <button
-            onClick={again}
-            className="border py-2 px-4 rounded hover:bg-white/20 transition-colors"
-          >
-            Play again
-          </button>
+          <Button to="/games">Menu</Button>
+          <Button onClick={again}>Play again</Button>
         </div>
       </div>
     </div>

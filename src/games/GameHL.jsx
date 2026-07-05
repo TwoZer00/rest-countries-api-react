@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState, useCallback } from "react";
-import { DataContext } from "../App";
+import { useEffect, useState, useCallback } from "react";
 import HLFlag from "./HLFlag";
 import Modal from "./Modal";
-import { getRandomInt, unMemberFilter } from "../utils";
+import { getRandomInt } from "../utils";
+import { useCountryData } from "../hooks/useCountryData";
 import usePageMeta from "../hooks/usePageMeta";
 
 export default function GameHL() {
-  const data = unMemberFilter(useContext(DataContext));
+  const data = useCountryData();
 
   const pickRandom = (pool) => pool[getRandomInt(pool.length)];
   const pickDifferent = (pool, exclude) => {

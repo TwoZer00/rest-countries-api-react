@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import NotFound from "../NotFound";
 import usePageMeta from "../../hooks/usePageMeta";
 
 export default function Detailed({ data }) {
@@ -18,17 +18,7 @@ export default function Detailed({ data }) {
   );
 
   if (!countryDetails) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full dark:text-white">
-        <p className="text-2xl font-bold">Country not found</p>
-        <button
-          onClick={() => navigate("/")}
-          className="mt-4 border rounded py-2 px-4 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
-        >
-          Go home
-        </button>
-      </div>
-    );
+    return <NotFound title="" message="Country not found" />;
   }
 
   return (

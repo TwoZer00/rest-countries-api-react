@@ -1,7 +1,8 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Home from "./components/Main/Home";
 import Detailed from "./components/Main/Detailed";
+import NotFound from "./components/NotFound";
 import { useState, useEffect, createContext } from "react";
 import Game from "./games/Game";
 import GameDashboard from "./games/GameDashboard";
@@ -57,13 +58,7 @@ function App() {
                 <Route path="/guessthecountry" element={<GameC />} />
                 <Route path="/higherlower" element={<GameHL />} />
                 <Route path="/worldle" element={<Worldle />} />
-                <Route path="*" element={
-                  <div className="flex flex-col items-center justify-center h-full dark:text-white">
-                    <p className="text-4xl font-bold">404</p>
-                    <p className="text-lg">Page not found</p>
-                    <Link to="/" className="mt-4 border rounded py-2 px-4 hover:bg-black/10 dark:hover:bg-white/10 transition-colors">Go home</Link>
-                  </div>
-                } />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </DataContext.Provider>
           </div>

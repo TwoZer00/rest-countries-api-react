@@ -1,13 +1,13 @@
-import { useContext, useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { DataContext } from "../App";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import Hint from "./Hint";
 import Modal from "./Modal";
 import ProgressBar from "./ProgressBar";
 import { useOutsideAlerter } from "../hooks/useOutsideAlerter";
 import lossSound from "../resources/loss_sound.wav";
 import winSound from "../resources/win_sound.wav";
-import { getRandomInt, unMemberFilter } from "../utils";
+import { getRandomInt } from "../utils";
 import { useGameDataset } from "../hooks/useGameDataset";
+import { useCountryData } from "../hooks/useCountryData";
 import usePageMeta from "../hooks/usePageMeta";
 
 const HINTS = [
@@ -21,7 +21,7 @@ const HINTS = [
 
 export default function GameC() {
   const dataset = useGameDataset();
-  const data = unMemberFilter(useContext(DataContext));
+  const data = useCountryData();
   const [countries, setCountries] = useState(dataset);
   const [randomCountry, setRandomCountry] = useState(null);
   const [loading, setLoading] = useState(false);
