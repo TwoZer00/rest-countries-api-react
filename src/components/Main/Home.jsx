@@ -18,7 +18,14 @@ export default function Home({ data }) {
       result = result.filter((d) => d.region === region);
     }
     if (search) {
-      result = result.filter((d) => d.name.common.toLowerCase().includes(search));
+      result = result.filter((d) =>
+        d.name.common.toLowerCase().includes(search) ||
+        d.name.official.toLowerCase().includes(search) ||
+        d.altSpellings?.some((s) => s.toLowerCase().includes(search)) ||
+        (d.name.nativeName && Object.values(d.name.nativeName).some(
+          (n) => n.common.toLowerCase().includes(search) || n.official.toLowerCase().includes(search)
+        ))
+      );
     }
     return result;
   }, [data, region, search]);

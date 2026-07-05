@@ -83,7 +83,7 @@ export default function GameDashboard() {
                 id="region"
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
-                className="px-2 py-2 rounded dark:bg-dark-mode-light dark:border w-full"
+                className="px-2 py-2 rounded bg-white dark:bg-dark-mode-light dark:text-white shadow border border-black/10 dark:border-white/10 w-full"
               >
                 {Object.entries(REGIONS).map(([key, { label }]) => (
                   <option key={key} value={key}>{label}</option>
@@ -96,7 +96,7 @@ export default function GameDashboard() {
                 id="duration"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
-                className="px-2 py-2 rounded dark:bg-dark-mode-light dark:border w-full"
+                className="px-2 py-2 rounded bg-white dark:bg-dark-mode-light dark:text-white shadow border border-black/10 dark:border-white/10 w-full"
               >
                 {Object.entries(DURATIONS).map(([key, { label }]) => (
                   <option key={key} value={key}>{label}</option>
