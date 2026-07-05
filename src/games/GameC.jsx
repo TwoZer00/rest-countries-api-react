@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState, useCallback, useMemo } from "r
 import { DataContext } from "../App";
 import Hint from "./Hint";
 import Modal from "./Modal";
+import ProgressBar from "./ProgressBar";
 import { useOutsideAlerter } from "../hooks/useOutsideAlerter";
 import lossSound from "../resources/loss_sound.wav";
 import winSound from "../resources/win_sound.wav";
@@ -44,7 +45,6 @@ export default function GameC() {
 
   const total = dataset.length;
   const answered = total - countries.length;
-  const progress = total > 0 ? (answered / total) * 100 : 0;
 
   const suggestedHint = useMemo(() => {
     const unrevealed = HINTS.filter((h) => !revealedHints.has(h.key));
@@ -263,14 +263,8 @@ export default function GameC() {
         </div>
 
         <div className="flex items-center justify-between text-sm px-1 sm:px-4">
-          <span className="font-semibold">{answered} / {total}</span>
+          <ProgressBar current={answered} total={total} />
           <span className="font-semibold text-xs sm:text-sm">Score: {score} <span className="text-xs opacity-50">({totalScore} pts)</span></span>
-        </div>
-        <div className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-valid rounded-full transition-all duration-500"
-            style={{ width: `${progress}%` }}
-          />
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-x-8 items-center p-2 sm:p-4">

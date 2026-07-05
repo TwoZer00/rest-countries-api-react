@@ -1,16 +1,34 @@
 import { Link } from "react-router-dom";
 
-export default function Modal({ title, desc, again, score, record, results }) {
-  const total = score[0] !== undefined ? score[0] + score[1] : 0;
+export default function Modal({ title, desc, again, score, results }) {
+  const isStreak = typeof score === "number";
+  const record = isStreak ? parseInt(localStorage.getItem("GameHL") ?? "0", 10) : null;
+  const isNewRecord = isStreak && score > record;
+
+  const total = !isStreak && score?.[1] !== undefined ? score[0] + score[1] : 0;
   const accuracy = total > 0 ? Math.round((score[0] / total) * 100) : 0;
 
   return (
     <div className="absolute h-full w-full flex flex-col items-center justify-center top-0 bg-dark-mode-light/60 z-50 dark:text-white">
       <div className="dark:bg-dark-fe/70 bg-white/40 backdrop-blur w-full max-w-md rounded-lg shadow-lg p-5 flex flex-col gap-4 mx-4">
         <h2 className="text-xl font-semibold text-center">{title}</h2>
-        <p className="text-center text-sm opacity-80">{desc}</p>
+        {desc && <p className="text-center text-sm opacity-80">{desc}</p>}
 
-        {score[1] !== undefined ? (
+        {isStreak ? (
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-5xl font-bold">{score}</p>
+            <p className="text-sm opacity-60">streak</p>
+            {isNewRecord && (
+              <p className="text-valid font-semibold animate-bounce">🎉 New record!</p>
+            )}
+            <div className="flex justify-center gap-6 text-sm">
+              <div className="flex flex-col items-center">
+                <span className="font-bold text-lg">{Math.max(record, score)}</span>
+                <span className="opacity-60">Best</span>
+              </div>
+            </div>
+          </div>
+        ) : score?.[1] !== undefined ? (
           <div className="flex flex-col items-center gap-1">
             <div className="flex justify-center gap-6 font-semibold">
               <span className="text-valid">✓ {score[0]}</span>
@@ -18,12 +36,7 @@ export default function Modal({ title, desc, again, score, record, results }) {
             </div>
             <span className="text-sm opacity-60">{accuracy}% accuracy</span>
           </div>
-        ) : (
-          <div className="flex gap-4 justify-center font-semibold">
-            <span>Score: {score}</span>
-            <span>Record: {record}</span>
-          </div>
-        )}
+        ) : null}
 
         {results && results.length > 0 && (
           <div className="flex flex-col max-h-[250px] overflow-auto rounded border dark:border-dark-mode-light">

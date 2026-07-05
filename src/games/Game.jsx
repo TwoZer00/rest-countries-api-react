@@ -4,6 +4,8 @@ import { DataContext } from "../App";
 import FlagTransition from "./FlagTransition";
 import Modal from "./Modal";
 import Timer from "../components/Timer";
+import ProgressBar from "./ProgressBar";
+import GameLayout from "./GameLayout";
 import { getRandomInt, unMemberFilter } from "../utils";
 import { useGameDataset } from "../hooks/useGameDataset";
 import usePageMeta from "../hooks/usePageMeta";
@@ -39,7 +41,6 @@ export default function Game() {
 
   const total = dataset.length;
   const answered = total - countries.length;
-  const progress = total > 0 ? (answered / total) * 100 : 0;
 
   usePageMeta(
     "Where in the world? - Guess the Flag",
@@ -120,23 +121,14 @@ export default function Game() {
   }
 
   return (
-    <div className="dark:text-white flex flex-col h-full w-11/12 justify-center items-center mx-auto relative">
-      <div className="flex flex-col bg-white/10 backdrop-blur-sm p-6 sm:p-10 rounded-lg gap-5 w-full sm:w-[500px]">
+    <GameLayout>
         {answered === 0 && (
           <h1 className="font-semibold text-2xl text-center">
             Choose the name of the country based on the flag
           </h1>
         )}
 
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-semibold">{answered} / {total}</span>
-        </div>
-        <div className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-valid rounded-full transition-all duration-500"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        <ProgressBar current={answered} total={total} />
 
         <div className="w-full h-[250px]">
           <FlagTransition flag={randomFlag} />
@@ -172,7 +164,6 @@ export default function Game() {
             className="self-end"
           />
         </div>
-      </div>
-    </div>
+    </GameLayout>
   );
 }

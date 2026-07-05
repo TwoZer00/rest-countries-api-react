@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { DataContext } from "../App";
 import HLFlag from "./HLFlag";
-import ModalResult from "./ModalResult";
+import Modal from "./Modal";
 import { getRandomInt, unMemberFilter } from "../utils";
 import usePageMeta from "../hooks/usePageMeta";
 
@@ -123,7 +123,7 @@ export default function GameHL() {
         </div>
       </div>
       {gameOver && (
-        <ModalResult points={score} reset={resetGame} />
+        <Modal title="Game over!" score={score} again={resetGame} />
       )}
     </div>
   );
