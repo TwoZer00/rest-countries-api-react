@@ -5,6 +5,7 @@ import Detailed from "./components/Main/Detailed";
 import NotFound from "./components/NotFound";
 import { useState, useEffect, createContext } from "react";
 import Game from "./games/Game";
+import FlagModeSelect from "./games/FlagModeSelect";
 import GameDashboard from "./games/GameDashboard";
 import GameC from "./games/GameC";
 import GameHL from "./games/GameHL";
@@ -54,7 +55,8 @@ function App() {
                 <Route path="/" element={<Home data={data} />} />
                 <Route path="/country/:id" element={<Detailed data={data} />} />
                 <Route path="/games" element={<GameDashboard />} />
-                <Route path="/guesstheflag" element={<Game />} />
+                <Route path="/guesstheflag" element={<FlagModeSelect />} />
+                <Route path="/guesstheflag/:mode" element={<Game />} />
                 <Route path="/guessthecountry" element={<GameC />} />
                 <Route path="/higherlower" element={<GameHL />} />
                 <Route path="/worldle" element={<Worldle />} />

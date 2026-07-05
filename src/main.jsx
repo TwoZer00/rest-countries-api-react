@@ -12,3 +12,10 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// Unregister any stale service workers from previous deployments
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    registrations.forEach((r) => r.unregister());
+  });
+}

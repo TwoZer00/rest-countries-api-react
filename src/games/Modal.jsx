@@ -1,6 +1,6 @@
 import Button from "../components/Button";
 
-export default function Modal({ title, desc, again, score, results }) {
+export default function Modal({ title, desc, again, score, results, menuPath = "/games" }) {
   const isStreak = typeof score === "number";
   const record = isStreak ? parseInt(localStorage.getItem("GameHL") ?? "0", 10) : null;
   const isNewRecord = isStreak && score > record;
@@ -74,7 +74,7 @@ export default function Modal({ title, desc, again, score, results }) {
         )}
 
         <div className="flex justify-center gap-4 text-sm">
-          <Button to="/games">Menu</Button>
+          <Button to={menuPath}>Menu</Button>
           <Button onClick={again}>Play again</Button>
         </div>
       </div>

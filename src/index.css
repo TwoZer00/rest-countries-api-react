@@ -17,6 +17,7 @@
   --animate-toggleup: toggleup 1s ease-in-out infinite;
   --animate-toggledown: toggledown 1s ease-in-out infinite;
   --animate-flip: flip 0.4s ease-in-out both;
+  --animate-shake: shake 0.3s ease-in-out;
 }
 
 @keyframes toggledown {
@@ -33,6 +34,12 @@
   0% { transform: scaleY(1); }
   50% { transform: scaleY(0); }
   100% { transform: scaleY(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
 }
 
 .background {

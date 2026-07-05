@@ -14,6 +14,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { DataContext, DarkContext } from "../App";
 import { unMemberFilter } from "../utils";
+import Switch from "../components/Switch";
 import usePageMeta from "../hooks/usePageMeta";
 
 const REGIONS = {
@@ -104,18 +105,10 @@ export default function GameDashboard() {
               </select>
             </div>
           </div>
+          <Switch checked={territories} onChange={setTerritories} label="Include territories" />
           <p className="text-sm text-center opacity-60">
             {countryCount} countries selected
           </p>
-          <label className="flex items-center gap-2 justify-center cursor-pointer">
-            <input
-              type="checkbox"
-              checked={territories}
-              onChange={(e) => setTerritories(e.target.checked)}
-              className="w-4 h-4 rounded"
-            />
-            <span className="text-sm">Include territories</span>
-          </label>
         </div>
 
         <div className="flex flex-col gap-3">

@@ -248,6 +248,7 @@ export default function GameC() {
           selected: r.selected,
           options: [],
         }))}
+        menuPath="/guessthecountry"
       />
     );
   }
