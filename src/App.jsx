@@ -10,6 +10,7 @@ import GameDashboard from "./games/GameDashboard";
 import GameC from "./games/GameC";
 import GameHL from "./games/GameHL";
 import Worldle from "./games/Worldle";
+import GameBingo from "./games/GameBingo";
 import { getOverview } from "./services/api";
 export const DataContext = createContext();
 export const DarkContext = createContext();
@@ -60,6 +61,7 @@ function App() {
                 <Route path="/guessthecountry" element={<GameC />} />
                 <Route path="/higherlower" element={<GameHL />} />
                 <Route path="/worldle" element={<Worldle />} />
+                <Route path="/borderbingo" element={<GameBingo />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </DataContext.Provider>

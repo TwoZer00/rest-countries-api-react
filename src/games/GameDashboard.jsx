@@ -3,12 +3,14 @@ import {
   ArrowTrendingUpIcon as TrendingUpIcon,
   ListBulletIcon as ViewListIcon,
   LanguageIcon,
+  TableCellsIcon,
 } from "@heroicons/react/24/outline";
 import {
   FlagIcon as FlagIconSolid,
   ArrowTrendingUpIcon as TrendingUpIconSolid,
   ListBulletIcon as ViewListIconSolid,
   LanguageIcon as LanguageIconSolid,
+  TableCellsIcon as TableCellsIconSolid,
 } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -142,6 +144,13 @@ export default function GameDashboard() {
             iconSolid={TrendingUpIconSolid}
             title="Higher or Lower"
             description="Compare populations — guess which is bigger"
+          />
+          <GameCard
+            to="/borderbingo"
+            icon={TableCellsIcon}
+            iconSolid={TableCellsIconSolid}
+            title="Border Bingo"
+            description="Pick countries that border both the row and column"
           />
         </div>
       </div>
