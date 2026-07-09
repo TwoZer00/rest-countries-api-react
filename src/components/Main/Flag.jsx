@@ -1,11 +1,11 @@
 export default function Flag({ data }) {
   return (
-    <div className="flex flex-col shadow-lg rounded overflow-hidden bg-white dark:bg-dark-mode-light dark:text-white min-h-[300px] sm:min-h-[350px]">
-      <div className="flex-none">
+    <div className="flex flex-col shadow-lg rounded-lg overflow-hidden bg-white dark:bg-dark-mode-light min-h-[300px] sm:min-h-[350px]">
+      <div className="flex-none aspect-[3/2] overflow-hidden">
         <img
           src={data.flags.svg}
           alt={data.name.common}
-          className="w-full"
+          className="w-full h-full object-cover"
           loading="lazy"
         />
       </div>

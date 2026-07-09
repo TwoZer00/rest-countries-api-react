@@ -22,20 +22,20 @@ export default function Detailed({ data }) {
   }
 
   return (
-    <div className="flex flex-col w-11/12 mx-auto dark:text-white transition-colors items-center justify-center h-full max-h-full overflow-auto py-4">
-      <div className="dark:bg-white/10 backdrop-blur-sm p-4 sm:p-5 rounded">
+    <div className="flex flex-col w-11/12 max-w-3xl mx-auto dark:text-white transition-colors items-center justify-center h-full max-h-full overflow-auto py-4">
+      <div className="bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-full">
         <div className="py-3 sm:py-5">
           <button
             onClick={() => navigate(-1)}
-            className="border rounded py-2 px-4 flex flex-row-reverse items-center hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+            className="border rounded-lg py-2 px-4 flex flex-row-reverse items-center hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
           >
             Back
             <ArrowLeftIcon className="w-4 h-4 stroke-2" />
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-center gap-4">
+        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-4">
           <div className="md:w-1/2">
-            <img src={countryDetails.flags.svg} alt={countryDetails.name.common} />
+            <img src={countryDetails.flags.svg} alt={countryDetails.name.common} className="max-h-[200px] md:max-h-none w-full object-contain" />
           </div>
           <div className="w-full md:w-1/2 flex flex-col self-stretch">
             <p className="flex flex-col">
@@ -91,7 +91,7 @@ export default function Detailed({ data }) {
                       <Link
                         key={index}
                         to={`/country/${borderCountry.ccn3}`}
-                        className="py-1 px-2 rounded text-sm text-center dark:bg-dark-mode-light shadow hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+                        className="py-1 px-2 rounded-lg text-sm text-center dark:bg-dark-mode-light shadow hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
                       >
                         {borderCountry.name.common}
                       </Link>

@@ -63,7 +63,7 @@ export default function GameDashboard() {
   const GameCard = ({ to, icon: Icon, iconSolid: IconSolid, title, description }) => (
     <Link
       to={to}
-      className="border p-4 rounded-lg shadow hover:bg-black/10 dark:hover:bg-white/10 transition-all flex flex-col gap-1"
+      className="border p-3 rounded-lg shadow hover:bg-black/10 dark:hover:bg-white/10 transition-all flex flex-col gap-1"
     >
       <div className="flex items-center justify-between">
         <span className="font-semibold text-lg">{title}</span>
@@ -74,9 +74,9 @@ export default function GameDashboard() {
   );
 
   return (
-    <div className="flex flex-col dark:text-white items-center justify-center h-full px-4">
-      <div className="p-6 rounded-lg bg-white/10 backdrop-blur shadow-lg flex flex-col gap-6 w-full max-w-md">
-        <h1 className="text-4xl sm:text-5xl font-bold text-center">Let's play</h1>
+    <div className="flex flex-col dark:text-white items-center justify-center h-full w-11/12 max-w-lg mx-auto overflow-auto py-4">
+      <div className="p-4 sm:p-6 rounded-lg bg-white/10 backdrop-blur-sm flex flex-col gap-4 sm:gap-5 w-full">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center">Let's play</h1>
 
         <div className="flex flex-col gap-3">
           <div className="flex gap-3">
@@ -86,7 +86,7 @@ export default function GameDashboard() {
                 id="region"
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
-                className="px-2 py-2 rounded bg-white dark:bg-dark-mode-light dark:text-white shadow border border-black/10 dark:border-white/10 w-full"
+                className="px-2 py-2 rounded-lg bg-white dark:bg-dark-mode-light shadow border border-black/10 dark:border-white/10 w-full"
               >
                 {Object.entries(REGIONS).map(([key, { label }]) => (
                   <option key={key} value={key}>{label}</option>
@@ -99,7 +99,7 @@ export default function GameDashboard() {
                 id="duration"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
-                className="px-2 py-2 rounded bg-white dark:bg-dark-mode-light dark:text-white shadow border border-black/10 dark:border-white/10 w-full"
+                className="px-2 py-2 rounded-lg bg-white dark:bg-dark-mode-light shadow border border-black/10 dark:border-white/10 w-full"
               >
                 {Object.entries(DURATIONS).map(([key, { label }]) => (
                   <option key={key} value={key}>{label}</option>
@@ -137,7 +137,7 @@ export default function GameDashboard() {
           />
         </div>
 
-        <div className="flex flex-col gap-3 pt-3 border-t border-white/20">
+        <div className="flex flex-col gap-3 pt-3 border-t border-black/10 dark:border-white/20">
           <GameCard
             to="/higherlower"
             icon={TrendingUpIcon}

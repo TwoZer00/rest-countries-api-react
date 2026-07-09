@@ -209,7 +209,7 @@ export default function Game() {
         again={startAgain}
         score={isEndless ? score[0] : score}
         results={results}
-        menuPath="/guesstheflag"
+        menuPath="/games"
       />
     );
   }
@@ -217,7 +217,7 @@ export default function Game() {
   return (
     <GameLayout>
       {answered === 0 && (
-        <h1 className="font-semibold text-2xl text-center">
+        <h1 className="font-semibold text-lg sm:text-xl text-center">
           {mode === "endless" && "Keep going until you miss!"}
           {mode === "speed" && "Answer as many as you can!"}
           {mode === "zen" && "Take your time, no pressure"}
@@ -244,12 +244,12 @@ export default function Game() {
             onChange={(e) => setTypedInput(e.target.value)}
             placeholder="Type country name..."
             autoComplete="off"
-            className={`shadow rounded p-3 bg-white dark:bg-dark-mode-light border text-center text-lg outline-none focus:ring-2 focus:ring-blue-400 transition-all ${
+            className={`shadow rounded-lg p-3 bg-white dark:bg-dark-mode-light border text-center text-lg outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 transition-all ${
               shake ? "animate-shake" : ""
             }`}
           />
           {showSuggestions && typedInput.length >= 2 && (
-            <ul className="absolute top-full mt-1 w-full bg-white dark:bg-dark-mode-light border rounded shadow-lg max-h-40 overflow-y-auto z-10">
+            <ul className="absolute top-full mt-1 w-full bg-white dark:bg-dark-mode-light border rounded-lg shadow-lg max-h-40 overflow-y-auto z-10">
               {data
                 .filter((c) => normalize(c.name.common).includes(normalize(typedInput)))
                 .slice(0, 5)
@@ -266,7 +266,7 @@ export default function Game() {
           )}
           <button
             type="submit"
-            className="shadow rounded p-2 bg-black/5 dark:bg-white/10 border hover:bg-black/10 dark:hover:bg-white/20 transition-colors font-semibold"
+            className="shadow rounded-lg p-2 bg-white dark:bg-dark-mode-light border hover:bg-black/10 dark:hover:bg-white/10 transition-colors font-semibold"
           >
             Submit
           </button>
@@ -277,7 +277,7 @@ export default function Game() {
             <button
               key={index}
               onClick={() => handleClick(element)}
-              className={`shadow rounded p-2 border transition-colors hover:cursor-pointer select-none text-left ${
+              className={`shadow rounded-lg p-2 border transition-colors hover:cursor-pointer select-none text-left ${
                 highlighted === index
                   ? "bg-black/20 dark:bg-white/20 scale-[0.98]"
                   : "bg-white dark:bg-dark-mode-light hover:bg-black/10 dark:hover:bg-white/10"

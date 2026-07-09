@@ -37,8 +37,8 @@ export default function FlagModeSelect() {
 
   return (
     <GameLayout>
-      <h1 className="text-2xl font-bold text-center">Guess the Flag</h1>
-      <p className="text-sm text-center opacity-60">Choose a game mode</p>
+      <h1 className="text-2xl sm:text-3xl font-bold text-center">Guess the Flag</h1>
+      <p className="text-xs sm:text-sm text-center opacity-60">Choose a game mode</p>
 
       <div className="flex flex-col gap-2">
         {MODES.map((mode) => (

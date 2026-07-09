@@ -43,14 +43,14 @@ export default function Home({ data }) {
   if (!data) return null;
 
   return (
-    <div className="h-full overflow-auto">
+    <div className="h-full overflow-auto dark:text-white">
       <div className="max-w-[1440px] mx-auto">
         <div className="flex flex-col lg:flex-row lg:h-12 px-4 sm:px-10 gap-4 sm:gap-7 my-6 sm:my-8">
           <div className="w-full h-12">
             <Search onSearch={(value) => { setSearch(value); setVisible(PAGE_SIZE); }} />
           </div>
           <select
-            className="h-12 w-full sm:w-1/2 lg:h-full bg-white dark:bg-dark-mode-light dark:text-white rounded shadow px-3"
+            className="h-12 w-full sm:w-1/2 lg:w-[200px] lg:h-full bg-white dark:bg-dark-mode-light rounded-lg shadow px-3"
             defaultValue="0"
             onChange={handleRegionChange}
           >
@@ -78,7 +78,7 @@ export default function Home({ data }) {
           <div className="flex justify-center pb-10">
             <button
               onClick={() => setVisible((v) => v + PAGE_SIZE)}
-              className="px-6 py-2 rounded shadow bg-white dark:bg-dark-mode-light dark:text-white font-semibold hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+              className="px-6 py-2 rounded-lg shadow bg-white dark:bg-dark-mode-light font-semibold hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
             >
               Load more
             </button>

@@ -9,10 +9,10 @@ export default function Modal({ title, desc, again, score, results, menuPath = "
   const accuracy = total > 0 ? Math.round((score[0] / total) * 100) : 0;
 
   return (
-    <div className="absolute h-full w-full flex flex-col items-center justify-center top-0 bg-dark-mode-light/60 z-50 dark:text-white">
-      <div className="dark:bg-dark-fe/70 bg-white/40 backdrop-blur w-full max-w-md rounded-lg shadow-lg p-5 flex flex-col gap-4 mx-4">
+    <div className="absolute h-full w-full flex flex-col items-center justify-center top-0 bg-dark-mode-light/60 z-50 overflow-auto py-4">
+      <div className="bg-white/90 dark:bg-dark-fe/90 backdrop-blur-sm w-11/12 max-w-md rounded-lg shadow-lg p-4 sm:p-6 flex flex-col gap-4 sm:gap-5 text-black dark:text-white">
         <h2 className="text-xl font-semibold text-center">{title}</h2>
-        {desc && <p className="text-center text-sm opacity-80">{desc}</p>}
+        {desc && <p className="text-center text-sm opacity-70">{desc}</p>}
 
         {isStreak ? (
           <div className="flex flex-col items-center gap-2">
@@ -39,7 +39,7 @@ export default function Modal({ title, desc, again, score, results, menuPath = "
         ) : null}
 
         {results && results.length > 0 && (
-          <div className="flex flex-col max-h-[250px] overflow-auto rounded border dark:border-dark-mode-light">
+          <div className="flex flex-col max-h-[250px] overflow-auto rounded-lg border dark:border-dark-mode-light">
             {results.map((round, ri) => {
               const wasCorrect = round.selected?.ccn3 === round.correct.ccn3;
               const wasSkipped = !round.selected;

@@ -154,19 +154,20 @@ export default function GameBingo() {
   }
 
   return (
-    <GameLayout className="!w-full sm:!w-[600px]">
-      <h1 className="font-semibold text-xl text-center">Border Bingo</h1>
-      <p className="text-sm text-center opacity-70">
+    <GameLayout className="!max-w-xl">
+      <h1 className="font-bold text-2xl sm:text-3xl text-center">Border Bingo</h1>
+      <p className="text-xs sm:text-sm text-center opacity-60">
         Pick a country that borders both the row and column country
       </p>
 
       {/* Grid */}
       <div className="overflow-x-auto">
         <div
-          className="grid gap-1 w-full"
+          className="grid gap-1"
           style={{
-            gridTemplateColumns: `80px repeat(${GRID_SIZE}, 1fr)`,
-            gridTemplateRows: `60px repeat(${GRID_SIZE}, 80px)`,
+            gridTemplateColumns: `60px repeat(${GRID_SIZE}, 1fr)`,
+            gridTemplateRows: `50px repeat(${GRID_SIZE}, 70px)`,
+            minWidth: "300px",
           }}
         >
           {/* Empty top-left corner */}
@@ -218,7 +219,7 @@ export default function GameBingo() {
                     onClick={() => handleCellClick(r, c)}
                     disabled={revealed[r][c]}
                     className={`border rounded flex items-center justify-center text-xs p-1 transition-all cursor-pointer
-                      ${isActive ? "ring-2 ring-blue-400 bg-blue-500/20" : ""}
+                      ${isActive ? "ring-2 ring-black/30 dark:ring-white/30 bg-black/5 dark:bg-white/10" : ""}
                       ${cell?.correct ? "bg-valid/20 border-valid" : ""}
                       ${cell && !cell.correct ? "bg-invalid/20 border-invalid" : ""}
                       ${!cell && !isActive ? "bg-white/5 hover:bg-white/10 dark:hover:bg-white/10" : ""}
@@ -254,7 +255,7 @@ export default function GameBingo() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search country..."
             autoFocus
-            className="shadow rounded p-2 bg-white dark:bg-dark-mode-light border outline-none focus:ring-2 focus:ring-blue-400"
+            className="shadow rounded-lg p-2 bg-white dark:bg-dark-mode-light border outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20"
           />
           <div className="max-h-40 overflow-y-auto flex flex-col gap-1">
             {filteredPool.map((country) => (

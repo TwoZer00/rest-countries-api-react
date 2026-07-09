@@ -158,15 +158,15 @@ function OptionsScreen({ dataset, onStart }) {
   }, [filtered, rounds]);
 
   return (
-    <div className="dark:text-white flex flex-col h-full w-11/12 max-w-md justify-center items-center mx-auto">
-      <div className="flex flex-col bg-white/10 backdrop-blur-sm p-6 rounded-lg gap-5 w-full">
+    <div className="dark:text-white flex flex-col h-full w-11/12 max-w-lg justify-center items-center mx-auto overflow-auto py-4">
+      <div className="flex flex-col bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-lg gap-4 sm:gap-5 w-full">
         <div className="text-center">
-          <h1 className="font-bold text-3xl sm:text-4xl">Worldle</h1>
+          <h1 className="font-bold text-2xl sm:text-3xl">Worldle</h1>
           <p className="text-sm opacity-60 mt-1">Guess the country name letter by letter</p>
         </div>
 
         <div className="flex flex-col gap-3">
-          <div className="p-3 rounded border border-white/10">
+          <div className="p-3 rounded-lg border border-black/10 dark:border-white/10">
             <div className="flex items-center justify-between">
               <p className="font-semibold text-sm">Word count</p>
               <span className="text-xs opacity-60">{wordLabels[maxWords]}</span>
@@ -186,7 +186,7 @@ function OptionsScreen({ dataset, onStart }) {
             </div>
           </div>
 
-          <div className="p-3 rounded border border-white/10">
+          <div className="p-3 rounded-lg border border-black/10 dark:border-white/10">
             <div className="flex items-center justify-between">
               <p className="font-semibold text-sm">Max letters</p>
               <span className="text-sm opacity-60">{maxLength === 0 ? "Any" : maxLength}</span>
@@ -194,7 +194,7 @@ function OptionsScreen({ dataset, onStart }) {
             <select
               value={maxLength}
               onChange={(e) => setMaxLength(parseInt(e.target.value))}
-              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-light dark:border text-sm"
+              className="w-full mt-1 px-2 py-1.5 rounded-lg bg-white dark:bg-dark-mode-light border border-black/10 dark:border-white/10 text-sm"
             >
               <option value={0}>No limit</option>
               <option value={6}>6 letters (easy)</option>
@@ -204,7 +204,7 @@ function OptionsScreen({ dataset, onStart }) {
             </select>
           </div>
 
-          <div className="p-3 rounded border border-white/10">
+          <div className="p-3 rounded-lg border border-black/10 dark:border-white/10">
             <div className="flex items-center justify-between">
               <p className="font-semibold text-sm">Rounds</p>
               <span className="text-sm opacity-60">{rounds === 0 ? "All" : rounds}</span>
@@ -212,7 +212,7 @@ function OptionsScreen({ dataset, onStart }) {
             <select
               value={rounds}
               onChange={(e) => setRounds(parseInt(e.target.value))}
-              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-light dark:border text-sm"
+              className="w-full mt-1 px-2 py-1.5 rounded-lg bg-white dark:bg-dark-mode-light border border-black/10 dark:border-white/10 text-sm"
             >
               <option value={0}>All ({filtered.length})</option>
               <option value={5}>5 rounds</option>
@@ -221,7 +221,7 @@ function OptionsScreen({ dataset, onStart }) {
             </select>
           </div>
 
-          <div className="p-3 rounded border border-white/10">
+          <div className="p-3 rounded-lg border border-black/10 dark:border-white/10">
             <div className="flex items-center justify-between">
               <p className="font-semibold text-sm">Region hint</p>
               <span className="text-sm opacity-60">{hintAfter === 0 ? "Off" : `After ${hintAfter} tries`}</span>
@@ -229,7 +229,7 @@ function OptionsScreen({ dataset, onStart }) {
             <select
               value={hintAfter}
               onChange={(e) => setHintAfter(parseInt(e.target.value))}
-              className="w-full mt-1 px-2 py-1.5 rounded dark:bg-dark-mode-light dark:border text-sm"
+              className="w-full mt-1 px-2 py-1.5 rounded-lg bg-white dark:bg-dark-mode-light border border-black/10 dark:border-white/10 text-sm"
             >
               <option value={0}>No hints</option>
               <option value={2}>After 2 wrong guesses</option>
@@ -352,8 +352,8 @@ export default function Worldle() {
   }
 
   const totalChars = answerName.length;
-  const cellSize = Math.max(28, Math.min(48, Math.floor(320 / totalChars)));
-  const spaceSize = Math.max(8, cellSize * 0.35);
+  const cellSize = Math.max(24, Math.min(44, Math.floor(280 / totalChars)));
+  const spaceSize = Math.max(6, cellSize * 0.3);
   const fontSize = cellSize * 0.4;
 
   const buildGuess = (letters) => {
@@ -477,9 +477,9 @@ export default function Worldle() {
       ref={containerRef}
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      className="dark:text-white flex flex-col h-full w-11/12 max-w-2xl justify-center items-center mx-auto relative outline-none"
+      className="dark:text-white flex flex-col h-full w-11/12 max-w-2xl justify-center items-center mx-auto relative outline-none overflow-auto py-4"
     >
-      <div className="flex flex-col bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-lg gap-4 w-full">
+      <div className="flex flex-col bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-lg gap-4 sm:gap-5 w-full">
         <div className="text-center">
           <h1 className="font-bold text-2xl sm:text-3xl">Worldle</h1>
           <p className="text-xs sm:text-sm opacity-60">
@@ -488,13 +488,13 @@ export default function Worldle() {
         </div>
 
         {message && (
-          <div className="text-center text-sm font-semibold bg-black/20 dark:bg-white/20 rounded py-1 px-3">
+          <div className="text-center text-sm font-semibold bg-black/20 dark:bg-white/20 rounded-lg py-1 px-3">
             {message}
           </div>
         )}
 
         {hintAfter > 0 && guesses.length >= hintAfter && gameState === "playing" && (
-          <div className="text-center text-sm bg-valid/20 rounded py-1.5 px-3">
+          <div className="text-center text-sm bg-valid/20 rounded-lg py-1.5 px-3">
             <span className="opacity-60">Hint:</span> This country is in <span className="font-semibold">{answer.region}</span>
           </div>
         )}

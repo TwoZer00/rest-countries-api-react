@@ -11,7 +11,7 @@ export default function Search({ onSearch }) {
   };
 
   return (
-    <div className="flex flex-row shadow rounded gap-x-4 w-full h-full pl-4 group dark:bg-dark-mode-light bg-white">
+    <div className="flex flex-row shadow rounded-lg gap-x-4 w-full h-full pl-4 group dark:bg-dark-mode-light bg-white">
       <SearchIcon className="w-8 dark:text-white text-black/30" />
       <input
         type="text"

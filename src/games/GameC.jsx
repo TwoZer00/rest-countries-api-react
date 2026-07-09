@@ -248,16 +248,16 @@ export default function GameC() {
           selected: r.selected,
           options: [],
         }))}
-        menuPath="/guessthecountry"
+        menuPath="/games"
       />
     );
   }
 
   return (
-    <div className="dark:text-white h-full flex flex-col items-center justify-center overflow-x-hidden overflow-y-auto">
-      <div className="flex w-full flex-col bg-white/10 backdrop-blur-sm lg:w-fit p-4 rounded-lg gap-4">
+    <div className="dark:text-white h-full flex flex-col items-center justify-center overflow-auto py-4 w-11/12 max-w-3xl mx-auto">
+      <div className="flex w-full flex-col bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-lg gap-4 sm:gap-5">
         <div className="text-center">
-          <h1 className="font-bold text-2xl sm:text-4xl">What's the country?</h1>
+          <h1 className="font-bold text-2xl sm:text-3xl">What's the country?</h1>
           <small className="hidden sm:block">
             Click boxes for more details, every box has a cost that reduces your score.
           </small>
@@ -275,7 +275,7 @@ export default function GameC() {
                 <div
                   className={`relative group shadow ${
                     valid === true ? "bg-valid" : valid === false ? "bg-invalid" : "bg-white dark:bg-dark-mode-light"
-                  } w-full rounded`}
+                  } w-full rounded-lg`}
                 >
                   <input
                     ref={inputRef}
@@ -290,7 +290,7 @@ export default function GameC() {
                   />
                   <div
                     ref={dropdownRef}
-                    className={`absolute z-10 top-full w-full max-h-[150px] bg-white text-black dark:text-white dark:bg-dark-mode-light shadow rounded-b-md overflow-auto flex-col ${visible ? "flex" : "hidden"}`}
+                    className={`absolute z-10 top-full w-full max-h-[150px] bg-white text-black dark:text-white dark:bg-dark-mode-light shadow rounded-b-lg overflow-auto flex-col ${visible ? "flex" : "hidden"}`}
                   >
                     {optionsSearch.map((element, index) => (
                       <button
@@ -327,12 +327,12 @@ export default function GameC() {
             </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-2 select-none w-full lg:w-2/3 py-2">
-            <div className="h-44 sm:h-52 w-full max-w-[350px] mx-auto bg-white/90 dark:bg-dark-mode-light/90 py-4 rounded shadow">
+            <div className="h-44 sm:h-52 w-full max-w-[350px] mx-auto bg-white/90 dark:bg-dark-mode-light/90 py-4 rounded-lg shadow">
               {showResult && randomCountry && (
                 <img src={randomCountry.flags.svg} alt={randomCountry.name.common} className="w-full h-full object-contain" />
               )}
             </div>
-            <p className="text-xl max-w-full min-w-[200px] min-h-[32px] shadow bg-white dark:bg-dark-mode-light rounded text-center flex flex-col items-center justify-center">
+            <p className="text-xl max-w-full min-w-[200px] min-h-[32px] shadow bg-white dark:bg-dark-mode-light rounded-lg text-center flex flex-col items-center justify-center">
               {showResult && randomCountry?.name.common}
             </p>
           </div>

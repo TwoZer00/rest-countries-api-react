@@ -123,7 +123,7 @@ export default function GameHL() {
         </div>
       </div>
       {gameOver && (
-        <Modal title="Game over!" score={score} again={resetGame} menuPath="/higherlower" />
+        <Modal title="Game over!" score={score} again={resetGame} menuPath="/games" />
       )}
     </div>
   );
